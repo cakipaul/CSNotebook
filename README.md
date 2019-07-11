@@ -23,7 +23,7 @@ CSNotebook.git
 |  |- web/...
 |  |- fe/...
 |  |- mobile/...
-|- html/
+|- docs/
 |  |- index.html
 |  |- ...
 |- inspur/
@@ -50,7 +50,7 @@ CSNotebook.git
 - README.md ：本项目整体介绍文件
 - csnotes/：CS笔记文件夹
   - 其他文件夹：请参照下文 [#csnotes文件夹](#csnotes文件夹) 里的介绍
-- html/：本项目Pages服务的网页文件夹
+- docs/：本项目Pages服务的网页文件夹
 - inspur/：Inspur公司的相关文档，其中技术相关的文档归档到csnotes文件夹中
   - common/：集团通用文档
   - IEI/：Inspur Electronic Information Industry，浪潮信息相关文档
