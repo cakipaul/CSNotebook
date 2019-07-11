@@ -73,19 +73,19 @@ CSNotebook.git
 
 文件夹|说明
 :--:|--
-[tools](https://github.com/cakipaul/CSNotebook/csnotes/others)|markup（MarDown，YML）
-[dev](https://github.com/cakipaul/CSNotebook/csnotes/dev)|Git（Git,GitHub,SVN,Coding），IDE（IntelliJ，VSCode），DevOps，CI/CD（GitLab，Jenkins，Travis-CI，Coding，Azure）
-[hw](https://github.com/cakipaul/CSNotebook/csnotes/hw)|底层（计组，汇编），GCC，嵌入式（STM32），存储技术（硬件部分）
-[os](https://github.com/cakipaul/CSNotebook/csnotes/os)|Linux，Shell，Docker
-[ds](https://github.com/cakipaul/CSNotebook/csnotes/ds)|数据结构，设计模式，LeetCode刷题
-[db](https://github.com/cakipaul/CSNotebook/csnotes/db)|MySQL，MongoDB，Redis，存储技术（软件部分）
-[c](https://github.com/cakipaul/CSNotebook/csnotes/c)|C/C++，Unity
-[dotnet](https://github.com/cakipaul/CSNotebook/csnotes/dotnet)|C#，.NET
-[java](https://github.com/cakipaul/CSNotebook/csnotes/java)|Java，Spring MVC，Spring Boot
-[dart](https://github.com/cakipaul/CSNotebook/csnotes/dart)|Dart，Flutter
-[web](https://github.com/cakipaul/CSNotebook/csnotes/web)|Network（OSI，TCP-IP，HTTP，SSL，SSH，Mail，FTP），Server（Apache，Nginx，IIS），H-Network(Bluetooth,WiFi,4G,ZigBee,NB-IoT)，通信原理
-[fe](https://github.com/cakipaul/CSNotebook/csnotes/fe)|前端（Html,CSS, JavaScript，PHP），js库（Node.js，Angular，React，vue），快速建站（Hexo，WordPress，GitBook）
-[mobile](https://github.com/cakipaul/CSNotebook/csnotes/mobile)|Android，IOS原生开发
+[tools](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/others)|markup（MarDown，YML）
+[dev](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/dev)|Git（Git,GitHub,SVN,Coding），IDE（IntelliJ，VSCode），DevOps，CI/CD（GitLab，Jenkins，Travis-CI，Coding，Azure）
+[hw](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/hw)|底层（计组，汇编），GCC，嵌入式（STM32），存储技术（硬件部分）
+[os](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/os)|Linux，Shell，Docker
+[ds](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/ds)|数据结构，设计模式，LeetCode刷题
+[db](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/db)|MySQL，MongoDB，Redis，存储技术（软件部分）
+[c](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/c)|C/C++，Unity
+[dotnet](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/dotnet)|C#，.NET
+[java](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/java)|Java，Spring MVC，Spring Boot
+[dart](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/dart)|Dart，Flutter
+[web](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/web)|Network（OSI，TCP-IP，HTTP，SSL，SSH，Mail，FTP），Server（Apache，Nginx，IIS），H-Network(Bluetooth,WiFi,4G,ZigBee,NB-IoT)，通信原理
+[fe](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/fe)|前端（Html,CSS, JavaScript，PHP），js库（Node.js，Angular，React，vue），快速建站（Hexo，WordPress，GitBook）
+[mobile](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/mobile)|Android，IOS原生开发
 
 ## 格式规范
 
