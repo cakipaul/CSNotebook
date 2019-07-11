@@ -67,7 +67,7 @@ CSNotebook.git
   - events/...
 - .gitignore
 
->注意：由于本项目被设置为private，非Inspur员工请勿传播inspur文件夹中的文档
+>注意：本项目暂设置为public，非Inspur员工请勿传播inspur文件夹中的文档
 
 ### csnotes文件夹
 
