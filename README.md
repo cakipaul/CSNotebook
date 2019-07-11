@@ -73,7 +73,7 @@ CSNotebook.git
 
 文件夹|说明
 :--:|--
-[tools](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/others)|markup（MarDown，YML）
+[tools](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/tools)|markup（MarDown，YML）
 [dev](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/dev)|Git（Git,GitHub,SVN,Coding），IDE（IntelliJ，VSCode），DevOps，CI/CD（GitLab，Jenkins，Travis-CI，Coding，Azure）
 [hw](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/hw)|底层（计组，汇编），GCC，嵌入式（STM32），存储技术（硬件部分）
 [os](https://github.com/cakipaul/CSNotebook/tree/master/csnotes/os)|Linux，Shell，Docker
