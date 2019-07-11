@@ -24,7 +24,7 @@ Q3：请问有没有参考报价？
 
 A3：这个是从中介网上整理的（虚假的）报价：
 
-![虚假的报价](https://github.com/cakipaul/CSNotebook/blob/master/SNotebook/others/events/2019.6 租房/%E8%99%9A%E5%81%87%E7%9A%84%E7%A7%9F%E6%88%BF%E4%BF%A1%E6%81%AF.png)
+![虚假的报价](https://github.com/cakipaul/CSNotebook/blob/master/others/events/2019.6%20%E7%A7%9F%E6%88%BF/%E8%99%9A%E5%81%87%E7%9A%84%E7%A7%9F%E6%88%BF%E4%BF%A1%E6%81%AF.png)
 
 一般来说：
 
