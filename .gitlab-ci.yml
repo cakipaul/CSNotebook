@@ -1,0 +1,74 @@
+# requiring the environment of NodeJS 10
+image: node:10
+
+# add 'node_modules' to cache for speeding up builds
+cache:
+  paths:
+    - gb # Node modules and dependencies
+
+before_script:
+  - npm install gitbook-cli -g # install gitbook
+  - gitbook fetch 3.2.3 # fetch final stable version
+  - cd gb
+  - gitbook install # add any requested plugins in book.json
+  - cd ..
+
+# # test:
+# #   stage: test
+# #   script:
+# #     - gitbook build . public # build to public path
+# #   only:
+# #     - branches # this job will affect every branch except 'master'
+# #   except:
+# #     - master
+    
+# # the 'pages' job will deploy and build your site to the 'public' path
+pages:
+  stage: deploy
+  script:
+    - gitbooks=("os" "fe" "java" "c" "dotnet" "py" "dart" "db" "ds" "web" "hw" "mobile" "tools" "dev")
+    - gb_file="csnotes/"
+    - dev_file="gb/"
+    - deploy="public/"
+    - summary="csnotes/summary/*"
+    - ls -lah
+    - cp -r $summary .
+    - for gitbook in ${gitbooks[@]};do
+    -     mv $gb_file$gitbook'/'$gitbook'-SUMMARY.md' $gitbook'-SUMMARY.md' 
+    - done
+    - ls -lah
+    - gitbook install
+    - gitbook build . $deploy
+    - cd $deploy
+    - ls -lah
+    - cd ..
+    - ls -lah
+    - cd $gb_file
+    - ls -lah
+    - cd os
+    - ls -lah
+    - cd ..
+    - cd ..
+    - for gitbook in ${gitbooks[@]};do
+    -     cp -r $gb_file$gitbook/* $dev_file
+    -     cd $dev_file
+    -     gitbook build . $gitbook
+    -     ls -lah
+    -     cd ..
+    -     mv -f $dev_file$gitbook $deploy
+    -     cd $dev_file
+    -     ls |grep -v node_modules|xargs rm -rf
+    -     ls -lah
+    # -     shopt -s extglob
+    # -     rm -rf ! (node_modules)
+    # -     find ! -wholename './node_modules*' -exec rm -r {} \;
+    -     cd ..
+    - done
+    - ls -lah
+
+  artifacts:
+    paths:
+      - public
+    #expire_in: 1 week
+  only:
+    - master # this job will affect only the 'master' branch
