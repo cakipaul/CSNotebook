@@ -7,7 +7,7 @@
         "gitbook": "3.2.3",
         "links": {
             "sidebar": {
-                "Home": "http://csnotebook.cakipaul.com"
+                "Home": "http://csnotes.cakipaul.com"
             }
         },
         "plugins": [
@@ -71,7 +71,7 @@
                 "tocLevel3Icon": "fa fa-hand-o-right"
             },
             "page-footer-ex": {
-                "copyright": "By [cakipaul](http://csnotebook.cakipaul.com)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布",
+                "copyright": "By [cakipaul](http://csnotes.cakipaul.com)，使用[知识共享 署名-相同方式共享 4.0协议](https://creativecommons.org/licenses/by-sa/4.0/)发布",
                 "markdown": true,
                 "update_label": "此页面修订于：",
                 "update_format": "YYYY-MM-DD HH:mm:ss"
