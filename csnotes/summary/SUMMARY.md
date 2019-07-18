@@ -24,6 +24,10 @@
 * [IT资源链接](res/IT资源链接.md)
 * [RSS_sites](res/RSS_sites.md)
 
+## Words
+
+* [1. Traffic](others/english/part1_traffic1.md)
+
 ## Logs
 
 * [2019_1-3](log/2019_1-3.md)
