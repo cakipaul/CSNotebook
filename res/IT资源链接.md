@@ -62,6 +62,7 @@
 
 ## 通用资源
 
+- [网络上优质开源项目与资源](https://www.githubs.cn/awesome)
 - [极客搜索](https://s.geekbang.org/)
 - [手册网](http://www.shouce.ren/)
 - [红帽技术文档](https://www.redhat.com/zh/topics)
@@ -116,6 +117,8 @@
 
 ### Java/Android
 
+- [Java中文在线教程](http://how2j.cn/)
+- [MVN Repository](https://mvnrepository.com/)
 - [java 7 入门书籍 – 开源中国社区](http://www.oschina.net/question/587367_155258)
 - [让Java开发更简便的工具包_V1.10.7](http://feilong-core.mydoc.io/?t=252617feilong-core)
 - [APICloud](https://www.apicloud.com/)
@@ -173,6 +176,7 @@
 ## 常用下载
 
 - [MSDN，微软系统与软件大全](http://msdn.itellyou.cn/)
+- [阿里开源镜像下载](https://opsx.alibaba.com/mirror)
 
 ### OS
 
@@ -228,3 +232,4 @@
 - [InfoQ](https://www.infoq.cn/)
 - [51CTO](http://blog.51cto.com/)
 - [掘金](https://juejin.im)
+- [内存·溢出](http://outofmemory.cn/)
