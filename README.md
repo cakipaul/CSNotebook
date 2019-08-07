@@ -74,7 +74,7 @@ CSNotebook.git
 
 文件夹|说明
 :--:|--
-[tools](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/tools)|markup（MarDown，YML），正则表达式，XML
+[tools](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/tools)|markup（MarDown，YML），正则表达式，XML，技术文档，网络安全
 [dev](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/dev)|Git（Git，SVN，firefly，tfs），IDE（IntelliJ，VSCode），DevOps，CI/CD（GitLab，Jenkins，Travis-CI，Coding，Azure）
 [hw](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/hw)|底层（计组，汇编），GCC，嵌入式（STM32），存储技术（硬件部分）
 [os](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/os)|Linux，Shell，Docker
