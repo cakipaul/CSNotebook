@@ -39,6 +39,7 @@
 
 ## 在线工具
 
+- [HTML Online Tools](http://www.html-help.org/)
 - [Create, edit & deploy fullstack apps Online](https://stackblitz.com/)
 - [选择一个开源协议](http://choosealicense.online/)
 - [SpeedGuide.net](https://www.speedguide.ne)
@@ -119,6 +120,7 @@
 
 - [Java中文在线教程](http://how2j.cn/)
 - [MVN Repository](https://mvnrepository.com/)
+- [阿里云 Maven Repo](http://maven.aliyun.com/nexus/content/groups/public/)
 - [java 7 入门书籍 – 开源中国社区](http://www.oschina.net/question/587367_155258)
 - [让Java开发更简便的工具包_V1.10.7](http://feilong-core.mydoc.io/?t=252617feilong-core)
 - [APICloud](https://www.apicloud.com/)
@@ -209,6 +211,7 @@
 
 ## 常用API与数据服务
 
+- [大数据导航](http://hao.199it.com/)
 - [public-apis](https://github.com/toddmotto/public-apis)
 - [谷歌API](https://console.developers.google.com/apis/)
 - [SMTP等](https://app.mailgun.com)
