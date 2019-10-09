@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AwesomeCodeBuilderTools</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <!-- esprima required only for !!js/function -->
+    <!-- <script src="esprima.js"></script> -->
+    <script src="js/js-yaml.min.js"></script>
+    <script src="js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/index-skin.css" />
+
+    <script type="text/javascript">
+        var doc = jsyaml.load('oldMapName: response\nnewMapName: paramMap\noldKeyName: orderfield\nnewKeyName: orderfield\noldValues: \nnewValues: \nvalueMapping: {}\n');
+        console.log(doc);
+    </script>
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+    <div id="tools-div">
+        <table>
+            <tr>
+                <td>
+
+                    <!-- <p>{{ toolUrl }}</p> -->
+                    <div class="toolcat">Formatter
+                        <ol>
+                            <tool-item v-for="item in Formatter" :tool="item" :key="item.id">
+                                </todo-item>
+                        </ol>
+                    </div>
+
+                    <div class="toolcat">CodeSnippet
+                        <ol>
+                            <tool-item v-for="item in CodeSnippet" :tool="item" :key="item.id">
+                                </todo-item>
+                        </ol>
+                    </div>
+
+                    <div class="toolcat">Encode&amp;Decode
+                        <ol>
+                            <tool-item v-for="item in EncodeDecode" :tool="item" :key="item.id">
+                                </todo-item>
+                        </ol>
+                    </div>
+                </td>
+                <td>
+                    <iframe id='tool-window' :src="toolUrl" class='toolWindow'></iframe>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        Vue.component('tool-item', {
+            props: ['tool'],
+            template: '<div @click="tool.method" class="toolbox">{{ tool.content }}</div>'
+        })
+        var toolsApp = new Vue({
+            el: '#tools-div',
+            data: {
+                toolUrl: 'FormatterTools/SQLFormatter.html',
+                Formatter: [{
+                    id: 0,
+                    content: 'SQLFormatter',
+                    method: function() {
+                        toolsApp.toolUrl = 'FormatterTools/SQLFormatter.html';
+                        // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                    }
+                }],
+                CodeSnippet: [{
+                    id: 0,
+                    content: 'MapKeysConverter',
+                    method: function() {
+                        toolsApp.toolUrl = 'CodeSnippet/MapKeysConverter.html';
+                        // window.open("CodeSnippet/MapKeysConverter.html");
+                    }
+                }, {
+                    id: 1,
+                    content: 'SwitchMapValue',
+                    method: function() {
+                        toolsApp.toolUrl = 'CodeSnippet/SwitchMapValue.html';
+                        // window.open("CodeSnippet/SwitchMapValue.html");
+                    }
+                }, {
+                    id: 2,
+                    content: 'TableToBean',
+                    method: function() {
+                        toolsApp.toolUrl = 'CodeSnippet/TableToBean.html';
+                        // window.open("CodeSnippet/TableToBean.html");
+                    }
+                }],
+                EncodeDecode: [{
+                    id: 0,
+                    content: 'Encode&Decode',
+                    method: function() {
+                        toolsApp.toolUrl = 'EncodeDecode/EncodeDecode.html';
+                        // window.open("CodeSnippet/MapKeysConverter.html");
+                    }
+                }]
+            }
+        })
+    </script>
+</body>
+
+</html>

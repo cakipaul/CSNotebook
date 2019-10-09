@@ -1,0 +1,36 @@
+.toolcat {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #423636;
+    width: 220px;
+    border: 8px solid darkgreen;
+    background-color: whitesmoke;
+    padding: 8px;
+    margin: 8px;
+}
+
+.toolbox {
+    font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    text-align: center;
+    vertical-align: middle;
+    color: #423636;
+    width: 120px;
+    height: 20px;
+    border: 10px solid green;
+    background-color: whitesmoke;
+    padding: 2px;
+    margin: 2px;
+}
+
+a {
+    color: aliceblue;
+}
+
+.toolWindow {
+    width: 700px;
+    height: 700px;
+    float: right;
+}

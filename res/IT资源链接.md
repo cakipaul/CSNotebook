@@ -25,6 +25,7 @@
 - [站长之家工具](http://tool.chinaz.com/)
 - [免费申请SSL证书](https://freessl.cn/)
 - [SSL工具](https://ee.myssl.com/dashboard)
+- [fir.im 内测安装包托管](https://fir.im)
 
 ### 站点统计
 
@@ -39,6 +40,7 @@
 
 ## 在线工具
 
+- [在线工具大全](https://tool.lu/)
 - [HTML Online Tools](http://www.html-help.org/)
 - [Create, edit & deploy fullstack apps Online](https://stackblitz.com/)
 - [选择一个开源协议](http://choosealicense.online/)

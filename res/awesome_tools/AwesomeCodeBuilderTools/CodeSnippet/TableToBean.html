@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Table To Bean</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="../js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <script src="../js/js-yaml.min.js"></script>
+
+
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+
+    <div id="param-div" class="tool-div">
+        <p style="text-align: center; color: black;font-size: 20px"><b> {{ title }} </b></p>
+        <table>
+            <tr>
+                <td><label class="input-label">Table Name:</label></td>
+                <td><input readonly class='input-field' v-model="tableName"></td>
+            </tr>
+            <tr>
+                <td><label class="input-label">Class Name:</label></td>
+                <td><input readonly class='input-field' v-model="className"></td>
+            </tr>
+            <tr>
+                <td><label class="input-label">Columns Name:</label></td>
+                <td><input readonly class='input-field' v-model="columnsName"></td>
+            </tr>
+            <tr>
+                <td><label class="input-label">Params Name:</label></td>
+                <td><input readonly class='input-field' v-model="paramsName"></td>
+            </tr>
+        </table>
+        <p class="input-label">Input params in Yaml:</p>
+        <textarea v-model="yamlParam" style="height: 150px" class="input-textarea">
+                </textarea>
+        <table style="width:495px">
+            <tr>
+                <td align="center" valign="middle"><button class="function-button" style="width: 100%;" v-on:click="praseYaml">Prase Yaml</button></td>
+                <td align="center" valign="middle"><button class="function-button" style="width: 100%;" v-on:click="generateParamsName">Generate Params Name</button></td>
+                <td align="center" valign="middle"><button class="function-button" style="width: 100%;" v-on:click="buildCode">Build Code</button></td>
+            </tr>
+        </table>
+
+        <div class='result-div'>
+            <div class="toolbar" v-clipboard:copy="header" v-clipboard:success="onCopy" v-clipboard:error="onError">copy</div>
+            <pre class="result-pre"><code v-html="header"></code></pre>
+        </div>
+        <div class='result-div'>
+            <div class="toolbar" v-clipboard:copy="content" v-clipboard:success="onCopy" v-clipboard:error="onError">copy</div>
+            <pre class="result-pre"><code v-html="content"></code></pre>
+        </div>
+        <div class='result-div'><span class="">
+            <div class="toolbar" v-clipboard:copy="toString" v-clipboard:success="onCopy" v-clipboard:error="onError">copy</div>
+            <pre class="result-pre"><code v-html="toString"></code> </pre>
+        </div>
+
+    </div>
+    <script>
+        var converter = new Vue({
+            el: '#param-div',
+            data: {
+                title: 'Table To Bean',
+                tableName: '',
+                className: '',
+                columnsName: '',
+                paramsName: '',
+                yamlParam: 'tableName: \nclassName: \ncolumnsName: \nparamsName: \n# nameMapping is not required \nnameMapping: \n oldKey: newKey',
+                header: '',
+                content: '',
+                toString: ''
+            },
+            methods: {
+                generateParamsName: function() {
+                    this.praseYaml();
+                    var columns = this.columnsName.split(",");
+                    this.paramsName = '';
+                    for (var i = 0; i < columns.length; i++) {
+                        var frag = columns[i].split("_");
+                        var paramName = '';
+                        for (var j = 0; j < frag.length; j++) {
+                            if (j == 0) paramName += frag[j].toLowerCase();
+                            else paramName += frag[j].substr(0, 1).toUpperCase() + frag[j].substr(1, frag[j].length).toLowerCase();
+                        }
+                        if (i == 0 || this.paramsName == "") this.paramsName += paramName;
+                        else this.paramsName += "," + paramName;
+                    }
+                },
+                buildCode: function() {
+                    var headerResult = new Array;
+
+                    headerResult.push("import java.io.Serializable;");
+                    headerResult.push("import javax.persistence.Column;");
+                    headerResult.push("import javax.persistence.Id;");
+                    headerResult.push("import javax.persistence.Table;");
+                    headerResult.push('/**');
+                    headerResult.push(' * Bean');
+                    headerResult.push(' * @author: paul');
+                    headerResult.push(' * @date: ' + new Date().toLocaleDateString() + '');
+                    headerResult.push(' */');
+                    headerResult.push('@Table(name = "' + this.tableName + '")');
+                    headerResult.push('public class ' + this.className + ' implements Serializable {');
+                    headerResult.push('\tprivate static final long serialVersionUID = 1L;');
+                    headerResult.push('');
+                    headerResult.push('');
+                    headerResult.push('}');
+                    this.header = '';
+                    for (var s in headerResult) {
+                        this.header += headerResult[s] + "\n";
+                    }
+
+                    var contentResult = new Array;
+                    var columns = this.columnsName.split(",");
+                    var params = this.paramsName.split(",");
+                    for (var i = 0; i < columns.length; i++) {
+                        contentResult.push('@Column(name="' + columns[i] + '")');
+                        contentResult.push('private String ' + params[i] + ';');
+                    }
+
+                    for (var i = 0; i < columns.length; i++) {
+                        getterName = "get" + params[i][0].toUpperCase() + params[i].substr(1, params[i].length);
+                        setterName = "set" + params[i][0].toUpperCase() + params[i].substr(1, params[i].length);
+                        contentResult.push('public String ' + getterName + '() {');
+                        contentResult.push('\treturn ' + params[i] + ';');
+                        contentResult.push('}');
+                        contentResult.push('public void ' + setterName + '(String ' + params[i] + ') {');
+                        contentResult.push('\tthis.' + params[i] + ' = ' + params[i] + ';');
+                        contentResult.push('}');
+                    }
+
+                    this.content = '';
+                    for (var s in contentResult) {
+                        this.content += contentResult[s] + "\n";
+                    }
+
+                    var toStringMethod = new Array;
+
+                    toStringMethod.push('@Override');
+                    toStringMethod.push('public String toString() {');
+                    toStringMethod.push('\treturn "' + this.className + ' [' + params[0] + '=" + ' + params[0]);
+                    for (var i = 1; i < params.length; i++) {
+                        toStringMethod.push('\t + ", ' + params[i] + '=" + ' + params[i]);
+                    }
+                    toStringMethod.push('\t+ "]";');
+                    toStringMethod.push('}');
+
+                    this.toString = '';
+                    for (var s in toStringMethod) {
+                        this.toString += toStringMethod[s] + "\n";
+                    }
+                },
+                praseYaml: function() {
+                    let jsonStr;
+                    try {
+                        jsonStr = jsyaml.load(converter.yamlParam);
+                        if (typeof jsonStr != 'object' || !jsonStr) alert("Illegal Yaml!");
+                    } catch (e) {
+                        alert('Illegal Yaml!');
+                        return;
+                    }
+                    if (jsonStr.tableName == null) jsonStr.tableName ='';
+                    this.tableName = jsonStr.tableName;
+                    if (jsonStr.className == null)jsonStr.className = '';
+                    this.className = jsonStr.className;
+                    if (jsonStr.columnsName == null)jsonStr.columnsName = '';
+                    this.columnsName = jsonStr.columnsName;
+                    if (jsonStr.paramsName == null)jsonStr.paramsName ='' ;
+                    this.paramsName = jsonStr.paramsName;
+
+                    for (var key in jsonStr.nameMapping) {
+                            if(key==null||jsonStr.nameMapping[key]==null)break;
+                            if ("" == this.columnsName || this.columnsName == null) this.columnsName = key;
+                            else this.columnsName += "," + key;
+                            if ("" == this.paramsName || this.paramsName == null) this.paramsName = jsonStr.nameMapping[key];
+                            else this.paramsName += "," + jsonStr.nameMapping[key];
+                    }
+                },
+                onCopy: function() {
+                    alert("copy sucess")
+                },
+                onError: function() {
+                    alert("copy error")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

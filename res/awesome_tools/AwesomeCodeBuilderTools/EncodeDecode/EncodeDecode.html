@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Encode &amp; Decode</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="../js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <script src="../js/js-yaml.min.js"></script>
+    <script src="../js/md5.js"></script>
+
+
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+
+    <div id="param-div" class="tool-div">
+        <p style="text-align: center; color: black;font-size: 20px"><b> {{ title }} </b></p>
+        <p class="input-label">Mode :</p>
+
+        <table>
+            <tr>
+                <td style="width: 50%">
+                    <label class="input-label">ASCII 2 Unicode</label><input class="input-radiobox" type="radio" id="ascii2unicode-mode" name="mode" value="ascii2unicode" v-model="mode">
+                </td>
+                <td style="width: 50%">
+                    <label class="input-label">Unicode 2 ASCII</label><input class="input-radiobox" type="radio" id="unicode2ascii-mode" name="mode" value="unicode2ascii" v-model="mode">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="input-label">Password Encode</label>
+                    <input class="input-radiobox" type="radio" id="pwdEncode-mode" name="mode" value="pwdEncode" v-model="mode">
+                </td>
+                <td>
+                    <input class="input-field" v-model="pwdSalt"></input>
+                </td>
+            </tr>
+        </table>
+        <textarea id='input' v-model="input" class="input-textarea">
+                </textarea>
+        <table style="width:495px">
+            <tr>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="generSalt">Gener Salt</button></td>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="encodeDecode">Do En(De)code</button></td>
+            </tr>
+        </table>
+        <div class='result-div'>
+            <div class="toolbar" v-clipboard:copy="content" v-clipboard:success="onCopy" v-clipboard:error="onError">copy</div>
+            <textarea readonly class="result-pre" id='content' v-model="content"></textarea>
+        </div>
+    </div>
+    <script>
+        var converter = new Vue({
+            el: '#param-div',
+            data: {
+                title: 'Encode & Decode',
+                mode: [],
+                input: 'Input here',
+                content: '',
+                pwdSalt: 'input salt here'
+            },
+            methods: {
+                encodeDecode: function() {
+                    if (this.input == null || this.input == '') {
+                        alert('input something plz.. [orz]');
+                        return;
+                    }
+                    if (this.mode == null || this.mode == '') {
+                        alert('choose a mode plz.. [orz]');
+                        return;
+                    }
+                    var input = this.input;
+                    var result = '';
+                    switch (this.mode) {
+                        case 'unicode2ascii':
+                            {
+                                for (var i = 0; i < input.length; i++)
+                                    result += '&#' + input.charCodeAt(i) + ';';
+                                this.content = result;
+                                document.getElementById('content').focus();
+                            }
+                            break;
+                        case 'ascii2unicode':
+                            {
+                                var code = input.match(/&#(\d+);/g);
+                                for (var i = 0; i < code.length; i++)
+                                    result += String.fromCharCode(code[i].replace(/[&#;]/g, ''));
+                                this.content = result;
+                            }
+                            break;
+                        case 'pwdEncode':
+                            {
+                                var code = input + "{" + this.pwdSalt + "}";
+                                this.content = hex_md5(code);
+                            }
+                            break;
+                    }
+                },
+                generSalt: function() {
+                    this.pwdSalt = "1#2$3%4(5)6@7!poeeww$3%4(5)djjkkldss";
+                },
+                onCopy: function() {
+                    alert("copy sucess")
+                },
+                onError: function() {
+                    alert("copy error")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
