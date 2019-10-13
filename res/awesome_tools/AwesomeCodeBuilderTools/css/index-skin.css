@@ -31,6 +31,10 @@ a {
 
 .toolWindow {
     width: 700px;
-    height: 700px;
+    height: 900px;
     float: right;
+    border: 8px solid darkgreen;
+    background-color: whitesmoke;
+    padding: 8px;
+    margin: 8px;
 }

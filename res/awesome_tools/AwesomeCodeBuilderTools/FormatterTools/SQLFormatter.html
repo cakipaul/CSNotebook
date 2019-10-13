@@ -69,9 +69,17 @@
                                 if (sqlList[i].substr(0, this.LineFeedKeywords[j].length).toLowerCase() == this.LineFeedKeywords[j].toLowerCase())
                                     lineFeed = true;
                             }
-                            if ((lineFeed || sqlList[i].substr(0, 2) == "--") && !isFirst) result += "\n";
-                            result += sqlList[i].trim() + " ";
-                            isFirst = false;
+                            if (lineFeed) {
+                                if (isFirst) result += sqlList[i].trim() + " ";
+                                else result += '\n' + sqlList[i].trim() + " ";
+                                isFirst = false;
+                            } else if (sqlList[i].trim().substr(0, 2) == "--") {
+                                if (isFirst) result += sqlList[i].trim() + "\n";
+                                else result += '\n' + sqlList[i].trim() + "\n";
+                                isFirst = true;
+                            } else {
+                                result += sqlList[i].trim() + " ";
+                            }
                         }
                     }
                     this.content = result;

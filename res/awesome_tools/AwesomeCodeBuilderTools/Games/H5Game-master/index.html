@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AwesomeCodeBuilderTools</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <!-- esprima required only for !!js/function -->
+    <!-- <script src="esprima.js"></script> -->
+    <script src="../../js/js-yaml.min.js"></script>
+    <script src="../../js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/index-skin.css" />
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+    <div id="tools-div">
+        <table>
+            <tr>
+                <td>
+                    <div class="toolcat">H5Games
+                        <ol>
+                            <tool-item v-for="item in H5Games" :tool="item" :key="item.id">
+                                </todo-item>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        Vue.component('tool-item', {
+            props: ['tool'],
+            template: '<div @click="tool.method" class="toolbox">{{ tool.content }}</div>'
+        })
+        var toolsApp = new Vue({
+            el: '#tools-div',
+            data: {
+                H5Games: [{
+                    id: 0,
+                    content: 'Tetris',
+                    method: function() {
+                        // toolsApp.toolUrl = 'Tetris/single/index.html';
+                        window.open("Tetris/single/index.html");
+                    }
+                }, {
+                    id: 1,
+                    content: 'RetroSnaker',
+                    method: function() {
+                        // toolsApp.toolUrl = 'RetroSnaker/index.html';
+                        window.open("RetroSnaker/index.html");
+                    }
+
+                }, {
+                    id: 2,
+                    content: 'Gobang',
+                    method: function() {
+                        // toolsApp.toolUrl = 'Gobang/index.html';
+                        window.open("Gobang/index.html");
+                    }
+
+                }, {
+                    id: 3,
+                    content: 'BlockBreaker',
+                    method: function() {
+                        // toolsApp.toolUrl = 'h5-game-blockBreaker-master/index.html';
+                        window.open("h5-game-blockBreaker-master/index.html");
+                    }
+
+                }, {
+                    id: 4,
+                    content: 'Plants vs Zombies',
+                    method: function() {
+                        // toolsApp.toolUrl = 'h5-game-plantsVSzombies-master/index.html';
+                        window.open("h5-game-plantsVSzombies-master/index.html");
+                    }
+
+                }]
+            }
+        })
+    </script>
+</body>
+
+</html>
