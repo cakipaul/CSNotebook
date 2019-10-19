@@ -49,6 +49,12 @@
                                 </todo-item>
                         </ol>
                     </div>
+                    <div class="toolcat">Links
+                        <ol>
+                            <tool-item v-for="item in BlogRoll" :tool="item" :key="item.id">
+                                </todo-item>
+                        </ol>
+                    </div>
                 </td>
                 <td>
                     <iframe id='tool-window' :src="toolUrl" class='toolWindow'></iframe>
@@ -68,7 +74,7 @@
                 Formatter: [{
                     id: 0,
                     content: 'SQLFormatter',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'FormatterTools/SQLFormatter.html';
                         // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
                     }
@@ -76,21 +82,21 @@
                 CodeSnippet: [{
                     id: 0,
                     content: 'MapKeysConverter',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'CodeSnippet/MapKeysConverter.html';
                         // window.open("CodeSnippet/MapKeysConverter.html");
                     }
                 }, {
                     id: 1,
                     content: 'SwitchMapValue',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'CodeSnippet/SwitchMapValue.html';
                         // window.open("CodeSnippet/SwitchMapValue.html");
                     }
                 }, {
                     id: 2,
                     content: 'TableToBean',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'CodeSnippet/TableToBean.html';
                         // window.open("CodeSnippet/TableToBean.html");
                     }
@@ -98,27 +104,56 @@
                 EncodeDecode: [{
                     id: 0,
                     content: 'Encode&Decode',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'EncodeDecode/EncodeDecode.html';
                         // window.open("EncodeDecode/EncodeDecode.html");
+                    }
+                }, {
+                    id: 1,
+                    content: 'Html Code',
+                    method: function () {
+                        toolsApp.toolUrl = 'http://tool.oschina.net/commons?type=2';
+                        // window.open("http://tool.oschina.net/commons?type=2");
                     }
                 }],
                 Games: [{
                     id: 0,
                     content: 'H5Games',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'Games/H5Game-master/index.html';
                         // window.open("Games/H5Game-master/index.html");
                     }
                 }, {
                     id: 1,
                     content: '2048',
-                    method: function() {
+                    method: function () {
                         toolsApp.toolUrl = 'Games/h5-2048/index.html';
                         // window.open("Games/h5-2048/index.html");
                     }
 
+                }], BlogRoll: [{
+                    id: 0,
+                    content: 'OnlineTools',
+                    method: function () {
+                        toolsApp.toolUrl = 'http://www.bejson.com/ui/compress_img/';
+                        // window.open("http://www.bejson.com/ui/compress_img/");
+                    }
+                }, {
+                    id: 1,
+                    content: 'OSChina Tools',
+                    method: function () {
+                        toolsApp.toolUrl = 'http://tool.oschina.net/';
+                        // window.open("http://tool.oschina.net/");
+                    }
+                }, {
+                    id: 2,
+                    content: 'FontAwesome 4.3.0',
+                    method: function () {
+                        toolsApp.toolUrl = 'http://www.wapadd.cn/icons/awesome/index.htm';
+                        // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
+                    }
                 }]
+
             }
         })
     </script>
