@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>楼上 Menu Builer</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="../js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <link href="https://cdn.bootcss.com/font-awesome/5.10.2/css/all.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../js/js-yaml.min.js"></script>
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+
+    <div id="param-div" class="tool-div">
+        <p style="text-align: center; color: black;font-size: 20px"><b> {{ title }} </b><span :title='helpMessage'
+                v-on:click='popHelp' style='align-self: auto;' class='fa fa-question-circle'></span></p>
+        <table align="center">
+            <tr>
+                <td style="width: 50%">
+                    <label class="input-label">楼 3 菜单</label><input class="input-radiobox" type="radio"
+                        id="lou3-params-mode" name="mode" value="3" v-model="mode" v-on:click='changeMode(3)'>
+                </td>
+                <td style="width: 50%">
+                    <label class="input-label">楼 7 菜单</label><input class="input-radiobox" type="radio"
+                        id="lou7-params-mode" name="mode" value="7" v-model="mode" v-on:click='changeMode(7)'>
+                </td>
+            </tr>
+        </table>
+        <div id='lou3-params' style="display:true">
+            <table>
+                <tr>
+                    <td><label class="input-label">菜单名: </label></td>
+                    <td><input readonly class='input-field' v-model="menuName"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">菜单 ID（数字）:</label></td>
+                    <td><input readonly class='input-field' v-model="menuId3"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">菜单路径:</label></td>
+                    <td><input readonly class='input-field' v-model="pathName"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">父菜单 ID:</label></td>
+                    <td><input readonly class='input-field' v-model="parentMenuId3"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">icon 路径:</label></td>
+                    <td><input readonly class='input-field' v-model="iconPath"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">Module Code:</label></td>
+                    <td><input readonly class='input-field' v-model="moduleCode"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">Function Code:</label></td>
+                    <td><input readonly class='input-field' v-model="functionCode"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">Operation Code:</label></td>
+                    <td><input readonly class='input-field' v-model="operationCode"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">URL:</label></td>
+                    <td><input readonly class='input-field' v-model="urlContent"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">用户权限:</label></td>
+                    <td><input readonly class='input-field' v-model="roleOperation"></td>
+                </tr>
+            </table>
+        </div>
+        <div id='lou7-params' style="display:none">
+            <table>
+                <tr>
+                    <td><label class="input-label">菜单名: </label></td>
+                    <td><input readonly class='input-field' v-model="menuName"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">菜单 ID:</label></td>
+                    <td><input readonly class='input-field' v-model="menuId"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">菜单 ID 路径:</label></td>
+                    <td><input readonly class='input-field' v-model="menuPath"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">菜单名称路径:</label></td>
+                    <td><input readonly class='input-field' v-model="pathName"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">父菜单 ID:</label></td>
+                    <td><input readonly class='input-field' v-model="parentMenuId"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">Module Code:</label></td>
+                    <td><input readonly class='input-field' v-model="moduleCode"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">Function Code:</label></td>
+                    <td><input readonly class='input-field' v-model="functionCode"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">Operation Code:</label></td>
+                    <td><input readonly class='input-field' v-model="operationCode"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">URL:</label></td>
+                    <td><input readonly class='input-field' v-model="urlContent"></td>
+                </tr>
+                <tr>
+                    <td><label class="input-label">用户权限:</label></td>
+                    <td><input readonly class='input-field' v-model="roleOperation"></td>
+                </tr>
+            </table>
+        </div>
+        <p class="input-label">Input params in yaml:</p>
+        <textarea v-model="yamlParam" class="input-textarea yaml">
+                </textarea>
+        <table style="width:495px">
+            <tr>
+                <td align="center" valign="middle"><button class="function-button" @click="showSampleYaml">参考
+                        Yaml</button>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="praseYaml">解析
+                        Yaml</button></td>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="buildMenu">生成菜单
+                        SQL</button>
+                </td>
+            </tr>
+        </table>
+        <div class='result-div'>
+            <div class="toolbar" v-clipboard:copy="content" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                copy</div>
+            <pre class="result-pre"><code v-html="content"></code></pre>
+        </div>
+    </div>
+    <script>
+        var menuBuilder = new Vue({
+            el: '#param-div',
+            data: {
+                title: '菜单生成器',
+                helpMessage: '使用说明: \n1. 选择菜单模式（楼 3 或楼 7）； \n2. 在 Yaml 解析区域输入参数内容，点击 “参考 Yaml” 查看参考的 Yaml；\n3. 点击 “解析 Yaml” 生成参数；\n4. 点击 “生成菜单 SQL” 生成菜单 sql 。',
+                mode: [],
+                menuName: '',
+                menuId: '',//楼7
+                menuPath: '',//楼7
+                pathName: '',//楼7
+                parentMenuId: '',//楼7
+                moduleCode: '',//楼7
+                menuId3: '',//楼3
+                parentMenuId3: '',//楼3
+                iconPath: '',//楼3
+                functionCode: '',
+                operationCode: '',
+                urlContent: '',
+                roleOperation: '',
+                yamlParam: '',
+                content: '',
+                yamlSample: ''
+            },
+            methods: {
+                buildMenu: function () {
+                    this.praseYaml();
+                    var codeResult = new Array;
+                    if (this.mode == 7) {
+                        codeResult.push("-- lou"+this.mode+"菜单【"+this.menuName+"】创建 SQL");
+                        codeResult.push("-- sino_zsk 中的重名 function 会导致 grain_web 中的 function 插入失败，故需要先删除");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_role_resource WHERE RESOURCE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_resources WHERE RESOURCE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.PUB_FUNCTIONS WHERE FUNCTION_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_roles WHERE ROLE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_ROLE_OPERATION WHERE OPERATION_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_URLS WHERE URL_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_OPERATIONS WHERE OPERATION_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_FUNCTIONS WHERE FUNCTION_CODE = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_MENU_STRU WHERE MENU_STRU_ID = '" + this.menuId + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_MENU_ITEM WHERE MENU_ID = '" + this.menuId + "';");
+                        codeResult.push("INSERT INTO `grain_web`.PUB_MENU_ITEM(MENU_ID, MENU_NAME, REQUEST_ACTION, IS_LEAF, MODULE_CODE, FUNCTION_CODE, APP_CODE)");
+                        codeResult.push("VALUES('" + this.menuId + "', '" + this.menuName + "', '" + this.pathName + "', '1', '" + this.moduleCode + "', '" + this.functionCode + "', '-1');");
+                        codeResult.push("INSERT INTO `grain_web`.PUB_MENU_STRU(MENU_STRU_ID, MENU_TYPE_ID, MENU_ID, PARENT_MENU_ID, SEQ, MENU_PATH, PATH_NAME)");
+                        codeResult.push("VALUES('" + this.menuId + "', '1', '" + this.menuId + "', '" + this.parentMenuId + "', 4, '" + this.menuPath + "', '" + this.pathName + "');");
+                        codeResult.push("INSERT INTO `grain_web`.PUB_FUNCTIONS(FUNCTION_CODE, FUNCTION_NAME, MODULE_CODE, SEQ)");
+                        codeResult.push("VALUES('" + this.functionCode + "', '" + this.menuName + "', '" + this.moduleCode + "', 0);");
+                        codeResult.push("INSERT INTO `grain_web`.PUB_OPERATIONS(OPERATION_CODE, OPERATION_NAME, FUNCTION_CODE, OPERATION_TYPE_CODE, IS_DEFAULT, SEQ)");
+                        codeResult.push("VALUES('" + this.operationCode + "', '" + this.menuName + "', '" + this.functionCode + "', '00', '1', 0);");
+                        codeResult.push("INSERT INTO `grain_web`.PUB_URLS(URL_CODE, URL_NAME, URL_CONTENT, OPERATION_CODE, FUNCTION_CODE, SEQ, ACCESS_TYPE)");
+                        codeResult.push("VALUES('" + this.operationCode + "', '" + this.menuName + "', '" + this.urlContent + "', '" + this.operationCode + "', '" + this.functionCode + "', 0, 'http');");
+                        codeResult.push("INSERT INTO `grain_web`.PUB_ROLE_OPERATION VALUES");
+                        var values = '';
+                        var operationRoles = this.roleOperation.split(',');
+                        for (index in operationRoles) {
+                            values += "('" + operationRoles[index] + "', '" + this.functionCode + "'),";
+                        }
+                        codeResult.push(values.substr(0, values.length - 1) + ";");
+                    } else if (this.mode == 3) {
+                        codeResult.push("-- lou"+this.mode+"菜单【"+this.menuName+"】创建 SQL");
+                        codeResult.push("-- grain_web 中的重名 function 会导致 sino_zsk 中的 function 插入失败，故需要先删除");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_ROLE_OPERATION WHERE OPERATION_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_URLS WHERE URL_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_OPERATIONS WHERE OPERATION_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.PUB_FUNCTIONS WHERE FUNCTION_CODE = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_role_resource WHERE RESOURCE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_resources WHERE RESOURCE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.PUB_FUNCTIONS WHERE FUNCTION_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_roles WHERE ROLE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.`PUB_MENU` WHERE ID = '" + this.menuId3 + "';");
+                        codeResult.push("INSERT INTO `sino_zsk`.`pub_menu` ( `ID`, `TEXT`, `TITLE`, `TYPE`, `FUNCTION1`, `TARGET`, `PARENT`, `SEQ`, `OPTIONS`, `FUNCTION2`, `icon`, `APP_CODE`, `is_fixed` ) VALUES");
+                        codeResult.push("( '" + this.menuId3 + "', '" + this.menuName + "', '" + this.menuName + "', '0', '" + this.urlContent + "', '', '" + this.parentMenuId3 + "', '3', '', NULL, '" + this.iconPath + "', 'grainWeb', NULL );");
+                        codeResult.push("INSERT INTO `sino_zsk`.pub_roles (`ROLE_ID`, `ROLE_NAME`, `ROLE_ALIAS`, `CORPORATION_ID`, `IS_SYS`)");
+                        codeResult.push("SELECT '" + this.functionCode + "','"+this.menuName+"','"+this.menuName+"',XT_ZZGXHZDZ_ZZNM,'0' FROM `sino_zsk`.XT_ZZGXHZDZ;");
+                        codeResult.push("INSERT INTO `sino_zsk`.PUB_FUNCTIONS(FUNCTION_ID, FUNCTION_CODE, FUNCTION_NAME, MODULE_ID, IS_SYS)");
+                        codeResult.push("VALUES('" + this.functionCode + "', '" + this.functionCode + "', '" + this.menuName + "', '" + this.moduleCode + "', 0);");
+                        codeResult.push("INSERT INTO `sino_zsk`.pub_resources(`RESOURCE_ID`, `RESOURCE_NAME`, `RESOURCE_ALIAS`, `URL_NAMES`, `SECURITY_LEVEL`, `FUNCTION_ID`, `IS_DEFAULT`, `IS_AUDIT`) VALUES ");
+                        codeResult.push("('" + this.functionCode + "', '" + this.menuName + "', '" + this.menuName + "', '" + this.urlContent + "', '0', '" + this.functionCode + "', '0','0');");
+                        codeResult.push("INSERT INTO `sino_zsk`.pub_role_resource(`ROLE_ID`, `RESOURCE_ID`) VALUES");
+                        var values = '';
+                        var operationRoles = this.roleOperation.split(',');
+                        for (index in operationRoles) {
+                            values += "('" + operationRoles[index] + "', '" + this.functionCode + "'),";
+                        }
+                        codeResult.push(values.substr(0, values.length - 1) + ";");
+                    } else {
+
+                    }
+
+                    this.content = '';
+                    for (var s in codeResult) {
+                        this.content += codeResult[s] + "\n";
+                    }
+                },
+                praseYaml: function () {
+                    //未选择模式提醒
+                    if (this.yamlSample == '') {
+                        alert('请先选择菜单模式（楼3 or 楼7）... Orz');
+                        return;
+                    }
+                    let jsonStr;
+                    try {
+                        jsonStr = jsyaml.load(menuBuilder.yamlParam);
+                        console.log(jsonStr);
+                        if (typeof jsonStr != 'object' || !jsonStr) {
+                            alert("Illegal Yaml!");
+                            return;
+                        }
+                    } catch (e) {
+                        alert('Illegal Yaml!');
+                        return;
+                    }
+                    if (jsonStr.menuName == null) jsonStr.menuName = '';
+                    this.menuName = jsonStr.menuName;
+                    if (jsonStr.menuId == null) jsonStr.menuId = '';
+                    this.menuId = jsonStr.menuId;
+                    if (jsonStr.menuId3 == null) jsonStr.menuId3 = '';
+                    this.menuId3 = jsonStr.menuId3;
+                    if (jsonStr.pathName == null) jsonStr.pathName = '';
+                    this.pathName = jsonStr.pathName;
+                    if (jsonStr.menuPath == null) jsonStr.menuPath = '';
+                    this.menuPath = jsonStr.menuPath;
+                    if (jsonStr.iconPath == null) jsonStr.iconPath = '';
+                    this.iconPath = jsonStr.iconPath;
+                    if (jsonStr.parentMenuId == null) jsonStr.parentMenuId = '';
+                    this.parentMenuId = jsonStr.parentMenuId;
+                    if (jsonStr.parentMenuId3 == null) jsonStr.parentMenuId3 = '';
+                    this.parentMenuId3 = jsonStr.parentMenuId3;
+                    if (jsonStr.moduleCode == null) jsonStr.moduleCode = '';
+                    this.moduleCode = jsonStr.moduleCode;
+                    if (jsonStr.functionCode == null) jsonStr.functionCode = this.menuId;//为空时，与 menuId 同名
+                    this.functionCode = jsonStr.functionCode;
+                    if (jsonStr.operationCode == null) jsonStr.operationCode = this.functionCode;//为空时，与 functionCode 同名
+                    this.operationCode = jsonStr.operationCode;
+                    if (jsonStr.urlContent == null) jsonStr.urlContent = '';
+                    this.urlContent = jsonStr.urlContent;
+                    if (jsonStr.roleOperation == null) jsonStr.roleOperation = '';
+                    this.roleOperation = jsonStr.roleOperation;
+                },
+                popHelp: function () {
+                    alert(this.helpMessage);
+                },
+                changeMode: function (e) {
+                    var mode = this.mode;
+                    console.log(e);
+                    if (e == 3) {
+                        //楼3菜单参数
+                        this.yamlParam = "menuName: \nmenuId3: \npathName: \nparentMenuId3: \niconPath: \nmoduleCode: \nfunctionCode: \n#operationCode留空，则默认与functionCode同名\noperationCode: \nurlContent: \n#role之间使用逗号进行分隔\nroleOperation: ";
+                        this.yamlSample = "menuName: 第三方检验\nmenuId3: 601104\npathName: service/znzy/jygl/dsfjyxx\nparentMenuId3: 6011\niconPath: sfk/third/icon2.png\nmoduleCode: ZGSCCZLGL\nfunctionCode: ZNZY_ZLGL_DSFJYXX\n#operationCode留空，则默认与functionCode同名\noperationCode: \nurlContent: service/znzy/jygl/dsfjyxx\n#role之间使用逗号进行分隔\nroleOperation: SUPERADMIN,SYSADMIN,ZNZY_ZLGL_DSFJYXX";
+                        document.getElementById("lou3-params").style.display = '';
+                        document.getElementById("lou7-params").style.display = 'none';
+                    } else {
+                        //楼7菜单参数
+                        this.yamlParam = "menuName: \nmenuId: \npathName: \nmenuPath: \nparentMenuId: \nmoduleCode: \n#functionCode、moduleCode与operationCode留空，则默认与menuId同名\nfunctionCode: \noperationCode: \nurlContent: \n#role之间使用逗号进行分隔\nroleOperation: ";
+                        this.yamlSample = "menuName: 第三方检验\nmenuId: ZNZY_ZLGL_DSFJYXX\npathName: 智能作业#称重计量#称重记录\nmenuPath: ZNZY#ZNZY_CZJL#ZNZY_CZJL_CZJL\nparentMenuId: ZNZY_ZLGL\nmoduleCode: ZGSCCZLGL\n#functionCode与operationCode留空，则默认与menuId同名\nfunctionCode: \noperationCode: \nurlContent: service/znzy/jygl/dsfjyxx\n#role之间使用逗号进行分隔\nroleOperation: SUPERADMIN,SYSADMIN,ZNZY_ZLGL_DSFJYXX";
+                        document.getElementById("lou7-params").style.display = '';
+                        document.getElementById("lou3-params").style.display = 'none';
+                    }
+                },
+                showSampleYaml: function () {
+                    //未选择模式提醒
+                    if (this.yamlSample == '') {
+                        alert('chose a mode first plz... Orz');
+                        return;
+                    }
+                    this.yamlParam = this.yamlSample;
+                    this.praseYaml();
+                },
+                onCopy: function () {
+                    alert("copy sucess")
+                },
+                onError: function () {
+                    alert("copy error")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

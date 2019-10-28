@@ -144,11 +144,11 @@
 
                     toStringMethod.push('@Override');
                     toStringMethod.push('public String toString() {');
-                    toStringMethod.push('\treturn "' + this.className + ' [' + params[0] + '=" + ' + params[0]);
+                    toStringMethod.push('\treturn "{\\"' + this.className + '\\": {\\"' + params[0] + '\\": \\""+' + params[0]+'+"\\""');
                     for (var i = 1; i < params.length; i++) {
-                        toStringMethod.push('\t + ", ' + params[i] + '=" + ' + params[i]);
+                        toStringMethod.push('\t +" ,\\"' + params[i] + '\\": \\""+' + params[i]+'+"\\""');
                     }
-                    toStringMethod.push('\t+ "]";');
+                    toStringMethod.push('\t+ "}}";');
                     toStringMethod.push('}');
 
                     this.toString = '';

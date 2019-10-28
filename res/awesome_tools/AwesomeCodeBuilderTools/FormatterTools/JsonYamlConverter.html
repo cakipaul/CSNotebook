@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON YAML Converter</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="../js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <script src="../js/js-yaml.min.js"></script>
+
+
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+
+    <div id="param-div" class="tool-div">
+        <p style="text-align: center; color: black;font-size: 20px"><b> {{ title }} </b></p>
+        <textarea v-model="input" class="input-textarea">
+                </textarea>
+        <table style="width:495px">
+            <tr>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="json2Yaml">TO
+                        YAML</button></td>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="yaml2Json">TO
+                        JSON</button></td>
+            </tr>
+        </table>
+        <div class='result-div'>
+            <div class="toolbar" v-clipboard:copy="content" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                copy</div>
+            <pre class="result-pre"><code v-html="content"></code></pre>
+        </div>
+    </div>
+    <script>
+        var converter = new Vue({
+            el: '#param-div',
+            data: {
+                title: 'JSON YAML Converter',
+                input: 'Input here',
+                content: ''
+            },
+            methods: {
+                json2Yaml: function () {
+                    let jsonObj;
+                    try {
+                        jsonObj = JSON.parse(this.input);
+                        if (typeof jsonObj != 'object' || !jsonObj) {
+                            Alert("Illegal Input Format!");
+                            return;
+                        }
+                        this.content = jsyaml.dump(jsonObj);
+                    } catch (e) {
+                        try {
+                            this.content = jsyaml.dump(jsyaml.load(this.input));
+                            return;
+                        } catch (e) {
+                            console.log(e);
+                            alert('Illegal Input Format!');
+                            return;
+                        }
+                    }
+                },
+                yaml2Json: function () {
+                    let jsonStr;
+                    try {
+                        jsonStr = jsyaml.load(this.input);
+                        if (typeof jsonStr != 'object' || !jsonStr) {
+                            Alert("Illegal Input Format!");
+                            return;
+                        }
+                        this.content = JSON.stringify(jsonStr, null, 0);
+                    } catch (e) {
+                        try {
+                            this.content = JSON.stringify(this.input, null, 0);
+                            return;
+                        } catch (e) {
+                            console.log(e);
+                            alert('Illegal Input Format!');
+                            return;
+                        }
+                    }
+                },
+                onCopy: function () {
+                    alert("copy sucess")
+                },
+                onError: function () {
+                    alert("copy error")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

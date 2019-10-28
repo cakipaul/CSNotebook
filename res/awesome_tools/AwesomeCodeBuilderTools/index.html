@@ -23,41 +23,50 @@
         <table>
             <tr>
                 <td>
-                    <div class="toolcat">Formatter
-                        <ol>
-                            <tool-item v-for="item in Formatter" :tool="item" :key="item.id">
-                                </todo-item>
-                        </ol>
-                    </div>
+                    <div style="overflow-y:auto" :style="{'width':toolCatWidth,'height':toolCatHeight }">
+                        <div class=" toolcat">Formatter
+                            <ol>
+                                <tool-item v-for="item in Formatter" :tool="item" :key="item.id">
+                                </tool-item>
+                            </ol>
+                        </div>
 
-                    <div class="toolcat">CodeSnippet
-                        <ol>
-                            <tool-item v-for="item in CodeSnippet" :tool="item" :key="item.id">
-                                </todo-item>
-                        </ol>
-                    </div>
+                        <div class="toolcat">CodeSnippet
+                            <ol>
+                                <tool-item v-for="item in CodeSnippet" :tool="item" :key="item.id">
+                                </tool-item>
+                            </ol>
+                        </div>
 
-                    <div class="toolcat">Encode&amp;Decode
-                        <ol>
-                            <tool-item v-for="item in EncodeDecode" :tool="item" :key="item.id">
-                                </todo-item>
-                        </ol>
-                    </div>
-                    <div class="toolcat">Games
-                        <ol>
-                            <tool-item v-for="item in Games" :tool="item" :key="item.id">
-                                </todo-item>
-                        </ol>
-                    </div>
-                    <div class="toolcat">Links
-                        <ol>
-                            <tool-item v-for="item in BlogRoll" :tool="item" :key="item.id">
-                                </todo-item>
-                        </ol>
+                        <div class="toolcat">Encode&amp;Decode
+                            <ol>
+                                <tool-item v-for="item in EncodeDecode" :tool="item" :key="item.id">
+                                </tool-item>
+                            </ol>
+                        </div>
+                        <div class="toolcat">Games
+                            <ol>
+                                <tool-item v-for="item in Games" :tool="item" :key="item.id">
+                                </tool-item>
+                            </ol>
+                        </div>
+                        <div class="toolcat">Others
+                            <ol>
+                                <tool-item v-for="item in Others" :tool="item" :key="item.id">
+                                </tool-item>
+                            </ol>
+                        </div>
+                        <div class="toolcat">Links
+                            <ol>
+                                <tool-item v-for="item in BlogRoll" :tool="item" :key="item.id">
+                                </tool-item>
+                            </ol>
+                        </div>
                     </div>
                 </td>
                 <td>
-                    <iframe id='tool-window' :src="toolUrl" class='toolWindow'></iframe>
+                    <iframe id='tool-window' :src="toolUrl" class='toolWindow'
+                        :style="{ 'width':toolWindowWidth,'height':toolWindowHeight }"></iframe>
                 </td>
             </tr>
         </table>
@@ -69,92 +78,142 @@
         })
         var toolsApp = new Vue({
             el: '#tools-div',
-            data: {
-                toolUrl: '',
-                Formatter: [{
-                    id: 0,
-                    content: 'SQLFormatter',
-                    method: function () {
-                        toolsApp.toolUrl = 'FormatterTools/SQLFormatter.html';
-                        // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                    }
-                }],
-                CodeSnippet: [{
-                    id: 0,
-                    content: 'MapKeysConverter',
-                    method: function () {
-                        toolsApp.toolUrl = 'CodeSnippet/MapKeysConverter.html';
-                        // window.open("CodeSnippet/MapKeysConverter.html");
-                    }
-                }, {
-                    id: 1,
-                    content: 'SwitchMapValue',
-                    method: function () {
-                        toolsApp.toolUrl = 'CodeSnippet/SwitchMapValue.html';
-                        // window.open("CodeSnippet/SwitchMapValue.html");
-                    }
-                }, {
-                    id: 2,
-                    content: 'TableToBean',
-                    method: function () {
-                        toolsApp.toolUrl = 'CodeSnippet/TableToBean.html';
-                        // window.open("CodeSnippet/TableToBean.html");
-                    }
-                }],
-                EncodeDecode: [{
-                    id: 0,
-                    content: 'Encode&Decode',
-                    method: function () {
-                        toolsApp.toolUrl = 'EncodeDecode/EncodeDecode.html';
-                        // window.open("EncodeDecode/EncodeDecode.html");
-                    }
-                }, {
-                    id: 1,
-                    content: 'Html Code',
-                    method: function () {
-                        toolsApp.toolUrl = 'http://tool.oschina.net/commons?type=2';
-                        // window.open("http://tool.oschina.net/commons?type=2");
-                    }
-                }],
-                Games: [{
-                    id: 0,
-                    content: 'H5Games',
-                    method: function () {
-                        toolsApp.toolUrl = 'Games/H5Game-master/index.html';
-                        // window.open("Games/H5Game-master/index.html");
-                    }
-                }, {
-                    id: 1,
-                    content: '2048',
-                    method: function () {
-                        toolsApp.toolUrl = 'Games/h5-2048/index.html';
-                        // window.open("Games/h5-2048/index.html");
-                    }
+            data() {
+                return {
+                    toolUrl: '',
+                    toolWindowWidth: window.innerWidth - 350 + 'px',
+                    toolWindowHeight: window.innerHeight - 100 + 'px',
+                    toolCatWidth: '270px',
+                    toolCatHeight: window.innerHeight - 100 + 'px',
+                    Formatter: [{
+                        id: 0,
+                        content: 'SQLFormatter',
+                        method: function () {
+                            toolsApp.toolUrl = 'FormatterTools/SQLFormatter.html';
+                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 1,
+                        content: 'JSONFormatter',
+                        method: function () {
+                            toolsApp.toolUrl = 'FormatterTools/JsonFormatter.html';
+                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 2,
+                        content: 'JSON & YAML',
+                        method: function () {
+                            toolsApp.toolUrl = 'FormatterTools/JsonYamlConverter.html';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    }],
+                    CodeSnippet: [{
+                        id: 0,
+                        content: 'MapKeysConverter',
+                        method: function () {
+                            toolsApp.toolUrl = 'CodeSnippet/MapKeysConverter.html';
+                            // window.open("CodeSnippet/MapKeysConverter.html");
+                        }
+                    }, {
+                        id: 1,
+                        content: 'SwitchMapValue',
+                        method: function () {
+                            toolsApp.toolUrl = 'CodeSnippet/SwitchMapValue.html';
+                            // window.open("CodeSnippet/SwitchMapValue.html");
+                        }
+                    }, {
+                        id: 2,
+                        content: 'TableToBean',
+                        method: function () {
+                            toolsApp.toolUrl = 'CodeSnippet/TableToBean.html';
+                            // window.open("CodeSnippet/TableToBean.html");
+                        }
+                    }, {
+                        id: 3,
+                        content: 'LouShangMenu',
+                        method: function () {
+                            toolsApp.toolUrl = 'CodeSnippet/LouShangMenuGenerator.html';
+                            // window.open("CodeSnippet/LouShangMenuGenerator.html");
+                        }
+                    }],
+                    EncodeDecode: [{
+                        id: 0,
+                        content: 'Encode & Decode',
+                        method: function () {
+                            toolsApp.toolUrl = 'EncodeDecode/EncodeDecode.html';
+                            // window.open("EncodeDecode/EncodeDecode.html");
+                        }
+                    }, {
+                        id: 1,
+                        content: 'Html Code',
+                        method: function () {
+                            toolsApp.toolUrl = 'http://tool.oschina.net/commons?type=2';
+                            // window.open("http://tool.oschina.net/commons?type=2");
+                        }
+                    }],
+                    Others: [{
+                        id: 0,
+                        content: 'Timer',
+                        method: function () {
+                            toolsApp.toolUrl = 'Others/timer.html';
+                            // window.open("Others/timer.html");
+                        }
+                    }],
+                    Games: [{
+                        id: 0,
+                        content: 'H5Games',
+                        method: function () {
+                            toolsApp.toolUrl = 'Games/H5Game-master/index.html';
+                            // window.open("Games/H5Game-master/index.html");
+                        }
+                    }, {
+                        id: 1,
+                        content: '2048',
+                        method: function () {
+                            toolsApp.toolUrl = 'Games/h5-2048/index.html';
+                            // window.open("Games/h5-2048/index.html");
+                        }
 
-                }], BlogRoll: [{
-                    id: 0,
-                    content: 'OnlineTools',
-                    method: function () {
-                        toolsApp.toolUrl = 'http://www.bejson.com/ui/compress_img/';
-                        // window.open("http://www.bejson.com/ui/compress_img/");
-                    }
-                }, {
-                    id: 1,
-                    content: 'OSChina Tools',
-                    method: function () {
-                        toolsApp.toolUrl = 'http://tool.oschina.net/';
-                        // window.open("http://tool.oschina.net/");
-                    }
-                }, {
-                    id: 2,
-                    content: 'FontAwesome 4.3.0',
-                    method: function () {
-                        toolsApp.toolUrl = 'http://www.wapadd.cn/icons/awesome/index.htm';
-                        // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
-                    }
-                }]
-
-            }
+                    }], BlogRoll: [{
+                        id: 0,
+                        content: 'OnlineTools',
+                        method: function () {
+                            toolsApp.toolUrl = 'http://www.bejson.com/ui/compress_img/';
+                            // window.open("http://www.bejson.com/ui/compress_img/");
+                        }
+                    }, {
+                        id: 1,
+                        content: 'OSChina Tools',
+                        method: function () {
+                            toolsApp.toolUrl = 'http://tool.oschina.net/';
+                            // window.open("http://tool.oschina.net/");
+                        }
+                    }, {
+                        id: 2,
+                        content: 'FontAwesome 4.3.0',
+                        method: function () {
+                            toolsApp.toolUrl = 'http://www.wapadd.cn/icons/awesome/index.htm';
+                            // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
+                        }
+                    }]
+                }
+            },
+          
+            mounted() {
+                const _this = this;
+                window.onresize = () => {
+                    return (() => {
+                        _this.toolWindowHeight = window.innerHeight - 100 + 'px';
+                        _this.toolWindowWidth = window.innerWidth - 350 + 'px';
+                        console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
+                        _this.toolCatHeight = window.innerHeight - 100 + 'px';
+                        _this.toolCatWidth = '270px';
+                    })()
+                }
+            },
+             
         })
     </script>
 </body>

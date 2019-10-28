@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Formatter</title>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="../js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <script src="../js/js-yaml.min.js"></script>
+
+
+</head>
+
+<body>
+    <!--[if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif]-->
+
+    <div id="param-div" class="tool-div">
+        <p style="text-align: center; color: black;font-size: 20px"><b> {{ title }} </b></p>
+        <textarea v-model="json" class="input-textarea">
+                </textarea>
+        <table style="width:495px">
+            <tr>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="formatJSON">Format
+                        JSON</button></td>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="compressJSON">Compress
+                        JSON</button></td>
+                <td align="center" valign="middle"><button class="function-button" v-on:click="toCode">TO Code
+                        String</button></td>
+            </tr>
+        </table>
+        <div class='result-div'>
+            <div class="toolbar" v-clipboard:copy="content" v-clipboard:success="onCopy" v-clipboard:error="onError">
+                copy</div>
+            <pre class="result-pre"><code v-html="content"></code></pre>
+        </div>
+    </div>
+    <script>
+        var converter = new Vue({
+            el: '#param-div',
+            data: {
+                title: 'JSON Formatter',
+                json: 'Input JSON here',
+                content: ''
+            },
+            methods: {
+                formatJSON: function () {
+                    try {
+                        jsonStr = JSON.stringify(this.json, null, 0).replace(/\\n/g, '\n').replace(/\\/g, '');
+                        console.log(jsonStr);
+                        this.content = jsonStr.substring(1,jsonStr.length-1);//去除引号
+                    } catch (e) {
+                        Alert('illeagl Json!');
+                        console.log(e);
+                    }
+                },
+                compressJSON: function () {
+                    try {
+                        jsonStr = JSON.stringify(this.json, null, 0).replace(/\\n/g, '\n').replace(/\\/g, '').replace(/\n/g,'').replace(/ /g, '');//注意消除次序;
+                        console.log(jsonStr);
+                        this.content = jsonStr.substring(1,jsonStr.length-1);//去除引号
+                        return;
+                    } catch (e) {
+                        console.log(e);
+                        alert('Illegal Json!');
+                        return;
+
+                    }
+                },
+                toCode: function () {
+                    try {
+                        this.content = JSON.stringify(this.json).replace(/ /g, '');
+                    } catch (e) {
+                        Alert('illeagl Json!');
+                        console.log(e);
+                    }
+                },
+                onCopy: function () {
+                    alert("copy sucess")
+                },
+                onError: function () {
+                    alert("copy error")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
