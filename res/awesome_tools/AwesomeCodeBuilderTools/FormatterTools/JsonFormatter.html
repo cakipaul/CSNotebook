@@ -8,9 +8,9 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- 生产环境版本，优化了尺寸和速度 -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-    <script src="../js/vue-clipboard.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
-    <script src="../js/js-yaml.min.js"></script>
+    <script src="../assets/js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/css/skin.css" />
+    <script src="../assets/js/js-yaml.min.js"></script>
 
 
 </head>
@@ -59,7 +59,7 @@
                 },
                 compressJSON: function () {
                     try {
-                        jsonStr = JSON.stringify(this.json, null, 0).replace(/\\n/g, '\n').replace(/\\/g, '').replace(/\n/g,'').replace(/ /g, '');//注意消除次序;
+                        jsonStr = JSON.stringify(this.json, null, 0).replace(/\\n/g, '\n').replace(/\\/g, '').replace(/\n/g,'');//注意消除次序;
                         console.log(jsonStr);
                         this.content = jsonStr.substring(1,jsonStr.length-1);//去除引号
                         return;

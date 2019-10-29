@@ -8,11 +8,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- 生产环境版本，优化了尺寸和速度 -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
-    <script src="../js/vue-clipboard.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../css/skin.css" />
+    <script src="../assets/js/vue-clipboard.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../assets/css/skin.css" />
     <link href="https://cdn.bootcss.com/font-awesome/5.10.2/css/all.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../js/js-yaml.min.js"></script>
+    <script src="../assets/js/js-yaml.min.js"></script>
 </head>
 
 <body>
@@ -170,13 +170,14 @@
                     this.praseYaml();
                     var codeResult = new Array;
                     if (this.mode == 7) {
-                        codeResult.push("-- lou"+this.mode+"菜单【"+this.menuName+"】创建 SQL");
+                        codeResult.push("-- lou" + this.mode + "菜单【" + this.menuName + "】创建 SQL");
                         codeResult.push("-- sino_zsk 中的重名 function 会导致 grain_web 中的 function 插入失败，故需要先删除");
                         codeResult.push("DELETE FROM `sino_zsk`.pub_role_resource WHERE RESOURCE_ID = '" + this.functionCode + "';");
                         codeResult.push("DELETE FROM `sino_zsk`.pub_resources WHERE RESOURCE_ID = '" + this.functionCode + "';");
                         codeResult.push("DELETE FROM `sino_zsk`.PUB_FUNCTIONS WHERE FUNCTION_ID = '" + this.functionCode + "';");
-                        codeResult.push("DELETE FROM `sino_zsk`.pub_roles WHERE ROLE_ID = '" + this.functionCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_ROLE_OPERATION WHERE OPERATION_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.pub_roles WHERE ROLE_ID = '" + this.functionCode + "';");
+                        codeResult.push("DELETE FROM `sino_zsk`.pub_roles WHERE ROLE_ID = '" + this.functionCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_URLS WHERE URL_CODE = '" + this.operationCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_OPERATIONS WHERE OPERATION_CODE = '" + this.operationCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_FUNCTIONS WHERE FUNCTION_CODE = '" + this.functionCode + "';");
@@ -192,6 +193,9 @@
                         codeResult.push("VALUES('" + this.operationCode + "', '" + this.menuName + "', '" + this.functionCode + "', '00', '1', 0);");
                         codeResult.push("INSERT INTO `grain_web`.PUB_URLS(URL_CODE, URL_NAME, URL_CONTENT, OPERATION_CODE, FUNCTION_CODE, SEQ, ACCESS_TYPE)");
                         codeResult.push("VALUES('" + this.operationCode + "', '" + this.menuName + "', '" + this.urlContent + "', '" + this.operationCode + "', '" + this.functionCode + "', 0, 'http');");
+                        codeResult.push("-- 角色目前存在 sino_zsk 中");
+                        codeResult.push("INSERT INTO `sino_zsk`.pub_roles (`ROLE_ID`, `ROLE_NAME`, `ROLE_ALIAS`, `CORPORATION_ID`, `IS_SYS`)");
+                        codeResult.push("SELECT '" + this.functionCode + "','" + this.menuName + "','" + this.menuName + "',XT_ZZGXHZDZ_ZZNM,'0' FROM `sino_zsk`.XT_ZZGXHZDZ;");
                         codeResult.push("INSERT INTO `grain_web`.PUB_ROLE_OPERATION VALUES");
                         var values = '';
                         var operationRoles = this.roleOperation.split(',');
@@ -200,9 +204,10 @@
                         }
                         codeResult.push(values.substr(0, values.length - 1) + ";");
                     } else if (this.mode == 3) {
-                        codeResult.push("-- lou"+this.mode+"菜单【"+this.menuName+"】创建 SQL");
+                        codeResult.push("-- lou" + this.mode + "菜单【" + this.menuName + "】创建 SQL");
                         codeResult.push("-- grain_web 中的重名 function 会导致 sino_zsk 中的 function 插入失败，故需要先删除");
                         codeResult.push("DELETE FROM `grain_web`.PUB_ROLE_OPERATION WHERE OPERATION_CODE = '" + this.operationCode + "';");
+                        codeResult.push("DELETE FROM `grain_web`.pub_roles WHERE ROLE_ID = '" + this.functionCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_URLS WHERE URL_CODE = '" + this.operationCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_OPERATIONS WHERE OPERATION_CODE = '" + this.operationCode + "';");
                         codeResult.push("DELETE FROM `grain_web`.PUB_FUNCTIONS WHERE FUNCTION_CODE = '" + this.functionCode + "';");
@@ -214,7 +219,7 @@
                         codeResult.push("INSERT INTO `sino_zsk`.`pub_menu` ( `ID`, `TEXT`, `TITLE`, `TYPE`, `FUNCTION1`, `TARGET`, `PARENT`, `SEQ`, `OPTIONS`, `FUNCTION2`, `icon`, `APP_CODE`, `is_fixed` ) VALUES");
                         codeResult.push("( '" + this.menuId3 + "', '" + this.menuName + "', '" + this.menuName + "', '0', '" + this.urlContent + "', '', '" + this.parentMenuId3 + "', '3', '', NULL, '" + this.iconPath + "', 'grainWeb', NULL );");
                         codeResult.push("INSERT INTO `sino_zsk`.pub_roles (`ROLE_ID`, `ROLE_NAME`, `ROLE_ALIAS`, `CORPORATION_ID`, `IS_SYS`)");
-                        codeResult.push("SELECT '" + this.functionCode + "','"+this.menuName+"','"+this.menuName+"',XT_ZZGXHZDZ_ZZNM,'0' FROM `sino_zsk`.XT_ZZGXHZDZ;");
+                        codeResult.push("SELECT '" + this.functionCode + "','" + this.menuName + "','" + this.menuName + "',XT_ZZGXHZDZ_ZZNM,'0' FROM `sino_zsk`.XT_ZZGXHZDZ;");
                         codeResult.push("INSERT INTO `sino_zsk`.PUB_FUNCTIONS(FUNCTION_ID, FUNCTION_CODE, FUNCTION_NAME, MODULE_ID, IS_SYS)");
                         codeResult.push("VALUES('" + this.functionCode + "', '" + this.functionCode + "', '" + this.menuName + "', '" + this.moduleCode + "', 0);");
                         codeResult.push("INSERT INTO `sino_zsk`.pub_resources(`RESOURCE_ID`, `RESOURCE_NAME`, `RESOURCE_ALIAS`, `URL_NAMES`, `SECURITY_LEVEL`, `FUNCTION_ID`, `IS_DEFAULT`, `IS_AUDIT`) VALUES ");
@@ -295,7 +300,7 @@
                     } else {
                         //楼7菜单参数
                         this.yamlParam = "menuName: \nmenuId: \npathName: \nmenuPath: \nparentMenuId: \nmoduleCode: \n#functionCode、moduleCode与operationCode留空，则默认与menuId同名\nfunctionCode: \noperationCode: \nurlContent: \n#role之间使用逗号进行分隔\nroleOperation: ";
-                        this.yamlSample = "menuName: 第三方检验\nmenuId: ZNZY_ZLGL_DSFJYXX\npathName: 智能作业#称重计量#称重记录\nmenuPath: ZNZY#ZNZY_CZJL#ZNZY_CZJL_CZJL\nparentMenuId: ZNZY_ZLGL\nmoduleCode: ZGSCCZLGL\n#functionCode与operationCode留空，则默认与menuId同名\nfunctionCode: \noperationCode: \nurlContent: service/znzy/jygl/dsfjyxx\n#role之间使用逗号进行分隔\nroleOperation: SUPERADMIN,SYSADMIN,ZNZY_ZLGL_DSFJYXX";
+                        this.yamlSample = "menuName: 第三方检验\nmenuId: ZNZY_ZLGL_DSFJYXX\npathName: 智能作业#质量管理#第三方检验\nmenuPath: ZNZY#ZNZY_ZLGL#ZNZY_ZLGL_DSFJYXX\nparentMenuId: ZNZY_ZLGL\nmoduleCode: ZGSCCZLGL\n#functionCode与operationCode留空，则默认与menuId同名\nfunctionCode: \noperationCode: \nurlContent: service/znzy/jygl/dsfjyxx\n#role之间使用逗号进行分隔\nroleOperation: SUPERADMIN,SYSADMIN,ZNZY_ZLGL_DSFJYXX";
                         document.getElementById("lou7-params").style.display = '';
                         document.getElementById("lou3-params").style.display = 'none';
                     }
