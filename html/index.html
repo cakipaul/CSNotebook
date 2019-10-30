@@ -11,9 +11,11 @@
     <style>
         .main-div {
             text-align: center;
+            vertical-align:middle;
+            display:table-cell;
+
             background-color: darkgreen;
         }
-
         
         .function-button {
             font-size: 1.5em;
@@ -53,7 +55,7 @@
 <body>
         <div id='main-div'>
                 <div :style="{ 'width':windowWidth,'height':windowHeight }" class="main-div">
-                    <div style="position: absolute;top: 30%;left: 50%;margin: -5% -13%;">
+                    <div style="position: relative;display:inline-block; ">
                         <p class="title">&lt;/&gt;</p>
                         <p class="content">just a demo yet...</p>
                         <button class="function-button"
