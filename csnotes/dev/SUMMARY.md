@@ -1,23 +1,23 @@
 # Summary
 
-* [本书首页](README.md)
+* [本书首页](/csnotes/dev/README.md)
 
 ## Git-SVN-Firefly-TFS
 
-* [Git](Git_SVN_Firefly_TFS/git1.md)
-* [Firefly](Git_SVN_Firefly_TFS/firefly1.md)
+* [Git](/csnotes/dev/Git_SVN_Firefly_TFS/git1.md)
+* [Firefly](/csnotes/dev/Git_SVN_Firefly_TFS/firefly1.md)
 
 ## CI/CD
 
-* [CI/CD](CI_CD/ci-cd1.md)
-* [GitLab-Runner](CI_CD/gitlab-runner1.md)
-* [Jenkins](CI_CD/jenkins1.md)
+* [CI/CD](/csnotes/dev/CI_CD/ci-cd1.md)
+* [GitLab-Runner](/csnotes/dev/CI_CD/gitlab-runner1.md)
+* [Jenkins](/csnotes/dev/CI_CD/jenkins1.md)
 
 ## IDE
 
-* [VSCode快捷键](IDE/vscode1.md)
+* [VSCode快捷键](/csnotes/dev/IDE/vscode1.md)
 
 ## 参考资源
 
-* [分类链接](res/分类链接.md)
-* [分类链接](res/firefly.md)
+* [分类链接](/csnotes/dev/res/分类链接.md)
+* [分类链接](/csnotes/dev/res/firefly.md)

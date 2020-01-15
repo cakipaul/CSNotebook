@@ -1,32 +1,32 @@
 # Summary
 
-* [本书首页](README.md)
+* [本书首页](/csnotes/web/README.md)
 
 ## Net
 
-* [OSI-计算机网络体系结构](Net/osi1.md)
-* [物理层](Net/osi2.md)
-* [数据链路层](Net/osi3.md)
-* [网络层](Net/osi4.md)
-* [传输层](Net/osi5.md)
-* [应用层](Net/osi6.md)
-* [TCP/IP](Net/tcp-ip1.md)
-* [TSL/SSL](Net/tsl-ssl1.md)
+* [OSI-计算机网络体系结构](/csnotes/web/Net/osi1.md)
+* [物理层](/csnotes/web/Net/osi2.md)
+* [数据链路层](/csnotes/web/Net/osi3.md)
+* [网络层](/csnotes/web/Net/osi4.md)
+* [传输层](/csnotes/web/Net/osi5.md)
+* [应用层](/csnotes/web/Net/osi6.md)
+* [TCP/IP](/csnotes/web/Net/tcp-ip1.md)
+* [TSL/SSL](/csnotes/web/Net/tsl-ssl1.md)
 
 ## Server
 
-* [中间件](Server/middleware1.md)
-* [JBoss](Server/jboss1.md)
-* [Apache](Server/apache1.md)
-* [Nginx](Server/nginx1.md)
-* [Caddy](Server/caddy1.md)
+* [中间件](/csnotes/web/Server/middleware1.md)
+* [JBoss](/csnotes/web/Server/jboss1.md)
+* [Apache](/csnotes/web/Server/apache1.md)
+* [Nginx](/csnotes/web/Server/nginx1.md)
+* [Caddy](/csnotes/web/Server/caddy1.md)
 
 ## APP
 
-* [Http](APP/http1.md)
-* [SSH](APP/ssh1.md)
-* [Mail](APP/mail1.md)
+* [Http](/csnotes/web/APP/http1.md)
+* [SSH](/csnotes/web/APP/ssh1.md)
+* [Mail](/csnotes/web/APP/mail1.md)
 
 ## 参考资源
 
-* [分类链接](参考资源/分类链接.md)
+* [分类链接](/csnotes/web/参考资源/分类链接.md)
