@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+<link rel="stylesheet" href="editormd/css/editormd.preview.css" />
+
+<div id="md-to-html">
+    <!-- Server-side output Markdown text -->
+    <textarea id='md-content' style="display:none;">### Hello world!</textarea>
+</div>
+
+<div id="test-markdown-view">
+    <!-- Server-side output Markdown text -->
+    <textarea style="display:none;">### Hello world!</textarea>
+</div>
+
+<div id="mdEditor">
+    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+    <textarea style="display:none;">### Hello Editor.md !</textarea>
+</div>
+
+
+<script src="js/jquery.min.js"></script>
+<script src="editor.md/editormd.js"></script>
+<script src="editor.md/lib/marked.min.js"></script>
+<script src="editor.md/lib/prettify.min.js"></script>
+<script type="text/javascript">
+    $.extend({
+        getUrlVars: function () {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        },
+        getUrlVar: function (name) {
+            return $.getUrlVars()[name];
+        }
+    });
+
+    $(function () {
+
+        // Getting URL var by its nam
+        var path = $.getUrlVar('path');
+        // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
+        var mdContent = "# hi\n\n";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', path);
+        xhr.send('')
+        xhr.onload = function () {
+            console.log('path:' + path);
+            console.log(xhr.responseText);
+            mdContent+=xhr.responseText;
+        }
+
+        $('#md-content').val(mdContent);
+        editormd.markdownToHTML("md-to-html", {
+            htmlDecode: "style,script,iframe", //可以过滤标签解码
+            emoji: true,
+            taskList: true,
+            tex: true,               // 默认不解析
+            flowChart: true,         // 默认不解析
+            sequenceDiagram: true,  // 默认不解析
+        });
+
+        // var mdEditor = editormd("mdEditor", {
+        //     width: "100%",
+        //     height: "100%",
+        //     syncScrolling : "single",
+        //     // markdown: "xxxx",     // dynamic set Markdown text
+        //     path : "editor.md/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
+        // });
+
+
+        // var testView = editormd.markdownToHTML("test-markdown-view", {
+        //     // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
+        //     // htmlDecode : true,  // Enable / disable HTML tag encode.
+        //     // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
+        // });
+
+    });
+</script>

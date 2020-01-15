@@ -1,0 +1,236 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Merry Christmas</title>
+    <link rel="icon" type="image/x-icon" href="res/icon.gif" />
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+    <style>
+        .main-div {
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+
+            background-color: darkgreen;
+        }
+
+        .function-button {
+            font-size: 1.5em;
+            color: #fff;
+            width: auto;
+            height: auto;
+            text-align: center;
+            padding: 12px 24px;
+            display: inline-block;
+            padding: 0.75em 2em;
+            border-radius: 2em;
+            display: inline-block;
+            background-color: darkslategray;
+            transition: all 0.15s ease;
+            box-sizing: border-box;
+            border: 1px solid black;
+
+        }
+
+        .title {
+            font-size: 2.5em;
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            color: white;
+            margin: 25px;
+            padding: 15px;
+        }
+
+        .content {
+            font-size: 1.5em;
+            color: white;
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            margin: 15px;
+            padding: 5px;
+        }
+
+        .result-pre {
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            color: white;
+            font-size: 14px;
+            width: auto;
+            height: auto;
+            border: 2px solid darkgreen;
+            background-color: rgb(40, 44, 52);
+            overflow: auto;
+            /* overflow-y: auto; */
+            padding: 9.5px;
+            position: relative;
+        }
+
+        .input-label {
+            font-family: "Times New Roman";
+            font-size: 20px;
+            color: whitesmoke;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .input-field {
+            position: relative;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            color: #443a3a;
+            padding: 0.5em 0.5em;
+            border-radius: 0.5em;
+            display: inline-block;
+            vertical-align: middle;
+            background-color: whitesmoke;
+            transition: all 0.15s ease;
+            box-sizing: border-box;
+            border: 1px solid darkolivegreen;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='main-div'>
+        <div :style="{ 'width':windowWidth,'height':windowHeight }" class="main-div">
+            <div style="position: relative;display:inline-block; ">
+                <p class="title">Merry Christmas！</p>
+                <!-- <p class="content">&lt;/&gt;</p> -->
+                <table style="padding: 20px;position: relative;text-align: center;">
+                    <tr>
+                        <td>
+                            <label class="input-label">Element:</label>
+                        </td>
+                        <td><input class='input-field' v-model="element"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="input-label">Message:</label>
+                        </td>
+                        <td><input class='input-field' v-model="message"></td>
+                    </tr>
+                </table>
+                <pre class="result-pre"><code v-html="content"></code></pre>
+                <button class="function-button" v-on:click="generate">Generate</button>
+            </div>
+        </div>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+        var app = new Vue({
+            el: '#main-div',
+            data() {
+                return {
+                    toolUrl: '',
+                    content: 'try to tap generate',
+                    element: '#',
+                    message: 'Merry Christmas! —— paul 2019',
+                    windowHeight: window.innerHeight - 10 + 'px',
+                    windowWidth: window.innerWidth - 10 + 'px',
+                }
+            },
+            methods: {
+                generate: function () {
+                    var output = '';
+                    var pic = new Array();
+
+                    // height of the pic
+                    var p_height = 40;
+                    // width of the pic
+                    var p_width = 120;
+                    // snow proportion in pic
+                    var p_snow = 5;
+                    // thickness of the tree
+                    var t_thickness = 7;
+                    // height of the tree stem
+                    var t_height = 10;
+                    // height of the leaves
+                    var l_height = 20;
+                    // width of the leaves
+                    var l_width = 90;
+                    // layers of the leaves
+                    var l_layers = 4;
+                    // shape of the Crown
+                    var SPLOT = 4;
+                    var SPAN = 7;
+                    // CONSTANT
+                    var BACK_GROUND = ' ';
+                    var SNOW = '*';
+                    var TREE = '#';
+                    // element on the tree
+                    var element = this.element;// "𝖕𝖆𝖚𝖑"
+                    if(element==undefined||element=='')element="#"
+                    // element on the background
+                    var b_element = this.message;// "𝖕𝖆𝖚𝖑"
+
+                    var index = 0;
+
+                    for (var h = 0; h < p_height; h++) {
+                        pic[h] = new Array();
+                        for (var w = 0; w < p_width; w++) {
+                            // add background
+                            pic[h][w] = ' ';
+
+                            // add snow
+                            var num = Math.floor(Math.random() * 100);
+                            if (num <= p_snow)
+                                pic[h][w] = SNOW;
+
+                            // draw tree stem
+                            if (h >= p_height - t_height && w >= (p_width - t_thickness) / 2
+                                && w < (p_width + t_thickness) / 2)
+                                pic[h][w] = TREE;
+                        }
+                    }
+                    var layer_height = l_height / l_layers;
+                    // draw tree leaves
+                    for (var l = 0; l <= l_layers; l++) {
+                        for (var l_h = 0; l_h <= layer_height; l_h++) {
+                            for (var l_w = (p_width - l * SPAN - l_h * SPLOT)
+                                / 2; l_w <= (p_width + l * SPAN + l_h * SPLOT) / 2; l_w++) {
+                                var row = p_height - t_height - l_height + l * layer_height + l_h;
+                                // console.log(row + "*" + l_w);
+                                pic[row][Math.floor(l_w)] = TREE;
+                            }
+                        }
+                    }
+
+                    for (var h = 0; h < p_height; h++) {
+                        for (var w = 0; w < p_width; w++) {
+
+                            // use element replace tree
+                            if (pic[h][w] == TREE) {
+                                pic[h][w] = element[index++];
+                                if (index >= element.length)
+                                    index = 0;
+                            }
+
+                            // DRAW PIC
+                            output += pic[h][w];
+                        }
+                        output += "\n";
+                    }
+                    output += "\n";
+                    for (var i = 0; i < p_width / 2 - b_element.length / 2; i++)
+                        output += " ";
+                    output += b_element;
+                    output += "\n\n";
+                    this.content = output;
+                }
+            },
+            mounted() {
+                const _this = this;
+                window.onresize = () => {
+                    return (() => {
+                        _this.windowHeight = window.innerHeight - 10 + 'px';
+                        _this.windowWidth = window.innerWidth - 10 + 'px';
+                        console.log(_this.windowHeight + "*" + _this.windowWidth);
+                    })()
+                }
+            },
+
+        })
+    </script>
+</body>
