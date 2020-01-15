@@ -16,7 +16,7 @@
 
 ## 其他
 
-* [正则表达](/regular_expr1.md)
+* [正则表达](/csnotes/tools/regular_expr1.md)
 * [XML](/xml1.md)
 
 ## 参考资源

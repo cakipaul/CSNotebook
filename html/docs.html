@@ -1,83 +1,236 @@
-<link rel="stylesheet" href="editor.md/css/editormd.min.css" />
-<link rel="stylesheet" href="editormd/css/editormd.preview.css" />
+<html>
 
-<div id="md-to-html">
-    <!-- Server-side output Markdown text -->
-    <textarea id='md-content' style="display:none;">### Hello world!</textarea>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <title>Docs</title>
 
-<div id="test-markdown-view">
-    <!-- Server-side output Markdown text -->
-    <textarea style="display:none;">### Hello world!</textarea>
-</div>
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+    <link rel="stylesheet" href="editormd/css/editormd.preview.css" />
 
-<div id="mdEditor">
-    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
-    <textarea style="display:none;">### Hello Editor.md !</textarea>
-</div>
+    <!--引入js文件-->
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/lib/raphael.min.js"></script>
+    <script src="editor.md/lib/underscore.min.js"></script>
+    <script src="editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="editor.md/lib/flowchart.min.js"></script>
+    <script src="editor.md/lib/jquery.flowchart.min.js"></script>
+    <style>
+        .mdWindow {
+            width: 900px;
+            height: 900px;
+            float: right;
+            border: 8px solid gray;
+            background-color: white;
+            padding: 8px;
+            margin: 8px;
+        }
+
+        .sidebar {
+            border-right: 1px solid #f0f2f1;
+            width: 180px;
+            float: left;
+            padding-left: 35px;
+        }
+
+        .sidebar>ul {
+
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            display: inline-block;
+            color: #423636;
+            width: 210px;
+            border: 5px solid gray;
+            background-color: whitesmoke;
+            padding: 5px;
+            margin: 5px;
+            /* list-style: none;
+            padding: 0;
+            margin: 0; */
+        }
+
+        .sidebar>ul>li {
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            font-size: 13px;
+            color: #423636;
+            width: 155px;
+            height: 18px;
+            border: 8px solid gray;
+            background-color: whitesmoke;
+            padding: 10px;
+            margin: 12px;
+            list-style-type: none;
+            /* font-size: 18px;
+            font-weight: 400;
+            padding: 0010px;
+            margin-top: 5px; */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- [if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif] -->
+
+    <div id="tools-div">
+        <div style="float: left;" class="sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
+            <ul>Category
+                <tool-item v-for="item in Category" :tool="item" :key="item.id">
+                </tool-item>
+            </ul>
+
+            <ul>Resource
+                <tool-item v-for="item in Resource" :tool="item" :key="item.id">
+                </tool-item>
+            </ul>
+        </div>
+        <div id="md-to-html" class='mdWindow' :style="{ 'width':toolWindowWidth,'height':toolWindowHeight }">
+            <!-- Server-side output Markdown text -->
+            <textarea id='md-content' style="display:none;">### Hello world!</textarea>
+        </div>
+    </div>
 
 
-<script src="js/jquery.min.js"></script>
-<script src="editor.md/editormd.js"></script>
-<script src="editor.md/lib/marked.min.js"></script>
-<script src="editor.md/lib/prettify.min.js"></script>
-<script type="text/javascript">
-    $.extend({
-        getUrlVars: function () {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for (var i = 0; i < hashes.length; i++) {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
+
+
+    <script type="text/javascript">
+        $.extend({
+            getUrlVars: function () {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            },
+            getUrlVar: function (name) {
+                return $.getUrlVars()[name];
             }
-            return vars;
-        },
-        getUrlVar: function (name) {
-            return $.getUrlVars()[name];
-        }
-    });
-
-    $(function () {
-
-        // Getting URL var by its nam
-        var path = $.getUrlVar('path');
-        // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
-        var mdContent = "# hi\n\n";
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('get', path);
-        xhr.send('')
-        xhr.onload = function () {
-            console.log('path:' + path);
-            console.log(xhr.responseText);
-            mdContent+=xhr.responseText;
-        }
-
-        $('#md-content').val(mdContent);
-        editormd.markdownToHTML("md-to-html", {
-            htmlDecode: "style,script,iframe", //可以过滤标签解码
-            emoji: true,
-            taskList: true,
-            tex: true,               // 默认不解析
-            flowChart: true,         // 默认不解析
-            sequenceDiagram: true,  // 默认不解析
         });
 
-        // var mdEditor = editormd("mdEditor", {
-        //     width: "100%",
-        //     height: "100%",
-        //     syncScrolling : "single",
-        //     // markdown: "xxxx",     // dynamic set Markdown text
-        //     path : "editor.md/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
-        // });
+        $(function () {
+            // Getting URL var by its nam
+            var path ='/csnotes' +$.getUrlVar('path');
+            // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
+            var mdContent = "";
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', path);
+            xhr.send('')
+            xhr.onload = function () {
+                console.log('path:' + path);
+                mdContent += xhr.responseText;
+                console.log(mdContent);
 
+                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g,"[$1](/csnotes/html/docs.html?path=/csnotes$2)");//链接格式修正
+                // mdContent = mdContent.replace(/[(.*)]\(\/(.*)\)/g,"[$1](/csnotes/$2)");//链接格式修正
 
-        // var testView = editormd.markdownToHTML("test-markdown-view", {
-        //     // markdown : "[TOC]\n### Hello world!\n## Heading 2", // Also, you can dynamic set Markdown text
-        //     // htmlDecode : true,  // Enable / disable HTML tag encode.
-        //     // htmlDecode : "style,script,iframe",  // Note: If enabled, you should filter some dangerous HTML tags for website security.
-        // });
+                $('#md-content').val(mdContent);
+                console.log($('#md-content').val());
+                editormd.markdownToHTML("md-to-html", {
+                    htmlDecode: "style,script,iframe", //可以过滤标签解码
+                    emoji: true,
+                    taskList: true,
+                    tex: true,               // 默认不解析
+                    flowChart: true,         // 默认不解析
+                    sequenceDiagram: true,  // 默认不解析
+                });
 
-    });
-</script>
+            }
+
+        });
+
+        Vue.component('tool-item', {
+            props: ['tool'],
+            template: '<li @click="tool.method">{{ tool.content }}</li>'
+        })
+        var toolsApp = new Vue({
+            el: '#tools-div',
+            data() {
+                return {
+                    toolUrl: '',
+                    toolWindowWidth: window.innerWidth - 350 + 'px',
+                    toolWindowHeight: window.innerHeight - 100 + 'px',
+                    toolCatWidth: '270px',
+                    toolCatHeight: window.innerHeight - 100 + 'px',
+                    Category: [{
+                        id: 0,
+                        content: 'SQLFormatter',
+                        method: function () {
+                            toolsApp.toolUrl = 'FormatterTools/SQLFormatter.html';
+                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 1,
+                        content: 'JSONFormatter',
+                        method: function () {
+                            toolsApp.toolUrl = 'FormatterTools/JsonFormatter.html';
+                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 2,
+                        content: 'JSON & YAML',
+                        method: function () {
+                            toolsApp.toolUrl = 'FormatterTools/JsonYamlConverter.html';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    }],
+                    Resource: [{
+                        id: 0,
+                        content: 'OnlineTools',
+                        method: function () {
+                            // toolsApp.toolUrl = 'http://www.bejson.com/ui/compress_img/';
+                            window.open("http://www.bejson.com/ui/compress_img/");
+                        }
+                    }, {
+                        id: 1,
+                        content: 'OSChina Tools',
+                        method: function () {
+                            // toolsApp.toolUrl = 'http://tool.oschina.net/';
+                            window.open("http://tool.oschina.net/");
+                        }
+                    }, {
+                        id: 2,
+                        content: 'FontAwesome 4.3.0',
+                        method: function () {
+                            // toolsApp.toolUrl = 'http://www.wapadd.cn/icons/awesome/index.htm';
+                            window.open("http://www.wapadd.cn/icons/awesome/index.htm");
+                        }
+                    }, {
+                        id: 3,
+                        content: 'M-Design Icons',
+                        method: function () {
+                            // toolsApp.toolUrl = 'https://www.materialpalette.com/icons';
+                            window.open("https://www.materialpalette.com/icons");
+                        }
+                    }]
+                }
+            },
+
+            mounted() {
+                const _this = this;
+                window.onresize = () => {
+                    return (() => {
+                        _this.toolWindowHeight = window.innerHeight - 100 + 'px';
+                        _this.toolWindowWidth = window.innerWidth - 350 + 'px';
+                        console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
+                        _this.toolCatHeight = window.innerHeight - 100 + 'px';
+                        _this.toolCatWidth = '270px';
+                    })()
+                }
+            },
+
+        })
+
+    </script>
+</body>
+</html>
