@@ -129,7 +129,7 @@
                 mdContent += xhr.responseText;
                 console.log(mdContent);
 
-                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g,"[$1](/csnotes/html/docs.html?path=/csnotes$2)");//链接格式修正
+                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g,"[$1](/csnotes/html/docs.html?path=/csnotes/$2)");//链接格式修正
 
                 $('#md-content').val(mdContent);
                 console.log($('#md-content').val());
@@ -161,55 +161,142 @@
                     toolCatHeight: window.innerHeight - 100 + 'px',
                     Category: [{
                         id: 0,
-                        content: 'SQLFormatter',
+                        content: 'Hardware',
                         method: function () {
-                            toolsApp.toolUrl = 'FormatterTools/SQLFormatter.html';
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md';
                             // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
                         }
                     },
                     {
                         id: 1,
-                        content: 'JSONFormatter',
+                        content: 'OperationSystem',
                         method: function () {
-                            toolsApp.toolUrl = 'FormatterTools/JsonFormatter.html';
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md';
+                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                        }
+                    },{
+                        id: 2,
+                        content: 'DataStructure',
+                        method: function () {
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md';
                             // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
                         }
                     },
                     {
-                        id: 2,
-                        content: 'JSON & YAML',
+                        id: 3,
+                        content: 'Tools',
                         method: function () {
-                            toolsApp.toolUrl = 'FormatterTools/JsonYamlConverter.html';
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 4,
+                        content: 'DataBase',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id:5,
+                        content: 'C',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 6,
+                        content: '.Net',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 7,
+                        content: 'Java',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id:8,
+                        content: 'Go',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 9,
+                        content: 'Python',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id:10,
+                        content: 'Moblie',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/moblie/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id:11,
+                        content: 'Web',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id:12,
+                        content: 'FrontEnd',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md';
+                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                        }
+                    },
+                    {
+                        id: 13,
+                        content: 'Dev',
+                        method: function () {
+                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md';
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     }],
                     Resource: [{
                         id: 0,
-                        content: 'OnlineTools',
+                        content: 'Common Res',
                         method: function () {
-                            // toolsApp.toolUrl = 'http://www.bejson.com/ui/compress_img/';
-                            window.open("http://www.bejson.com/ui/compress_img/");
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/res/通用资源链接.md';
+                            // window.open("http://www.bejson.com/ui/compress_img/");
                         }
                     }, {
                         id: 1,
-                        content: 'OSChina Tools',
+                        content: 'IT Res',
                         method: function () {
-                            // toolsApp.toolUrl = 'http://tool.oschina.net/';
-                            window.open("http://tool.oschina.net/");
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/res/IT资源链接.md';
+                            // window.open("http://tool.oschina.net/");
                         }
                     }, {
                         id: 2,
-                        content: 'FontAwesome 4.3.0',
+                        content: 'IT Skills Tree',
                         method: function () {
-                            // toolsApp.toolUrl = 'http://www.wapadd.cn/icons/awesome/index.htm';
-                            window.open("http://www.wapadd.cn/icons/awesome/index.htm");
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/java/IT技能树.md';
+                            // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
                         }
                     }, {
                         id: 3,
-                        content: 'M-Design Icons',
+                        content: 'RSS Sites',
                         method: function () {
-                            // toolsApp.toolUrl = 'https://www.materialpalette.com/icons';
-                            window.open("https://www.materialpalette.com/icons");
+                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/java/RSS_sites.md';
+                            // window.open("https://www.materialpalette.com/icons");
                         }
                     }]
                 }
