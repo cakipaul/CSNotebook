@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Docs</title>
+    <title>Logs</title>
 
     <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
     <link rel="stylesheet" href="editormd/css/editormd.preview.css" />
@@ -163,7 +163,7 @@
             xhr.onload = function () {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
-                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
+                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/logs.html?path=$2)");//链接格式修正
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }
@@ -199,14 +199,14 @@
                         id: 0,
                         content: '2020-01',
                         method: function () {
-                            window.open('/csnotes/html/docs.html?path=/log/2020_01.md', '_self');
+                            window.open('/csnotes/html/logs.html?path=/log/2020_01.md', '_self');
                             // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
                         }
                     },{
                         id: 1,
                         content: '历史日志',
                         method: function () {
-                            window.open('/csnotes/html/docs.html?path=/log/SUMMARY.md', '_self');
+                            window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
                             // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
                         }
                     }],
@@ -214,14 +214,14 @@
                         id: 0,
                         content: 'xj语录',
                         method: function () {
-                            window.open('/csnotes/html/docs.html?path=/others/jokes/quotes_chengjie.md', '_self');
+                            window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
                             // window.open("http://www.bejson.com/ui/compress_img/");
                         }
                     }, {
                         id: 1,
                         content: '租房物品清单',
                         method: function () {
-                            window.open('/csnotes/html/docs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
+                            window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
                             // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
                         }
                     }]
