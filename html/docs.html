@@ -192,7 +192,7 @@
                 return {
                     toolUrl: '',
                     toolWindowWidth: window.innerWidth - 400 + 'px',
-                    toolWindowHeight: window.innerHeight - 110 + 'px',
+                    toolWindowHeight: window.innerHeight - 130 + 'px',
                     toolCatWidth: '260px',
                     toolCatHeight: window.innerHeight - 100 + 'px',
                     Category: [{
@@ -342,7 +342,7 @@
                 const _this = this;
                 window.onresize = () => {
                     return (() => {
-                        _this.toolWindowHeight = window.innerHeight - 110 + 'px';
+                        _this.toolWindowHeight = window.innerHeight - 130 + 'px';
                         _this.toolWindowWidth = window.innerWidth - 400 + 'px';
                         console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
                         _this.toolCatHeight = window.innerHeight - 100 + 'px';
