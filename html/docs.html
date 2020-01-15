@@ -14,6 +14,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     <script src="js/jquery.min.js"></script>
     <script src="editor.md/editormd.js"></script>
+    <script src="editor.md/editormd.min.js"></script>
     <script src="editor.md/lib/marked.min.js"></script>
     <script src="editor.md/lib/prettify.min.js"></script>
     <script src="editor.md/lib/raphael.min.js"></script>
@@ -23,40 +24,41 @@
     <script src="editor.md/lib/jquery.flowchart.min.js"></script>
     <style>
         .mdWindow {
-            width: 900px;
-            height: 900px;
-            float: right;
-            border: 8px solid gray;
+            /* width: 900px;
+            height: 900px; */
+            position: relative;
+            border: 5px solid gray;
             background-color: white;
-            padding: 8px;
-            margin: 8px;
+            padding: 18px;
+            margin: 18px;
         }
 
         .sidebar {
-            border-right: 1px solid #f0f2f1;
-            width: 180px;
+            text-align: center;
+            overflow-y: auto;
             float: left;
-            padding-left: 35px;
+            border-right: 1px solid #f0f2f1;
+            padding-left: 25px;
         }
 
         .sidebar>ul {
-
+            text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
             font-size: 20px;
-            text-align: center;
             display: inline-block;
             color: #423636;
-            width: 210px;
-            border: 5px solid gray;
+            width: 200px;
+            border: 4px solid gray;
             background-color: whitesmoke;
-            padding: 5px;
-            margin: 5px;
+            padding: 4px;
+            margin: 4px;
             /* list-style: none;
             padding: 0;
             margin: 0; */
         }
 
         .sidebar>ul>li {
+            text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
             font-size: 13px;
             color: #423636;
@@ -64,8 +66,8 @@
             height: 18px;
             border: 8px solid gray;
             background-color: whitesmoke;
-            padding: 10px;
-            margin: 12px;
+            padding: 8px;
+            margin: 8px;
             list-style-type: none;
             /* font-size: 18px;
             font-weight: 400;
@@ -77,29 +79,61 @@
 
 <body>
     <!-- [if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif] -->
+    <textarea id="page-content" style="display:none;"> </textarea>
 
-    <div id="tools-div">
-        <div style="float: left;" class="sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
+    <div id="test-editormd">
+        <textarea id='edit-content' style="display:none;"></textarea>
+    </div>
+
+
+    <div id="tools-div" style="height: auto;width: auto;">
+        <div class="sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
+            <ul onclick="editThePage()">Edit the page
+            </ul>
             <ul>Category
                 <tool-item v-for="item in Category" :tool="item" :key="item.id">
                 </tool-item>
             </ul>
-
             <ul>Resource
                 <tool-item v-for="item in Resource" :tool="item" :key="item.id">
                 </tool-item>
             </ul>
         </div>
-        <div id="md-to-html" class='mdWindow' :style="{ 'width':toolWindowWidth,'height':toolWindowHeight }">
-            <!-- Server-side output Markdown text -->
+        <div id="md-to-html" class='mdWindow' :style="{'width':toolWindowWidth,'height':toolWindowHeight }">
             <textarea id='md-content' style="display:none;">### Hello world!</textarea>
         </div>
+
     </div>
 
 
 
 
     <script type="text/javascript">
+        var testEditor;
+
+        function editThePage() {
+
+            console.log('edit');
+            var centent = $('#page-content').val();
+            if (centent == undefined || centent == null || centent == '') {
+                alert('choose a file first');
+                return;
+            }
+            $("#tools-div").hide();
+            $('#edit-content').val(centent);
+            console.log("----------------- centent ----------------\n" + centent);
+
+            testEditor = editormd("test-editormd", {
+                width: "90%",
+                height: "70%",
+                syncScrolling: "single",
+                path: "editor.md/lib/"
+            });
+        }
+        function backToReader() {
+
+        }
+
         $.extend({
             getUrlVars: function () {
                 var vars = [], hash;
@@ -118,21 +152,24 @@
 
         $(function () {
             // Getting URL var by its nam
-            var path ='/csnotes' +$.getUrlVar('path');
+            var path = $.getUrlVar('path');
             // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
             var mdContent = "";
+            reqPath = '/csnotes' + path;
+            console.log('reqPath:' + reqPath);
             var xhr = new XMLHttpRequest();
-            xhr.open('get', path);
+            xhr.open('get', reqPath);
             xhr.send('')
             xhr.onload = function () {
-                console.log('path:' + path);
                 mdContent += xhr.responseText;
-                console.log(mdContent);
-
-                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g,"[$1](/csnotes/html/docs.html?path=/csnotes/$2)");//链接格式修正
-
+                // console.log(mdContent);
+                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
+                if (path == undefined || path == null || path == '') {
+                    mdContent = '';
+                }
                 $('#md-content').val(mdContent);
-                console.log($('#md-content').val());
+                $('#page-content').val(mdContent);
+                // console.log($('#md-content').val());
                 editormd.markdownToHTML("md-to-html", {
                     htmlDecode: "style,script,iframe", //可以过滤标签解码
                     emoji: true,
@@ -143,7 +180,6 @@
                 });
 
             }
-
         });
 
         Vue.component('tool-item', {
@@ -155,15 +191,15 @@
             data() {
                 return {
                     toolUrl: '',
-                    toolWindowWidth: window.innerWidth - 350 + 'px',
-                    toolWindowHeight: window.innerHeight - 100 + 'px',
-                    toolCatWidth: '270px',
+                    toolWindowWidth: window.innerWidth - 400 + 'px',
+                    toolWindowHeight: window.innerHeight - 110 + 'px',
+                    toolCatWidth: '260px',
                     toolCatHeight: window.innerHeight - 100 + 'px',
                     Category: [{
                         id: 0,
                         content: 'Hardware',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md', '_self');
                             // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
                         }
                     },
@@ -171,14 +207,14 @@
                         id: 1,
                         content: 'OperationSystem',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
                         }
-                    },{
+                    }, {
                         id: 2,
                         content: 'DataStructure',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
                         }
                     },
@@ -186,7 +222,7 @@
                         id: 3,
                         content: 'Tools',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
@@ -194,15 +230,15 @@
                         id: 4,
                         content: 'DataBase',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
                     {
-                        id:5,
+                        id: 5,
                         content: 'C',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
@@ -210,7 +246,7 @@
                         id: 6,
                         content: '.Net',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
@@ -218,15 +254,15 @@
                         id: 7,
                         content: 'Java',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
                     {
-                        id:8,
+                        id: 8,
                         content: 'Go',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
@@ -234,31 +270,31 @@
                         id: 9,
                         content: 'Python',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
                     {
-                        id:10,
+                        id: 10,
                         content: 'Moblie',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/moblie/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/moblie/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
                     {
-                        id:11,
+                        id: 11,
                         content: 'Web',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
                     {
-                        id:12,
+                        id: 12,
                         content: 'FrontEnd',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     },
@@ -266,7 +302,7 @@
                         id: 13,
                         content: 'Dev',
                         method: function () {
-                             toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md';
+                            window.open('/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md', '_self');
                             // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
                         }
                     }],
@@ -274,28 +310,28 @@
                         id: 0,
                         content: 'Common Res',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/res/通用资源链接.md';
+                            window.open('/csnotes/html/docs.html?path=/res/通用资源链接.md', '_self');
                             // window.open("http://www.bejson.com/ui/compress_img/");
                         }
                     }, {
                         id: 1,
                         content: 'IT Res',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/res/IT资源链接.md';
+                            window.open('/csnotes/html/docs.html?path=/res/IT资源链接.md', '_self');
                             // window.open("http://tool.oschina.net/");
                         }
                     }, {
                         id: 2,
                         content: 'IT Skills Tree',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/java/IT技能树.md';
+                            window.open('/csnotes/html/docs.html?path=/res/IT技能树.md', '_self');
                             // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
                         }
                     }, {
                         id: 3,
                         content: 'RSS Sites',
                         method: function () {
-                            toolsApp.toolUrl = '/csnotes/html/docs.html?path=/csnotes/java/RSS_sites.md';
+                            window.open('/csnotes/html/docs.html?path=/res/RSS_sites.md', '_self');
                             // window.open("https://www.materialpalette.com/icons");
                         }
                     }]
@@ -306,11 +342,11 @@
                 const _this = this;
                 window.onresize = () => {
                     return (() => {
-                        _this.toolWindowHeight = window.innerHeight - 100 + 'px';
-                        _this.toolWindowWidth = window.innerWidth - 350 + 'px';
+                        _this.toolWindowHeight = window.innerHeight - 110 + 'px';
+                        _this.toolWindowWidth = window.innerWidth - 400 + 'px';
                         console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
                         _this.toolCatHeight = window.innerHeight - 100 + 'px';
-                        _this.toolCatWidth = '270px';
+                        _this.toolCatWidth = '260px';
                     })()
                 }
             },
@@ -319,4 +355,5 @@
 
     </script>
 </body>
+
 </html>
