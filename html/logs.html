@@ -1,0 +1,249 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Docs</title>
+
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
+    <link rel="stylesheet" href="editormd/css/editormd.preview.css" />
+
+    <!--引入js文件-->
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 生产环境版本，优化了尺寸和速度 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="js/jquery.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+    <script src="editor.md/editormd.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/lib/raphael.min.js"></script>
+    <script src="editor.md/lib/underscore.min.js"></script>
+    <script src="editor.md/lib/sequence-diagram.min.js"></script>
+    <script src="editor.md/lib/flowchart.min.js"></script>
+    <script src="editor.md/lib/jquery.flowchart.min.js"></script>
+    <style>
+        .mdWindow {
+            /* width: 900px;
+            height: 900px; */
+            position: relative;
+            border: 5px solid gray;
+            background-color: white;
+            padding: 18px;
+            margin: 18px;
+        }
+
+        .sidebar {
+            text-align: center;
+            overflow-y: auto;
+            float: left;
+            border-right: 1px solid #f0f2f1;
+            padding-left: 25px;
+        }
+
+        .sidebar>ul {
+            text-align: center;
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            font-size: 20px;
+            display: inline-block;
+            color: #423636;
+            width: 200px;
+            border: 4px solid gray;
+            background-color: whitesmoke;
+            padding: 4px;
+            margin: 4px;
+            /* list-style: none;
+            padding: 0;
+            margin: 0; */
+        }
+
+        .sidebar>ul>li {
+            text-align: center;
+            font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+            font-size: 13px;
+            color: #423636;
+            width: 155px;
+            height: 18px;
+            border: 8px solid gray;
+            background-color: whitesmoke;
+            padding: 8px;
+            margin: 8px;
+            list-style-type: none;
+            /* font-size: 18px;
+            font-weight: 400;
+            padding: 0010px;
+            margin-top: 5px; */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- [if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif] -->
+    <textarea id="page-content" style="display:none;"> </textarea>
+
+    <div id="test-editormd">
+        <textarea id='edit-content' style="display:none;"></textarea>
+    </div>
+
+
+    <div id="tools-div" style="height: auto;width: auto;">
+        <div class="sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
+            <ul onclick="editThePage()">Edit the page
+            </ul>
+            <ul>Logs
+                <tool-item v-for="item in logs" :tool="item" :key="item.id">
+                </tool-item>
+            </ul>
+            <ul>Others
+                <tool-item v-for="item in others" :tool="item" :key="item.id">
+                </tool-item>
+            </ul>
+        </div>
+        <div id="md-to-html" class='mdWindow' :style="{'width':toolWindowWidth,'height':toolWindowHeight }">
+            <textarea id='md-content' style="display:none;">### Hello world!</textarea>
+        </div>
+
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        var testEditor;
+
+        function editThePage() {
+
+            console.log('edit');
+            var centent = $('#page-content').val();
+            if (centent == undefined || centent == null || centent == '') {
+                alert('choose a file first');
+                return;
+            }
+            $("#tools-div").hide();
+            $('#edit-content').val(centent);
+            console.log("----------------- centent ----------------\n" + centent);
+
+            testEditor = editormd("test-editormd", {
+                width: "90%",
+                height: "70%",
+                syncScrolling: "single",
+                path: "editor.md/lib/"
+            });
+        }
+        function backToReader() {
+
+        }
+
+        $.extend({
+            getUrlVars: function () {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            },
+            getUrlVar: function (name) {
+                return $.getUrlVars()[name];
+            }
+        });
+
+        $(function () {
+            // Getting URL var by its nam
+            var path = $.getUrlVar('path');
+            // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
+            var mdContent = "";
+            reqPath = '/csnotes' + path;
+            console.log('reqPath:' + reqPath);
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', reqPath);
+            xhr.send('')
+            xhr.onload = function () {
+                mdContent += xhr.responseText;
+                // console.log(mdContent);
+                mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
+                if (path == undefined || path == null || path == '') {
+                    mdContent = '';
+                }
+                $('#md-content').val(mdContent);
+                $('#page-content').val(mdContent);
+                // console.log($('#md-content').val());
+                editormd.markdownToHTML("md-to-html", {
+                    htmlDecode: "style,script,iframe", //可以过滤标签解码
+                    emoji: true,
+                    taskList: true,
+                    tex: true,               // 默认不解析
+                    flowChart: true,         // 默认不解析
+                    sequenceDiagram: true,  // 默认不解析
+                });
+
+            }
+        });
+
+        Vue.component('tool-item', {
+            props: ['tool'],
+            template: '<li @click="tool.method">{{ tool.content }}</li>'
+        })
+        var toolsApp = new Vue({
+            el: '#tools-div',
+            data() {
+                return {
+                    toolUrl: '',
+                    toolWindowWidth: window.innerWidth - 400 + 'px',
+                    toolWindowHeight: window.innerHeight - 130 + 'px',
+                    toolCatWidth: '260px',
+                    toolCatHeight: window.innerHeight - 100 + 'px',
+                    logs: [{
+                        id: 0,
+                        content: '2020-01',
+                        method: function () {
+                            window.open('/csnotes/html/docs.html?path=/log/2020_01.md', '_self');
+                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                        }
+                    },{
+                        id: 1,
+                        content: '历史日志',
+                        method: function () {
+                            window.open('/csnotes/html/docs.html?path=/log/SUMMARY.md', '_self');
+                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                        }
+                    }],
+                    others: [{
+                        id: 0,
+                        content: 'xj语录',
+                        method: function () {
+                            window.open('/csnotes/html/docs.html?path=/others/jokes/quotes_chengjie.md', '_self');
+                            // window.open("http://www.bejson.com/ui/compress_img/");
+                        }
+                    }, {
+                        id: 1,
+                        content: '租房物品清单',
+                        method: function () {
+                            window.open('/csnotes/html/docs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
+                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                        }
+                    }]
+                }
+            },
+
+            mounted() {
+                const _this = this;
+                window.onresize = () => {
+                    return (() => {
+                        _this.toolWindowHeight = window.innerHeight - 130 + 'px';
+                        _this.toolWindowWidth = window.innerWidth - 400 + 'px';
+                        console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
+                        _this.toolCatHeight = window.innerHeight - 100 + 'px';
+                        _this.toolCatWidth = '260px';
+                    })()
+                }
+            },
+
+        })
+
+    </script>
+</body>
+
+</html>
