@@ -11,12 +11,12 @@
     <style>
         .main-div {
             text-align: center;
-            vertical-align:middle;
-            display:table-cell;
+            vertical-align: middle;
+            display: table-cell;
 
             background-color: darkgreen;
         }
-        
+
         .function-button {
             font-size: 1.5em;
             color: #fff;
@@ -28,7 +28,7 @@
             padding: 0.75em 2em;
             border-radius: 2em;
             display: inline-block;
-            background-color:darkslategray;
+            background-color: darkslategray;
             transition: all 0.15s ease;
             box-sizing: border-box;
             border: 1px solid black;
@@ -53,17 +53,16 @@
 </head>
 
 <body>
-        <div id='main-div'>
-                <div :style="{ 'width':windowWidth,'height':windowHeight }" class="main-div">
-                    <div style="position: relative;display:inline-block; ">
-                        <p class="title">&lt;/&gt;</p>
-                        <p class="content">just a demo yet...</p>
-                        <button class="function-button"
-                            onclick="window.location.href='../res/awesome_tools/AwesomeCodeBuilderTools/index.html';">AwesomeTools</button>
-                            onclick="window.location.href='docs.html';">Docs</button>
-                    </div>
-                </div>
+    <div id='main-div'>
+        <div :style="{ 'width':windowWidth,'height':windowHeight }" class="main-div">
+            <div style="position: relative;display:inline-block; ">
+                <p class="title">&lt;/&gt;</p>
+                <p class="content">just a demo yet...</p>
+                <button class="function-button" onclick="window.location.href='../res/awesome_tools/AwesomeCodeBuilderTools/index.html';">AwesomeTools</button>
+                <button class="function-button" onclick="window.location.href='docs.html';">Docs</button>
             </div>
+        </div>
+    </div>
 
     <script language="javascript" type="text/javascript">
         var app = new Vue({
