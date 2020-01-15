@@ -130,7 +130,6 @@
                 console.log(mdContent);
 
                 mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g,"[$1](/csnotes/html/docs.html?path=/csnotes$2)");//链接格式修正
-                // mdContent = mdContent.replace(/[(.*)]\(\/(.*)\)/g,"[$1](/csnotes/$2)");//链接格式修正
 
                 $('#md-content').val(mdContent);
                 console.log($('#md-content').val());
