@@ -1,6 +1,6 @@
 # CSNotebook
 
-程序猿社畜的技术成长笔记，由几位友人共同维护，感兴趣的朋友欢迎联系！
+[首页](https://cakipaul.com/csnotes) 程序猿社畜的技术成长笔记，由几位友人共同维护，感兴趣的朋友欢迎联系！
 
 ## 文件组织
 
@@ -25,10 +25,6 @@ CSNotebook.git
 |  |- fe/...
 |  |- mobile/...
 |- inspur/
-|  |- common/...
-|  |- IEI(Inspur Electronic Information Industry)/...
-|  |- ISS(Inspur Software)/...
-|  |- ESG(Enterprise Software Group)/...
 |  |- ...
 |- log/
 |  |- 2019_7.md
@@ -50,11 +46,6 @@ CSNotebook.git
 - README.md ：本项目整体介绍文件
 - csnotes/：CS笔记文件夹
   - 其他文件夹：请参照下文 [#csnotes文件夹](#csnotes文件夹) 里的介绍
-- inspur/：Inspur公司的相关文档，其中技术相关的文档归档到csnotes文件夹中
-  - common/：集团通用文档
-  - IEI/：Inspur Electronic Information Industry，浪潮信息相关文档
-  - ISS/：Inspur Software，浪潮软件相关文档
-  - ESG/：Enterprise Software Group：浪潮国际相关文档
 - log/：本项目日志记录，记录笔记未来计划与历史编写记录，按年_月格式命名目录下的文件
   - 2019_7.md：2019年7月日志
   - 2019_8.md：2019年8月日志
@@ -68,26 +59,25 @@ CSNotebook.git
 - gb/：gitbook build文件夹
 - .gitignore
 
->注意：本项目暂设置为public，非Inspur员工请勿传播inspur文件夹中的文档
-
 ### csnotes文件夹
 
 文件夹|说明
 :--:|--
-[tools](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/tools)|markup（MarDown，YML），正则表达式，XML，技术文档，网络安全
-[dev](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/dev)|Git（Git，SVN，firefly，tfs），IDE（IntelliJ，VSCode），DevOps，CI/CD（GitLab，Jenkins，Travis-CI，Coding，Azure）
-[hw](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/hw)|底层（计组，汇编），GCC，嵌入式（STM32），存储技术（硬件部分）
-[os](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/os)|Linux，Shell，Docker
-[ds](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/ds)|数据结构，设计模式，LeetCode刷题
-[db](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/db)|MySQL，MongoDB，Redis，存储技术（软件部分）
-[c](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/c)|C/C++，Unity
-[dotnet](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/dotnet)|C#，.NET
-[java](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/java)|Java，Spring MVC，Spring Boot
-[dart](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/dart)|Dart，Flutter
-[py](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/py)|Python
-[web](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/web)|Network（OSI，TCP-IP，HTTP，SSL，SSH，Mail，FTP），Server（Apache，Nginx，IIS），H-Network(Bluetooth,WiFi,4G,ZigBee,NB-IoT)，通信原理
-[fe](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/fe)|前端（Html,CSS, JavaScript，PHP），js库（Node.js，Angular，React，vue），快速建站（Hexo，WordPress，GitBook）
-[mobile](https://gitlab.com/csnotes/csnotes/tree/master/csnotes/mobile)|Android，IOS原生开发
+[tools](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md)|markup（MarDown，YML），正则表达式，XML，技术文档，网络安全
+[dev](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md)|Git（Git，SVN，firefly，tfs），IDE（IntelliJ，VSCode），DevOps，CI/CD（GitLab，Jenkins，Travis-CI，Coding，Azure）
+[hw](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md)|底层（计组，汇编），GCC，嵌入式（STM32），存储技术（硬件部分）
+[os](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md)|Linux，Shell，Docker
+[ds](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md)|数据结构，设计模式，LeetCode刷题
+[db](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md)|MySQL，MongoDB，Redis，存储技术（软件部分）
+[c](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md)|C/C++，Unity
+[dotnet](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md)|C#，.NET
+[java](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md)|Java，Spring MVC，Spring Boot
+[java](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md)|Go
+[dart](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/dart/SUMMARY.md)|Dart，Flutter
+[py](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md)|Python
+[web](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md)|Network（OSI，TCP-IP，HTTP，SSL，SSH，Mail，FTP），Server（Apache，Nginx，IIS），H-Network(Bluetooth,WiFi,4G,ZigBee,NB-IoT)，通信原理
+[fe](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md)|前端（Html,CSS, JavaScript，PHP），js库（Node.js，Angular，React，vue），快速建站（Hexo，WordPress，GitBook）
+[mobile](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/mobile/SUMMARY.md)|Android，IOS原生开发
 
 >注：summary 文件夹中包含网页入口文件组织
 
@@ -132,25 +122,25 @@ CSNotebook.git
 ``` md
 # Summary
 
-* [简介](README.md)
+* [简介](/csnotes/db/README.md)
 
 ## SQL
 
 ### MySQL
-* [入门-数据库与数据表的操作](sql/mysql/mysql1.md)
-* [数据操作-单表查询](sql/mysql/mysql2.md)
-* [多表操作-事务与存储过程](sql/mysql/mysql3.md)
-* [视图-高级操作](sql/mysql/mysql4.md)
+* [入门-数据库与数据表的操作](/csnotes/db/sql/mysql/mysql1.md)
+* [数据操作-单表查询](/csnotes/db/sql/mysql/mysql2.md)
+* [多表操作-事务与存储过程](/csnotes/db/sql/mysql/mysql3.md)
+* [视图-高级操作](/csnotes/db/sql/mysql/mysql4.md)
 
-## No-SQL
-* [MongoDB](nosql/mongodb.md)
-* [Redis](nosql/redis.md)
+## noSQL
+* [MongoDB](/csnotes/db/nosql/mongodb.md)
+* [Redis](/csnotes/db/nosql/redis.md)
 
 ## 参考资源
-* [分类链接](参考资源/分类链接.md)
+* [分类链接](/csnotes/db/参考资源/分类链接.md)
 ```
 
-可以看到，SUMMARY.md 文件中添加了整个 db/ 文件夹中的笔记文件链接，即起到了目录作用。
+可以看到，SUMMARY.md 文件中添加了整个 `/csnotes/db/` 文件夹中的笔记文件链接，即起到了目录作用。
 
 README.md 文件则为入口文件，其中可以记录参考文件、整理日期、日志等。
 
@@ -182,7 +172,7 @@ README.md 文件则为入口文件，其中可以记录参考文件、整理日�
 
 ## 本月日志
 
-1. 2019.7.11 [csnotes/db/sql/mysql/mysql1.md] 更新《入门-数据库与数据表的操作》
+1. 7.11 [csnotes/](/csnotes/html/docs.html) 初始化该项目目录组织，添加README.md
 ```
 
 #### 条目
@@ -196,15 +186,15 @@ README.md 文件则为入口文件，其中可以记录参考文件、整理日�
 
 示例：
 
-`1. 2019.7.10 [csnotes/db/sql/mysql/mysql1.md] 更新《入门-数据库与数据表的操作》`
+`7.12 [others/jokes/quotes_chengjie](/others/jokes/quotes_chengjie/SUMMARY.md) 更新`
 
 **标签命名**：
 
-1. **增删改操作**：可直接使用文件夹名，如 ：`[csnotes/db/sql/mysql/mysql1.md]`，`[log/2019_7.md]`
+1. **增删改操作**：可直接使用文件夹名，如 ：`[/csnotes/db/sql/mysql/mysql1.md]`，`[/log/2019_7.md]`
 
 >注：若涉及文件较多，可采用高级目录作为标签。如：
 >
->`1. 2019.7.11 [csnotes/] 创建 CS 笔记目录并对文件进行初始化配置，添加部分笔记文件。`
+>`1. 7.11 [csnotes/](/csnotes/html/docs.html) 初始化该项目目录组织，添加README.md`
 
 ## 维护人员
 
