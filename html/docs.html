@@ -164,7 +164,7 @@
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 if(mdContent.indexOf(".md")!=-1)mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
-                else mdContent='/csnotes'+mdContent;
+                else mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes$2)");//链接格式修正
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }
