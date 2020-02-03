@@ -2,6 +2,10 @@
 
 * [本书首页](/csnotes/tools/README.md)
 
+## XML 
+
+* [XML Tutorial](/csnotes/tools/xml/XML_Tutorial.md)
+
 ## Markdown
 
 * [基本语法](/csnotes/tools/markdown/基本语法.md)

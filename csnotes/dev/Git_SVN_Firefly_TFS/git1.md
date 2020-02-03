@@ -1,6 +1,9 @@
 # Git
 
-参考：[Git-Map](https://github.com/TeamStuQ/skill-map/blob/master/data/map-Git.md)
+参考：
+
+- [Git-Map](https://github.com/TeamStuQ/skill-map/blob/master/data/map-Git.md)
+- [廖雪峰のgit教程](https://www.liaoxuefeng.com/wiki/896043488029600)
 
 ## 分布式世界
 
