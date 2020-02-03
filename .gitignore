@@ -3,3 +3,6 @@ _book
 node_modules
 .DS_Store
 .vscode
+# go编译程序
+*.exe
+__debug_bin
