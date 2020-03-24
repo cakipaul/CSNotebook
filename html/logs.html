@@ -100,7 +100,7 @@
             </ul>
         </div>
         <div id="md-to-html" class='mdWindow' :style="{'width':toolWindowWidth,'height':toolWindowHeight }">
-            <textarea id='md-content' style="display:none;">### Hello world!</textarea>
+            <textarea id='md-content' style="display:none;"></textarea>
         </div>
 
     </div>
@@ -198,9 +198,9 @@
                     toolCatHeight: window.innerHeight - 100 + 'px',
                     logs: [{
                         id: 0,
-                        content: '2020-01',
+                        content: '2020-Spring',
                         method: function () {
-                            window.open('/csnotes/html/logs.html?path=/log/2020_01.md', '_self');
+                            window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
                             // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
                         }
                     },{

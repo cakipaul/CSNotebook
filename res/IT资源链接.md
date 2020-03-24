@@ -66,6 +66,7 @@
 ## 通用资源
 
 - [网络上优质开源项目与资源](https://www.githubs.cn/awesome)
+- [脚本之家手册](http://shouce.jb51.net/) 
 - [极客搜索](https://s.geekbang.org/)
 - [手册网](http://www.shouce.ren/)
 - [红帽技术文档](https://www.redhat.com/zh/topics)
@@ -142,13 +143,25 @@
 ### 文档与导航
 
 - [Web前端导航](http://www.alloyteam.com/nav/)
-- [Flutter](https://flutterchina.club/)
+- [UI Lab](https://www.uplabs.com/)
 - [jQuery API 中文文档](http://jquery.cuishifeng.cn/source.html)
 - [jQuery API 中文文档](https://www.jquery123.com/)
 - [Reference to HTML Symbol Entities Codes](http://entitycode.com)
 - [Bootstrap](https://getbootstrap.com/)
 - [Bootstrap及相关文档](https://www.bootcss.com/)
 - [Bootswatch](https://bootswatch.com/)
+
+### 在线前端工具
+
+#### 色彩
+
+- [Paletton 成套配色生成器](http://paletton.com/)
+- [Material Design 调色板&icons](https://www.materialpalette.com/colors)
+- [Flat UI Colors](http://flatuicolors.com/)
+- [Coolors](http://coolors.co/)
+- [Skala Color](http://bjango.com/mac/skalacolor/)
+- [Brand Colors](http://brandcolors.net/)
+- [lackk 调色板](http://lackk.com/color/)
 
 ### 素材资源
 
@@ -226,6 +239,8 @@
 - [中国国家数据](http://data.stats.gov.cn/)
 - [数据库与大数据分析](https://www.questmobile.com.cn/)
 - [艾瑞网-大数据分析与报告](http://report.iresearch.cn/)
+- [中文 Bible-API](http://bible.fhl.net/json/)
+- [Bible-API](http://bible-api.com/)
 
 ## IT社区
 
@@ -239,3 +254,9 @@
 - [51CTO](http://blog.51cto.com/)
 - [掘金](https://juejin.im)
 - [内存·溢出](http://outofmemory.cn/)
+
+## Jobs
+
+- [Awesome Remote Job](https://github.com/lukasz-madon/awesome-remote-job)
+- [Awesome Interview Questions](https://github.com/MaximAbramchuck/awesome-interview-questions)
+- [Triplebyte](https://triplebyte.com/)
