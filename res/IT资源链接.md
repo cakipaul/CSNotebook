@@ -121,6 +121,7 @@
 
 ### Java/Android
 
+- [Alibaba Java Initializr](https://start.aliyun.com/)
 - [Java中文在线教程](http://how2j.cn/)
 - [MVN Repository](https://mvnrepository.com/)
 - [阿里云 Maven Repo](http://maven.aliyun.com/nexus/content/groups/public/)

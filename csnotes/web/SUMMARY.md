@@ -21,6 +21,10 @@
 * [Nginx](/csnotes/web/Server/nginx1.md)
 * [Caddy](/csnotes/web/Server/caddy1.md)
 
+## 配置
+
+* [中间件 WEB.XML 配置](/csnotes/web/settings/web_xml1.md)
+
 ## APP
 
 * [Http](/csnotes/web/APP/http1.md)
