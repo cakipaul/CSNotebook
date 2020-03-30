@@ -2,13 +2,17 @@
 
 * [本书首页](/csnotes/fe/README.md)
 
-## 基础
+## HTML/CSS基础
 
 * [Html](/csnotes/fe/Html/html1.md)
 * [CSS](/csnotes/fe/CSS/css1.md)
+
+## JS
+
 * [JS 入门教程1](/csnotes/fe/JavaScipt/js1.md)
 * [JS 入门教程2](/csnotes/fe/JavaScipt/js2.md)
-* [PHP](/csnotes/fe/PHP/php1.md)
+* [前端JavaScript规范](/csnotes/fe/JavaScipt/js-guide.md)
+
 
 ## JS 库
 

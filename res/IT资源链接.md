@@ -11,6 +11,7 @@
 - [七牛云](https://www.qiniu.com/)
 - [搬瓦工](https://bwh88.net/)
 - [全球主机交流区](https://www.hostloc.com/forum.php)
+- [vultr](my.vultr.com)
 
 ## CDN/图床
 
