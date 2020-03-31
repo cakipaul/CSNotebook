@@ -108,11 +108,15 @@
 
 ## 操作系统
 
-- [TectMint](https://www.tecmint.com)
 - [Linux 初学者(学习资料)-知乎专栏](https://zhuanlan.zhihu.com/p/21723250)
 - [Linux 学习之路-开源中国社区](http://www.oschina.net/question/587367_156024)
-- [鳥哥的Linux 私房菜](http://linux.vbird.org/)
 - [Linux下的客户端工具表4.1.3 后端资源](https://github.com/agarrharr/awesome-cli-apps)
+
+### Linux
+
+- [Linux命令大全](https://man.linuxde.net/)
+- [TectMint](https://www.tecmint.com)
+- [鳥哥的Linux 私房菜](http://linux.vbird.org/)
 
 ## 后端
 
