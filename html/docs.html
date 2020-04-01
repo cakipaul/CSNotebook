@@ -177,8 +177,8 @@
             xhr.onload = function () {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
-                if (mdContent.indexOf(".md") != -1) mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
-                else mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes$2)");//链接格式修正
+                //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
+                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/logs.html?path=$2$3)");
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }

@@ -22,6 +22,7 @@
     <script src="editor.md/lib/sequence-diagram.min.js"></script>
     <script src="editor.md/lib/flowchart.min.js"></script>
     <script src="editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="js/vue-clipboard.min.js"></script>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -176,8 +177,8 @@
             xhr.onload = function () {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
-                if (mdContent.indexOf(".md") != -1) mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/logs.html?path=$2)");//链接格式修正
-                else mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes$2)");//链接格式修正
+                //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
+                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/logs.html?path=$2$3)");
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }
