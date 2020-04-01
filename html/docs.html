@@ -5,7 +5,7 @@
     <title>Docs</title>
 
     <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
-    <link rel="stylesheet" href="editormd/css/editormd.preview.css" />
+    <!-- <link rel="stylesheet" href="editormd/css/editormd.preview.css" /> -->
 
     <!--引入js文件-->
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -22,7 +22,20 @@
     <script src="editor.md/lib/sequence-diagram.min.js"></script>
     <script src="editor.md/lib/flowchart.min.js"></script>
     <script src="editor.md/lib/jquery.flowchart.min.js"></script>
+    <script src="js/vue-clipboard.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
     <style>
+        * {
+            box-sizing: content-box;
+            width: 100%;
+        }
+
         .mdWindow {
             /* width: 900px;
             height: 900px; */
@@ -33,7 +46,7 @@
             margin: 18px;
         }
 
-        .sidebar {
+        .doc-sidebar {
             text-align: center;
             overflow-y: auto;
             float: left;
@@ -41,7 +54,7 @@
             padding-left: 25px;
         }
 
-        .sidebar>ul {
+        .doc-sidebar>ul {
             text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
             font-size: 20px;
@@ -57,7 +70,7 @@
             margin: 0; */
         }
 
-        .sidebar>ul>li {
+        .doc-sidebar>ul>li {
             text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
             font-size: 13px;
@@ -87,7 +100,7 @@
 
 
     <div id="tools-div" style="height: auto;width: auto;">
-        <div class="sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
+        <div class="doc-sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
             <ul onclick="editThePage()">Edit the page
             </ul>
             <ul>Category
@@ -104,6 +117,7 @@
         </div>
 
     </div>
+    <div id="toastDiv" class="tooltip-inner" style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px"></div>
 
 
 
@@ -130,9 +144,6 @@
                 path: "editor.md/lib/"
             });
         }
-        function backToReader() {
-
-        }
 
         $.extend({
             getUrlVars: function () {
@@ -151,6 +162,9 @@
         });
 
         $(function () {
+            //设置popover属性
+            $().popover({});
+
             // Getting URL var by its nam
             var path = $.getUrlVar('path');
             // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
@@ -163,7 +177,7 @@
             xhr.onload = function () {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
-                if(mdContent.indexOf(".md")!=-1)mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
+                if (mdContent.indexOf(".md") != -1) mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/docs.html?path=$2)");//链接格式修正
                 else mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes$2)");//链接格式修正
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
@@ -180,6 +194,43 @@
                     sequenceDiagram: true,  // 默认不解析
                 });
 
+                codeId = 0;
+                $("#md-to-html code").each(function () {
+                    var $codeBlock = $(this);
+                    var codeBlockHtml = $codeBlock.html();
+                    var popoverMsg = "";
+                    //若在代码块中則返回
+                    if ($codeBlock.parent().prop("tagName") == "LI" && $codeBlock.parent().parent().prop("tagName") == "OL") {
+                        var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function (str) { return str != "linenums" });
+                        //判断是否有 linenums 样式，包含則返回
+                        if (hasLinenumsClass) {
+                            popoverMsg = "点击复制本行";//在代碼塊中
+                        } else {
+                            popoverMsg = "点击复制";//不在代碼塊中
+                        }
+                    } else {
+                        popoverMsg = "点击复制";//不在代碼塊中
+                    }
+                    // @click:getOneLineCode(event)
+
+                    codeHtml = '<span id="codeNum' + codeId + '" v-clipboard:copy="getOneLineCode(' + codeId + ')" v-clipboard:success="onCopy" v-clipboard:error="onError" title="' + popoverMsg + '" data-toggle="popover" data-content="' + popoverMsg + '">' + codeBlockHtml + '<span></code>';
+                    $codeBlock.html(codeHtml)
+                    codeId++;
+                })
+
+                $("#md-to-html pre>ol ").each(function () {
+                    var $linedCodeBlock = $(this);
+                    var hasLinenumsClass = !$(this).attr("class").split(" ").every(function (str) { return str != "linenums" });
+                    //判断是否有 linenums 样式，不包含則返回
+                    if (!hasLinenumsClass) { return; }
+                    linedCodeHtml = $linedCodeBlock.html();
+                    linedCodeHtml = '<button id="codeNum' + codeId + '" style="width:60px;padding:1px;margin:5px;color:grey;" v-clipboard:copy=getLinedCode(' + codeId + ') v-clipboard:success="onCopy" v-clipboard:error="onError" >copy</button>' + linedCodeHtml;
+                    $linedCodeBlock.html(linedCodeHtml)
+                    codeId++;
+                })
+
+                initVueApp();
+
             }
         });
 
@@ -187,172 +238,216 @@
             props: ['tool'],
             template: '<li @click="tool.method">{{ tool.content }}</li>'
         })
-        var toolsApp = new Vue({
-            el: '#tools-div',
-            data() {
-                return {
-                    toolUrl: '',
-                    toolWindowWidth: window.innerWidth - 400 + 'px',
-                    toolWindowHeight: window.innerHeight - 130 + 'px',
-                    toolCatWidth: '260px',
-                    toolCatHeight: window.innerHeight - 100 + 'px',
-                    Category: [{
-                        id: 0,
-                        content: 'Hardware',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 1,
-                        content: 'OperationSystem',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                        }
-                    }, {
-                        id: 2,
-                        content: 'DataStructure',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 3,
-                        content: 'Tools',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 4,
-                        content: 'DataBase',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 5,
-                        content: 'C',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 6,
-                        content: '.Net',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 7,
-                        content: 'Java',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 8,
-                        content: 'Go',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 9,
-                        content: 'Python',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 10,
-                        content: 'Moblie',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/mobile/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 11,
-                        content: 'Web',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 12,
-                        content: 'FrontEnd',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 13,
-                        content: 'Dev',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    }],
-                    Resource: [{
-                        id: 0,
-                        content: 'Common Res',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/通用资源链接.md', '_self');
-                            // window.open("http://www.bejson.com/ui/compress_img/");
-                        }
-                    }, {
-                        id: 1,
-                        content: 'IT Res',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/IT资源链接.md', '_self');
-                            // window.open("http://tool.oschina.net/");
-                        }
-                    }, {
-                        id: 2,
-                        content: 'IT Skills Tree',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/IT技能树.md', '_self');
-                            // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
-                        }
-                    }, {
-                        id: 3,
-                        content: 'RSS Sites',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/RSS_sites.md', '_self');
-                            // window.open("https://www.materialpalette.com/icons");
-                        }
-                    }]
-                }
-            },
 
-            mounted() {
-                const _this = this;
-                window.onresize = () => {
-                    return (() => {
-                        _this.toolWindowHeight = window.innerHeight - 130 + 'px';
-                        _this.toolWindowWidth = window.innerWidth - 400 + 'px';
-                        console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
-                        _this.toolCatHeight = window.innerHeight - 100 + 'px';
-                        _this.toolCatWidth = '260px';
-                    })()
-                }
-            },
+        function initVueApp() {
+            var toolsApp = new Vue({
+                el: '#tools-div',
+                data() {
+                    return {
+                        toolUrl: '',
+                        toolWindowWidth: window.innerWidth - 400 + 'px',
+                        toolWindowHeight: window.innerHeight - 130 + 'px',
+                        toolCatWidth: '260px',
+                        toolCatHeight: window.innerHeight - 100 + 'px',
+                        Category: [{
+                            id: 0,
+                            content: 'Hardware',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 1,
+                            content: 'OperationSystem',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                            }
+                        }, {
+                            id: 2,
+                            content: 'DataStructure',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 3,
+                            content: 'Tools',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 4,
+                            content: 'DataBase',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 5,
+                            content: 'C',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 6,
+                            content: '.Net',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 7,
+                            content: 'Java',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 8,
+                            content: 'Go',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 9,
+                            content: 'Python',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 10,
+                            content: 'Mobile',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/mobile/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 11,
+                            content: 'Web',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 12,
+                            content: 'FrontEnd',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        },
+                        {
+                            id: 13,
+                            content: 'Dev',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+                            }
+                        }],
+                        Resource: [{
+                            id: 0,
+                            content: 'Common Res',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/res/通用资源链接.md', '_self');
+                                // window.open("http://www.bejson.com/ui/compress_img/");
+                            }
+                        }, {
+                            id: 1,
+                            content: 'IT Res',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/res/IT资源链接.md', '_self');
+                                // window.open("http://tool.oschina.net/");
+                            }
+                        }, {
+                            id: 2,
+                            content: 'IT Skills Tree',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/res/IT技能树.md', '_self');
+                                // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
+                            }
+                        }, {
+                            id: 3,
+                            content: 'RSS Sites',
+                            method: function () {
+                                window.open('/csnotes/html/docs.html?path=/res/RSS_sites.md', '_self');
+                                // window.open("https://www.materialpalette.com/icons");
+                            }
+                        }]
+                    }
+                },
+                methods: {
+                    onCopy: function () {
+                        this.toast("", "copy success")
+                    },
+                    onError: function () {
+                        this.toast("", "copy error")
+                    },
+                    getOneLineCode: function (codeId) {
+                        var selector = "#codeNum" + codeId;
+                        var originHtml = $(selector).html();
+                        // console.log($(selector));
+                        var convertedText = originHtml.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ');
+                        // console.log("copy:", convertedText);
+                        return convertedText;
+                    },
+                    getLinedCode: function (codeId) {
+                        var selector = "#codeNum" + codeId;
+                        var originHtml = $(selector).parent().html();
+                        //去除开始的 copy button
+                        originHtml = originHtml.replace(/.*\<\/button\>/g, '');
+                        //按 li 添加换行，放在数组中
+                        var codeLinedList = originHtml.split(/\<\/li\>/g);
+                        //去除其他标签
+                        var convertedText = ""
+                        var firstLine = true;
+                        codeLinedList.forEach(function (codeLine) {
+                            if (!firstLine) {
+                                convertedText += "\n";
+                            }
+                            convertedText += codeLine.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, '').replace(/>/g, '');//.replace(/ /g, ' ')
+                            firstLine = false;
+                        })
+                        // console.log("copy:", convertedText);
+                        return convertedText;
+                    },
+                    toast: function (title, content) {
+                        $("#toastDiv").html(content);
+                        $("#toastDiv").fadeIn(400);
+                        setTimeout(function () { $("#toastDiv").fadeToggle(400); }, 1200);
+                    }
+                },
+                mounted() {
+                    const _this = this;
+                    window.onresize = () => {
+                        return (() => {
+                            _this.toolWindowHeight = window.innerHeight - 130 + 'px';
+                            _this.toolWindowWidth = window.innerWidth - 400 + 'px';
+                            console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
+                            _this.toolCatHeight = window.innerHeight - 100 + 'px';
+                            _this.toolCatWidth = '260px';
+                        })()
+                    }
+                },
 
-        })
+            })
+        }
+
 
     </script>
 </body>
