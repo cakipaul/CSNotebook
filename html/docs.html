@@ -178,7 +178,7 @@
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
-                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/logs.html?path=$2$3)");
+                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3)");
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }
