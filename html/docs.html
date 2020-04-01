@@ -116,7 +116,9 @@
         </div>
 
     </div>
-    <div id="toastDiv" class="tooltip-inner" style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px"></div>
+    <div id="toastDiv" class="tooltip-inner"
+        style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
+    </div>
 
 
 
@@ -176,8 +178,8 @@
             xhr.onload = function () {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
-               //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
-               mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3)");
+                //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
+                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3)");
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }
@@ -205,7 +207,7 @@
             props: ['tool'],
             template: '<li @click="tool.method">{{ tool.content }}</li>'
         })
-        
+
         function initCopyMethod() {
             codeId = 0;
             $("#md-to-html code").each(function () {
