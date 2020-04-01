@@ -69,82 +69,82 @@ function imagePickerSuccess(filePaths) {
 
 因微信API限制，移动框架的部分API在微信公众号无法使用，支持情况如下：
 
-| 插件名称        | 插件方法                                | 插件方法说明            | 支持情况   |
-|-----------------|-----------------------------------------|-------------------------|------------|
-| 设备信息        | cmApi.device.getDeviceId                | 获取设备唯一标识        | 支持       |
-| 设备信息        | cmApi.device.getVersion                 | 获取系统版本            | 支持       |
-| 设备信息        | cmApi.device.getModel                   | 获取手机型号            | 支持       |
-| 设备信息        | cmApi.device.getBrand                   | 获取手机品牌            | 支持       |
-| 设备信息        | cmApi.device.getType                    | 获取手机系统类型        | 支持       |
-| APP信息         | cmApi.appUtil.getAppVersionCode         | 获取app版本号           | 支持       |
-| APP信息         | cmApi.appUtil.getAppName                | 获取app名称             | 支持       |
-| APP信息         | cmApi.appUtil.getNetWorkType            | 获取当前网络类型        | 支持       |
-| APP信息         | cmApi.appUtil.downloadApk               | 下载APK安装包           | 支持       |
-| 本地数据库操作  | cmApi.jdbc.execSelectSQL                | 数据库查询              | **不支持** |
-| 本地数据库操作  | cmApi.jdbc.execUpdateSQL                | 数据库更新              | **不支持** |
-| 用户定位及导航  | cmApi.map.locate                        | 用户定位                | 支持       |
-| 用户定位及导航  | cmApi.map.navigate                      | 百度导航                | **不支持** |
-| 网络请求        | cmApi.request.commHttpPostAsync         | 异步网络请求            | 支持       |
-| 网络请求        | cmApi.request.reportFormHttpPostAsync   | 报表请求                | 支持       |
-| 消息推送        | cmApi.push.init                         | 初始化推送              | **不支持** |
-| 消息推送        | cmApi.push.onBind                       | 推送绑定                | **不支持** |
-| NFC             | cmApi.nfc.isNfcExists                   | 判断手机是否支持nfc功能 | **不支持** |
-| NFC             | cmApi.nfc.isNfcEnabled                  | 判断手机是否开启nfc功能 | **不支持** |
-| NFC             | cmApi.nfc.startReadCard                 | nfc读卡                 | **不支持** |
-| NFC             | cmApi.nfc.stopReadCard                  | 停止nfc读卡             | **不支持** |
-| NFC             | cmApi.nfc.writeCard                     | nfc写操作               | **不支持** |
-| NFC             | cmApi.nfc.resetCardInfo                 | 重置nfc卡信息           | **不支持** |
-| 蓝牙打印        | cmApi.bluetoothPrinter.setTitle         | 设置蓝牙打印的标题      | **不支持** |
-| 蓝牙打印        | cmApi.bluetoothPrinter.setInfo          | 设置蓝牙打印的内容      | **不支持** |
-| 蓝牙打印        | cmApi.bluetoothPrinter.setTyp           | 设置蓝牙打印的打印类型  | **不支持** |
-| 蓝牙打印        | cmApi.bluetoothPrinter.printer          | 开始打印                | **不支持** |
-| 蓝牙打印        | cmApi.bluetoothPrinter.destroyBluetooth | 停止打印                | **不支持** |
-| 手写签名        | cmApi.handwrite.start                   | 手写签名                | **不支持** |
-| 二维码          | cmApi.qrCode.createQRCode               | 生成二维码              | 支持       |
-| 二维码          | cmApi.qrCode.scan                       | 二维码扫描              | 支持       |
-| 拍照            | cmApi.photo.photograph                  | 相机拍照                | 支持       |
-| 拍照            | cmApi.image.watermarkText               | 添加文字水印            | **不支持** |
-| 拍照            | cmApi.image.watermaskImage              | 添加照片水印            | **不支持** |
-| 拍照            | cmApi.image.compressByScale             | 照片等比例压缩          | 支持       |
-| 拍照            | cmApi.image.compressByScale             | 照片按大小压缩          | 支持       |
-| 视频            | cmApi.video.show                        | 安防监控                | **不支持** |
-| 视频            | cmApi.video.playback                    | 录像回放                | **不支持** |
-| 视频            | cmApi.video.record                      | 手机录像                | **不支持** |
-| 视频            | cmApi.video.compress                    | 视频压缩                | **不支持** |
-| 语音播报        | cmApi.speech.startSpeak                 | 开始播放                | **不支持** |
-| 语音播报        | cmApi.speech.stopSpeak                  | 停止播放                | **不支持** |
-| 手机认证        | cmApi.fingerprint.startAuthenticate     | 开始认证                | **不支持** |
-| 手机认证        | cmApi.fingerprint.cancelAuthenticate    | 停止认证                | **不支持** |
-| 手机认证        | cmApi.fingerprint.isSupport             | 是否支持认证            | **不支持** |
-| OCR识别         | cmApi.ocr.speechRecognition             | 语音识别                | **不支持** |
-| OCR识别         | cmApi.ocr.licenseRecognition            | 车牌号识别              | **不支持** |
-| OCR识别         | cmApi.ocr.idCardRecognition             | 身份证识别              | **不支持** |
-| 文件            | cmApi.file.uploadFiles                  | 文件上传                | 支持       |
-| 文件            | cmApi.file.downloadFiles                | 文件下载                | **不支持** |
-| 文件            | cmApi.document.preview                  | 文件预览                | **不支持** |
-| 文件            | cmApi.file.delete                       | 文件删除                | **不支持** |
-| 文件            | cmApi.file.getMd5                       | 获取文件MD5值           | **不支持** |
-| 文件            | cmApi.file.rename                       | 文件重命名              | **不支持** |
-| 文件            | cmApi.file.copy                         | 文件复制                | **不支持** |
-| 文件            | cmApi.file.mkdirs                       | 文件新建子目录          | **不支持** |
-| configs配置文件 | cmApi.config.getItem                    | 获取配置信息            | **不支持** |
-| configs配置文件 | cmApi.config.isDebug                    | chrome浏览器调试模式    | **不支持** |
-| configs配置文件 | cmApi.config.isCompatibility            | 兼容模式                | **不支持** |
-| 文件选择器      | cmApi.FilePicker.openImagePicker        | 相册选择器              | 支持       |
-| 文件选择器      | cmApi.FilePicker.openVideoPicker        | 视频选择器              | **不支持** |
-| 文件选择器      | cmApi.FilePicker.openAudioPicker        | 音频选择器              | **不支持** |
-| 文件选择器      | cmApi.FilePicker.openFilePicker         | 文件选择器              | **不支持** |
-| 数据存储        | cmApi.LocalStorage.getItem              | 获取数据                | 支持       |
-| 数据存储        | cmApi.LocalStorage.setItem              | 存储数据                | 支持       |
-| 手持机          | cmApi.handset.readIdCard                | 读卡                    | **不支持** |
-| 手持机          | cmApi.handset.closeIdCard               | 关闭读卡                | **不支持** |
-| 手持机          | cmApi.handset.print                     | 打印                    | **不支持** |
-| 手持机          | cmApi.handset.scanBarCode               | 二维码扫描              | **不支持** |
-| 手持机          | cmApi.handset.scanBarCodeBindKey        | 开启二维码扫描按键      | **不支持** |
-| 手持机          | cmApi.handset.scanBarCodeUnBindKey      | 关闭二维码扫描按键      | **不支持** |
-| 监听            | cmApi.eventListener.add                 | 添加监听                | **不支持** |
-| 监听            | cmApi.eventListener.remove              | 移除监听                | **不支持** |
-| 监听            | cmApi.eventListener.clear               | 清楚监听                | **不支持** |
+| 插件名称        | 插件方法                                  | 插件方法说明            | 支持情况   |
+|-----------------|-------------------------------------------|-------------------------|------------|
+| 设备信息        | `cmApi.device.getDeviceId`                | 获取设备唯一标识        | 支持       |
+| 设备信息        | `cmApi.device.getVersion`                 | 获取系统版本            | 支持       |
+| 设备信息        | `cmApi.device.getModel`                   | 获取手机型号            | 支持       |
+| 设备信息        | `cmApi.device.getBrand`                   | 获取手机品牌            | 支持       |
+| 设备信息        | `cmApi.device.getType`                    | 获取手机系统类型        | 支持       |
+| APP信息         | `cmApi.appUtil.getAppVersionCode`         | 获取app版本号           | 支持       |
+| APP信息         | `cmApi.appUtil.getAppName`                | 获取app名称             | 支持       |
+| APP信息         | `cmApi.appUtil.getNetWorkType`            | 获取当前网络类型        | 支持       |
+| APP信息         | `cmApi.appUtil.downloadApk`               | 下载APK安装包           | 支持       |
+| 本地数据库操作  | `cmApi.jdbc.execSelectSQL`                | 数据库查询              | **不支持** |
+| 本地数据库操作  | `cmApi.jdbc.execUpdateSQL`                | 数据库更新              | **不支持** |
+| 用户定位及导航  | `cmApi.map.locate`                        | 用户定位                | 支持       |
+| 用户定位及导航  | `cmApi.map.navigate`                      | 百度导航                | **不支持** |
+| 网络请求        | `cmApi.request.commHttpPostAsync`         | 异步网络请求            | 支持       |
+| 网络请求        | `cmApi.request.reportFormHttpPostAsync`   | 报表请求                | 支持       |
+| 消息推送        | `cmApi.push.init`                         | 初始化推送              | **不支持** |
+| 消息推送        | `cmApi.push.onBind`                       | 推送绑定                | **不支持** |
+| NFC             | `cmApi.nfc.isNfcExists`                   | 判断手机是否支持nfc功能 | **不支持** |
+| NFC             | `cmApi.nfc.isNfcEnabled`                  | 判断手机是否开启nfc功能 | **不支持** |
+| NFC             | `cmApi.nfc.startReadCard`                 | nfc读卡                 | **不支持** |
+| NFC             | `cmApi.nfc.stopReadCard`                  | 停止nfc读卡             | **不支持** |
+| NFC             | `cmApi.nfc.writeCard`                     | nfc写操作               | **不支持** |
+| NFC             | `cmApi.nfc.resetCardInfo`                 | 重置nfc卡信息           | **不支持** |
+| 蓝牙打印        | `cmApi.bluetoothPrinter.setTitle`         | 设置蓝牙打印的标题      | **不支持** |
+| 蓝牙打印        | `cmApi.bluetoothPrinter.setInfo`          | 设置蓝牙打印的内容      | **不支持** |
+| 蓝牙打印        | `cmApi.bluetoothPrinter.setTyp`           | 设置蓝牙打印的打印类型  | **不支持** |
+| 蓝牙打印        | `cmApi.bluetoothPrinter.printer`          | 开始打印                | **不支持** |
+| 蓝牙打印        | `cmApi.bluetoothPrinter.destroyBluetooth` | 停止打印                | **不支持** |
+| 手写签名        | `cmApi.handwrite.start`                   | 手写签名                | **不支持** |
+| 二维码          | `cmApi.qrCode.createQRCode`               | 生成二维码              | 支持       |
+| 二维码          | `cmApi.qrCode.scan`                       | 二维码扫描              | 支持       |
+| 拍照            | `cmApi.photo.photograph`                  | 相机拍照                | 支持       |
+| 拍照            | `cmApi.image.watermarkText`               | 添加文字水印            | **不支持** |
+| 拍照            | `cmApi.image.watermaskImage`              | 添加照片水印            | **不支持** |
+| 拍照            | `cmApi.image.compressByScale`             | 照片等比例压缩          | 支持       |
+| 拍照            | `cmApi.image.compressByScale`             | 照片按大小压缩          | 支持       |
+| 视频            | `cmApi.video.show`                        | 安防监控                | **不支持** |
+| 视频            | `cmApi.video.playback`                    | 录像回放                | **不支持** |
+| 视频            | `cmApi.video.record`                      | 手机录像                | **不支持** |
+| 视频            | `cmApi.video.compress`                    | 视频压缩                | **不支持** |
+| 语音播报        | `cmApi.speech.startSpeak`                 | 开始播放                | **不支持** |
+| 语音播报        | `cmApi.speech.stopSpeak`                  | 停止播放                | **不支持** |
+| 手机认证        | `cmApi.fingerprint.startAuthenticate`     | 开始认证                | **不支持** |
+| 手机认证        | `cmApi.fingerprint.cancelAuthenticate`    | 停止认证                | **不支持** |
+| 手机认证        | `cmApi.fingerprint.isSupport`             | 是否支持认证            | **不支持** |
+| OCR识别         | `cmApi.ocr.speechRecognition`             | 语音识别                | **不支持** |
+| OCR识别         | `cmApi.ocr.licenseRecognition`            | 车牌号识别              | **不支持** |
+| OCR识别         | `cmApi.ocr.idCardRecognition`             | 身份证识别              | **不支持** |
+| 文件            | `cmApi.file.uploadFiles`                  | 文件上传                | 支持       |
+| 文件            | `cmApi.file.downloadFiles`                | 文件下载                | **不支持** |
+| 文件            | `cmApi.document.preview`                  | 文件预览                | **不支持** |
+| 文件            | `cmApi.file.delete`                       | 文件删除                | **不支持** |
+| 文件            | `cmApi.file.getMd5`                       | 获取文件MD5值           | **不支持** |
+| 文件            | `cmApi.file.rename`                       | 文件重命名              | **不支持** |
+| 文件            | `cmApi.file.copy`                         | 文件复制                | **不支持** |
+| 文件            | `cmApi.file.mkdirs`                       | 文件新建子目录          | **不支持** |
+| configs配置文件 | `cmApi.config.getItem`                    | 获取配置信息            | **不支持** |
+| configs配置文件 | `cmApi.config.isDebug`                    | chrome浏览器调试模式    | **不支持** |
+| configs配置文件 | `cmApi.config.isCompatibility`            | 兼容模式                | **不支持** |
+| 文件选择器      | `cmApi.FilePicker.openImagePicker`        | 相册选择器              | 支持       |
+| 文件选择器      | `cmApi.FilePicker.openVideoPicker`        | 视频选择器              | **不支持** |
+| 文件选择器      | `cmApi.FilePicker.openAudioPicker`        | 音频选择器              | **不支持** |
+| 文件选择器      | `cmApi.FilePicker.openFilePicker`         | 文件选择器              | **不支持** |
+| 数据存储        | `cmApi.LocalStorage.getItem`              | 获取数据                | 支持       |
+| 数据存储        | `cmApi.LocalStorage.setItem`              | 存储数据                | 支持       |
+| 手持机          | `cmApi.handset.readIdCard`                | 读卡                    | **不支持** |
+| 手持机          | `cmApi.handset.closeIdCard`               | 关闭读卡                | **不支持** |
+| 手持机          | `cmApi.handset.print`                     | 打印                    | **不支持** |
+| 手持机          | `cmApi.handset.scanBarCode`               | 二维码扫描              | **不支持** |
+| 手持机          | `cmApi.handset.scanBarCodeBindKey`        | 开启二维码扫描按键      | **不支持** |
+| 手持机          | `cmApi.handset.scanBarCodeUnBindKey`      | 关闭二维码扫描按键      | **不支持** |
+| 监听            | `cmApi.eventListener.add`                 | 添加监听                | **不支持** |
+| 监听            | `cmApi.eventListener.remove`              | 移除监听                | **不支持** |
+| 监听            | `cmApi.eventListener.clear`               | 清楚监听                | **不支持** |
 
 ## 插件API使用说明
 
@@ -598,692 +598,254 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
     - `cmApi.deleteLocalImg(path)` //V4.0已废弃，但可继续使用。请使用file.delete。
     - `cmApi.file.delete(path)`
 5. 文件重命名
-方法：
-`cmApi.file.rename(opts)` 
-参数列表：
-参数名	类型	描述
-oldPath	String	旧文件路径
-newName	String	新文件名
-返回值：
-参数名	类型	描述
-newName	String	新文件名
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-var params = {oldPath:oldPath,newName:newName};
-cmApi.file.rename({params:params,success:success,error:error}
-2.11.9.文件复制
-方法：
-`cmApi.file.copy(opts)` 
-参数列表：
-参数名	类型	描述
-oldPath	String	旧文件路径
-newPath	String	新文件路径
-返回值：
-参数名	类型	描述
-newPath	String	新文件路径
-返回方式：
-异步-方法回调
-增加版本：
-   V4.0
-示例：
-var params = {oldPath:oldPath,newPath:newPath};
-cmApi.file.copy({params:params,success:success,error:error}
-2.11.10.新建文件夹
-方法：
-`cmApi.file.mkdirs(opts)` 
-参数列表：
-参数名	类型	描述
-dirPath	String	新建文件路径
-返回值：
-参数名	类型	描述
-dirPath	String	新建文件路径
-返回方式：
-异步-方法回调
-增加版本：
-   V4.0
-示例：
-var params = {dirPath:dirPath };
-cmApi.file.mkdirs({params:params,success:success,error:error}
-2.11.11.获取文件MD5值
-方法：
-`cmApi.file.getMd5(path)` 
-参数列表：
-参数名	类型	描述
-path	String	文件路径
-返回值：
-参数名	类型	描述
-md5	String	文件md5
-返回方式：
-同步
-增加版本：
-V4.0
-示例：
-var md5 = `cmApi.file.getMd5(path)` 
-2.12.文件选择器
-2.12.1.相册选择器
-方法：
-`cmApi.filePicker.openImagePicker(opts)` 
-参数列表：
-参数名	类型	描述
-maxCount	int	最大选择数量
-返回值：
-参数名	类型	描述
-data	String	选中文件附件，以;分割
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-var params = {maxCount:maxCount};
-cmApi.filePicker.openImagePicker({params:params,success:success,error:error}
-2.12.2.视频选择器
-方法：
-`cmApi.filePicker.openVideoPicker(opts)` 
-参数列表：
-参数名	类型	描述
-maxCount	int	最大选择数量
-返回值：
-参数名	类型	描述
-data	String	选中文件附件，以;分割
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-var params = {maxCount:maxCount};
-cmApi.filePicker.openVideoPicker({params:params,success:success,error:error}
-2.12.3.音频选择器
-方法：
-`cmApi.filePicker.openAudioPicker(opts)` 
-参数列表：
-参数名	类型	描述
-maxCount	int	最大选择数量
-返回值：
-参数名	类型	描述
-data	String	选中文件附件，以;分割
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-var params = {maxCount:maxCount};
-cmApi.filePicker.openAudioPicker({params:params,success:success,error:error}
-2.12.4.文件选择器
-方法：
-`cmApi.filePicker.openFilePicker(opts)` 
-参数列表：
-参数名	类型	描述
-maxCount	int	最大选择数量
-返回值：
-参数名	类型	描述
-data	String	选中文件附件，以;分割
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-var params = {maxCount:maxCount};
-cmApi.filePicker.openFilePicker({params:params,success:success,error:error}
+    - `cmApi.file.rename(opts)`  // oldName	，newName	
+6. 文件复制
+    - `cmApi.file.copy(opts)` // oldPath	，newPath
+7. 新建文件夹
+    - `cmApi.file.mkdirs(opts)`  //dirPath	String	新建文件路径
+8. 获取文件MD5值
+    - `cmApi.file.getMd5(path)` 
 
-2.13.网络摄像头
+### 文件选择器
+
+1. 相册选择器
+    - `cmApi.filePicker.openImagePicker(opts)` //maxCount	int	最大选择数量
+2. 视频选择器
+    - `cmApi.filePicker.openVideoPicker(opts)` //maxCount	int	最大选择数量
+3. 音频选择器
+    - `cmApi.filePicker.openAudioPicker(opts)` //maxCount	int	最大选择数量
+4. 文件选择器
+    - `cmApi.filePicker.openFilePicker(opts)` //maxCount	int	最大选择数量
+
+### 网络摄像头
+
 即安防摄像头，依赖网络摄像头扩展插件。
-2.13.1.视频预览
-方法：
-`cmApi.webcam.preview(deviceList,title)`
-参数列表：
-参数名	类型	描述
-deviceList		arrayList	视频监控设备列表
-title	String	安防监控页面标题
-device格式
-参数名	类型	描述
-id	String	摄像头编号
-label	String	摄像头名称
-parentId	String	父级
-info	JSONObject	摄像头信息
-info格式
-参数名	类型	描述
-userName	String	认证用户名
-password	String	认证密码
-ip	String	IP地址
-port	String	端口号
-channel	String	通道号
-deviceBrand	String	品牌，大华：DHNET；海康威视：HIKVISION；宇视：UNIVIEW
-deviceType	String	类型，枪机：0；球机：1
-返回值：
-无
-增加版本：
-V4.0
-示例：
- `cmApi.webcam.preview([],' ')` 
-2.13.2.视频预览（已废弃）
-V4.0已废弃，但可继续使用。请使用video.preview。
-方法：
-`cmApi.video.show(deviceList,title)` 
-参数列表：
-参数名	类型	描述
-deviceList		JSONArray	视频监控设备列表
-title	String	安防监控页面标题
-device格式
-参数名	类型	描述
-id	String	摄像头编号
-label	String	摄像头名称
-parentId	String	父级
-info	JSONObject	摄像头信息
-info格式
-参数名	类型	描述
-userName	String	认证用户名
-password	String	认证密码
-ip	String	IP地址
-port	String	端口号
-channel	String	通道号
-deviceBrand	String	品牌，大华：DHNET；海康威视：HIKVISION；宇视：UNIVIEW
-deviceType	String	类型，枪机：0；球机：1
-返回值：
-无
-增加版本：
-V3.0
-示例：
-`cmApi.video.show([],' ')` 
-2.13.3.录像回放
+
+#### 视频预览
+
+    - `cmApi.video.show(deviceList,title)` //V4.0已废弃，但可继续使用。请使用webcam.preview。
+    - `cmApi.webcam.preview(deviceList,title)`
+
+device格式:
+
+| 参数名   | 类型       | 描述       |
+|----------|------------|------------|
+| id       | String     | 摄像头编号 |
+| label    | String     | 摄像头名称 |
+| parentId | String     | 父级       |
+| info     | JSONObject | 摄像头信息 |
+
+info格式：
+
+| 参数名      | 类型   | 描述                                                  |
+|-------------|--------|-------------------------------------------------------|
+| userName    | String | 认证用户名                                            |
+| password    | String | 认证密码                                              |
+| ip          | String | IP地址                                                |
+| port        | String | 端口号                                                |
+| channel     | String | 通道号                                                |
+| deviceBrand | String | 品牌，大华：DHNET；海康威视：HIKVISION；宇视：UNIVIEW |
+| deviceType  | String | 类型，枪机：0；球机：1                                |
+
+
+#### 录像回放
+
 回放硬盘录像机上按时间锁定的录像。
-方法：
-`cmApi.webcam.playback(label,videoName.ip,port,loginName,password,channel,deviceBrand,deviceType,startTime,endTime)` 
-参数列表：
-参数名	类型	描述
-label		String	摄像头名称
-videoName	String	录像名称
-ip	String	摄像头IP地址
-port	String	摄像头端口号
-loginName	String	摄像头登录名称
-password	String	摄像头登录密码
-channel	String	通道号
-deviceBrand	String	摄像头品牌
-deviceType	String	摄像头类型
-startTime	String	录像开始时间
-endTime	String	录像结束时间
-返回值：
-无
-增加版本：
-V4.0
-示例：
- 	`cmApi.webcam.playback(' ', ' ', ' ', ' '……)` 
-2.14.手机认证
+
+- `cmApi.webcam.playback(label,videoName.ip,port,loginName,password,channel,deviceBrand,deviceType,startTime,endTime)` 
+
+| 参数名      | 类型   | 描述           |
+|-------------|--------|----------------|
+| label       | String | 摄像头名称     |
+| videoName   | String | 录像名称       |
+| ip          | String | 摄像头IP地址   |
+| port        | String | 摄像头端口号   |
+| loginName   | String | 摄像头登录名称 |
+| password    | String | 摄像头登录密码 |
+| channel     | String | 通道号         |
+| deviceBrand | String | 摄像头品牌     |
+| deviceType  | String | 摄像头类型     |
+| startTime   | String | 录像开始时间   |
+| endTime     | String | 录像结束时间   |
+
+### 手机认证
+
 Android手机使用指纹认证，老苹果手机使用指纹认证，新苹果手机使用人脸认证。
-2.14.1.开始认证
-方法：
-`cmApi.fingerprint.startAuthenticate(callback)` 
-参数列表：
-参数名	类型	描述
-callback		String	回调函数
-返回值：
-参数名	类型	描述
-ret	String	1：认证成功
-0：认证失败
-2：设备不支持
-3：设备未开启指纹认证
-4：正在识别
-5：失败次数过多
-9：未知错误
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.fingerprint.startAuthenticate('demoModule.authenticateCallback')` 
-2.14.2.停止认证
-方法：
-`cmApi.fingerprint.cancelAuthenticate()` 
-参数列表：
-   无；
-返回值：
-   无；
-增加版本：
-   V4.0
-示例：
-`cmApi.fingerprint.cancelAuthenticate()` 
-2.14.3.是否支持认证
-方法：
-`cmApi.fingerprint.isSupport()` 
-参数列表：
-无
-返回值：
-参数名	类型	描述
-value	Boolean	是否支持指纹认证
-返回方式：
-同步
-增加版本：
-V4.0
-示例：
-`cmApi.fingerprint.isSupport()` 
-2.15.事件监听
+
+1. 开始认证
+    - `cmApi.fingerprint.startAuthenticate(callback)` //返回 ret String	1：认证成功 0：认证失败 2：设备不支持 3：设备未开启指纹认证 4：正在识别 5：失败次数过多 9：未知错误
+2. 停止认证
+    - `cmApi.fingerprint.cancelAuthenticate()` 
+3. 是否支持认证
+    - `cmApi.fingerprint.isSupport()` //Boolean	是否支持指纹认证
+
+### 事件监听
+
 移动框架支持多种事件监听，以便业务端灵活使用。支持的事件如下：
-事件Key	事件名称	触发时机
-network:online	网络重连	网络重新连接时，包括2G/3G/4G、WIFI等
-network:offline	网络离线	网络断开时，包括2G/3G/4G、WIFI等
-buttondown:back	返回按钮	返回按钮触发时
-buttondown:home	Home按钮	Home按钮触发时
-2.15.1.增加监听
-方法：
-`cmApi.eventListener.add(opts)` 
-参数列表：
-参数名	类型	描述
-type	String	监听事件Key
-listen	Function	触发方法
-返回值：
-无
-增加版本：
-V4.0
-示例：
-var opt = {type: "buttondown:back",listen:function};
-`cmApi.eventListener.add(opts)` 
-2.15.2.移除监听
-方法：
-`cmApi.eventListener.remove(opts)`
-参数列表：
-参数名	类型	描述
-type	String	监听事件Key
-listen	Function	触发方法
-返回值：
-无
-增加版本：
-V4.0
-示例：
-var opt = {type: "buttondown:back",listen:function};
-`cmApi.eventListener.remove(opts)` 
-2.15.3.清空监听
-方法：
-`cmApi.eventListener.clear(opts)`
-参数列表：
-参数名	类型	描述
-type	String	监听事件Key
-返回值：
-无
-增加版本：
-V4.0
-示例：
-var opt = {type: "buttondown:back"};
-`cmApi.eventListener.clear(opts)` 
-2.16.手写签名
+
+| 事件Key         | 事件名称 | 触发时机                             |
+|-----------------|----------|--------------------------------------|
+| network:online  | 网络重连 | 网络重新连接时，包括2G/3G/4G、WIFI等 |
+| network:offline | 网络离线 | 网络断开时，包括2G/3G/4G、WIFI等     |
+| buttondown:back | 返回按钮 | 返回按钮触发时                       |
+| buttondown:home | Home按钮 | Home按钮触发时                       |
+
+1. 增加监听
+    - `cmApi.eventListener.add(opts)` 
+
+| 参数名 | 类型     | 描述                            |
+|--------|----------|---------------------------------|
+| type   | String   | 监听事件Key，如 buttondown:back |
+| listen | Function | 触发方法                        |
+
+
+2. 移除监听
+    - `cmApi.eventListener.remove(opts)`//type listen
+3. 清空监听
+    - `cmApi.eventListener.clear(opts)`//type
+
+### 手写签名
+
 实现手指在手机上进行姓名签写。
-2.16.1.手写签名
-方法：
-`cmApi.handwrite.start(callback)` 
-`cmApi.handwrite.start(filepath,layout,callback)` 
-参数列表：
-参数名	类型	描述
-filepath	String	手写签名图片保存路径，可为空
-layout	JSONObject	签名框布局，可为空
-callback		String	回调函数
-layout格式
-参数名	类型	描述
-height	int	手写框高度
-width	int	手写框宽度
-返回值：
-参数名	类型	描述
-data	JsonObject	返回内容
-data格式
-参数名	类型	描述
-imgUrl	String	手写签名图片保存路径
-flag	String	1：成功
-0：取消
-返回方式：
-异步-字符串回调
-增加版本：
-   V4.0
-示例：
-    `cmApi.handwrite.start("",null,"lqjcModule.handWriteCallBack")`
-2.16.2.手写签名（已废弃）
-V4.0已废弃，但可继续使用。请使用handwrite.start。
-方法：
-`cmApi.startHandWrite(filepath,callback)` 
-参数列表：
-参数名	类型	描述
-filepath	String	手写签名图片保存路径，可为空
-callback		String	回调函数
-返回值：
-参数名	类型	描述
-data	JsonObject	返回内容
-data格式
-参数名	类型	描述
-imgUrl	String	手写签名图片保存路径
-flag	String	1：成功
-0：取消
-返回方式：
-异步-字符串回调
-增加版本：
-   V3.0
-示例：
-    `cmApi.startHandWrite("","lqjcModule.handWriteCallBack")`
-2.17.NFC功能
+
+1. 手写签名
+    - `cmApi.startHandWrite(filepath,callback)` //V4.0已废弃，但可继续使用。请使用handwrite.start。
+    - `cmApi.handwrite.start(callback)` 
+    - `cmApi.handwrite.start(filepath,layout,callback)` 
+
+| 参数名   | 类型       | 描述                         |
+|----------|------------|------------------------------|
+| filepath | String     | 手写签名图片保存路径，可为空 |
+| layout   | JSONObject | 签名框布局，可为空           |
+| callback | String     | 回调函数                     |
+
+layout格式：
+
+| 参数名 | 类型 | 描述       |
+|--------|------|------------|
+| height | int  | 手写框高度 |
+| width  | int  | 手写框宽度 |
+
+data格式：
+
+| 参数名 | 类型   | 描述                 |
+|--------|--------|----------------------|
+| imgUrl | String | 手写签名图片保存路径 |
+| flag   | String | 1：成功    0：取消   |
+
+### NFC功能
+
 Android机进行一些有关nfc功能的操作。
-2.17.1.是否支持nfc
-方法：
-`cmApi.nfc.isNfcExists()` 
-参数列表：
-无
-返回值：
-参数名	类型	描述
-value	String	1:支持；0：不支持
-返回方式：
-同步
-增加版本：
-   V4.0
-示例：
-var isNfcExists = `cmApi.nfc.isNfcExists()` 
-2.17.2.是否开启nfc
-方法：
-`cmApi.nfc.isNfcEnabled()` 
-参数列表：
-无
-返回值：
-参数名	类型	描述
-value	String	1:开启；0：关闭
-返回方式：
-同步
-增加版本：
-V3.0
-示例：
-var isNfcEnabled = `cmApi.nfc.isNfcEnabled()` 
-2.17.3.nfc读卡
-方法：
-`cmApi.nfc.startReadCard(type, callback)` 
-参数列表：
-参数名	类型	描述
-type	String	0：代表移动扦样；
-1：代表移动值仓；
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-data	JsonObject或String	返回值如果是JSON格式，则返回JsonObject，否则直接返回String
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.nfc.startReadCard('0','ydqyModule.nfcReadCardCallback')`
-2.17.4.停止nfc读卡
-方法：
-`cmApi.nfc.stopReadCard()` 
-参数列表：
-  	无
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.nfc.stopReadCard()` ; 
-2.17.5.nfc写卡
-方法：
-`cmApi.nfc.writeCard(data,callback)` 
-参数列表：
-参数名	类型	描述
-data	String	需要写入的信息
-callback	String	回调函数
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.nfc.writeCard(writeData,"crkbkModule.writeCardCallback")`
-2.17.6.重置nfc卡
-方法：
-`cmApi.nfc.resetCardInfo()` 
-参数列表：
-无
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.nfc.resetCardInfo()` ; 
-2.18.蓝牙打印
+
+1. 是否支持nfc
+    - `cmApi.nfc.isNfcExists()` //value	String	1:支持；0：不支持
+2. 是否开启nfc
+    - `cmApi.nfc.isNfcEnabled()` //value	String	1:开启；0：关闭
+3. nfc读卡
+    - `cmApi.nfc.startReadCard(type, callback)` //type	String	0：代表移动扦样；1：代表移动值仓；
+4. 停止nfc读卡
+    - `cmApi.nfc.stopReadCard()` 
+5. nfc写卡
+    - `cmApi.nfc.writeCard(data,callback)` 
+6. 重置nfc卡
+    - `cmApi.nfc.resetCardInfo()` 
+
+### 蓝牙打印
+
 使用基于ESC/POS协议，打印当前截屏。
-2.18.1.开始打印
-方法：
-`cmApi.bluetoothPrinter.print(opts)` 
-参数列表：
-参数名	类型	描述
-type	int	蓝牙打印机类型，主流58mm、80mm宽度打印机，默认：58
-返回值：
-参数名	类型	描述
-data	String	返回值
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-`cmApi.bluetoothPrinter.print(opts)` 
-2.18.2.设置打印标题、内容、类型（已废弃）
-方法：
-`cmApi.bluetoothPrinter.setTitle(title)` 
-`cmApi.bluetoothPrinter.setInfo(info)` 
-`cmApi.bluetoothPrinter.setType(type)` 
-参数列表：
-参数名	类型	描述
-title	String	打印标题
-info	String	打印内容
-type	String	打印类型：1.文字打印  2.条形码打印
-返回值：
-无
-增加版本：
-V3.0
-示例：
-`cmApi.bluetoothPrinter.setTitle('国家储备粮')` 
-`cmApi.bluetoothPrinter.setInfo('小麦 ')` 
-`cmApi.bluetoothPrinter.setType('0')` 
-2.18.3.开始打印（已废弃）
-方法：
-`cmApi.bluetoothPrinter.printer()` 
-参数列表：
-无
-返回值：
-无
-增加版本：
-   V3.0
-示例：
-`cmApi.bluetoothPrinter.printer()` ; 
-2.18.4.停止打印（已废弃）
-方法：
-`cmApi.bluetoothPrinter.destroyBluetooth()`
-参数列表：
-无
-返回值：
-无
-增加版本：
-V3.0
-示例：
-`cmApi.bluetoothPrinter.destroyBluetooth()` 
-2.19.OCR识别
-2.19.1.离线车牌号识别
-方法：
-`cmApi.ocr.carNumberRecognize(callback)`
-参数列表：
-参数名	类型	描述
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-carnumber	String	识别出的车牌号
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.handset.carNumberRecognize('module.callback')` 
-2.19.2.在线车牌号识别
+
+1. 开始打印
+    - `cmApi.bluetoothPrinter.print(opts)` //type	int	蓝牙打印机类型，主流58mm、80mm宽度打印机，默认：58
+2. 设置打印标题、内容、类型（已废弃）
+    - `cmApi.bluetoothPrinter.setTitle(title)` 
+    - `cmApi.bluetoothPrinter.setInfo(info)` 
+    - `cmApi.bluetoothPrinter.setType(type)` //打印类型：1.文字打印  2.条形码打印
+3. 开始打印（已废弃）
+    - `cmApi.bluetoothPrinter.printer()` 
+4. 停止打印（已废弃）
+    - `cmApi.bluetoothPrinter.destroyBluetooth()`
+
+### OCR识别
+
+1. 离线车牌号识别
+    - `cmApi.ocr.carNumberRecognize(callback)` //carnumber	String	识别出的车牌号
+2. 在线车牌号识别
+
 调用face++第三方识别API，要求必须可以连通互联网。
-方法：
-`cmApi.ocr.licenseRecognize(filepath,callback)`
-参数列表：
-参数名	类型	描述
-filepath	String	待识别的图片路径
-callback	String	回调函数
+
+方法：`cmApi.ocr.licenseRecognize(filepath,callback)`
+
+| 参数名   | 类型   | 描述             |
+|----------|--------|------------------|
+| filepath | String | 待识别的图片路径 |
+| callback | String | 回调函数         |
+
 返回值：
-参数名	类型	描述
-carnumber	String	识别出的车牌号
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.handset.licenseRecognize('module.callback')` 
-2.19.3.在线身份证识别
+
+| 参数名    | 类型   | 描述           |
+|-----------|--------|----------------|
+| carnumber | String | 识别出的车牌号 |
+
+3. 在线身份证识别
+
 调用face++第三方识别API，要求必须可以连通互联网。
-方法：
-`cmApi.ocr.idCardRecognize(filepath,callback)` 
-参数列表：
-参数名	类型	描述
-filepath	String	待识别的图片路径
-callback	String	回调函数
+
+方法：`cmApi.ocr.idCardRecognize(filepath,callback)` 
+
+| 参数名   | 类型   | 描述             |
+|----------|--------|------------------|
+| filepath | String | 待识别的图片路径 |
+| callback | String | 回调函数         |
+
 返回值：
-参数名	类型	描述
-idcard	String	识别出的身份证
-返回方式：
-异步-字符串回调
-增加版本：
-   V4.0
-示例：
-`cmApi.handset.idCardRecognize('module.callback')` 
-2.20.第三方功能集成
-2.20.1.浏览器返回
-提供给第三方使用，使用时不依赖前端环境，可全局调用。
-方法：
-window.MobileAPI.goBack()
-参数列表：
-参数名	类型	描述
-func	String	触发函数，要求可以全局执行
-返回值：
-无
-增加版本：
-V4.1.2
-示例：
-window.MobileAPI.goBack();
-2.20.2.浏览器返回首页
-提供给第三方使用，使用时不依赖前端环境，可全局调用。
-方法：
-window.MobileAPI.goHome()
-参数列表：
-	无
-返回值：
-无
-增加版本：
-V4.1.2
-示例：
-window.MobileAPI.goHome();
-2.20.3.注册返回函数
-方法：
-`cmApi.thirdParty.setGoBackFunc(func)` 
-参数列表：
-参数名	类型	描述
-func	String	触发函数，要求可以全局执行
-返回值：
-无
-增加版本：
-V4.1.2
-示例：
-`cmApi.thirdParty.setGoBackFunc(func)`
-2.20.4.移除返回函数
-方法：
-`cmApi.thirdParty.removeGoBackFunc()`
-参数列表：
-	无
-返回值：
-无
-增加版本：
-V4.1.2
-示例：
-`cmApi.thirdParty.removeGoBackFunc()`
-2.21.成为手持机
+
+| 参数名 | 类型   | 描述           |
+|--------|--------|----------------|
+| idcard | String | 识别出的身份证 |
+
+### 第三方功能集成
+
+1. 浏览器返回：提供给第三方使用，使用时不依赖前端环境，可全局调用。
+    - `window.MobileAPI.goBack()`
+
+| 参数名 | 类型   | 描述                       |
+|--------|--------|----------------------------|
+| func   | String | 触发函数，要求可以全局执行 |
+
+2. 浏览器返回首页：提供给第三方使用，使用时不依赖前端环境，可全局调用。
+    - `window.MobileAPI.goHome()`
+3. 注册返回函数
+    - `cmApi.thirdParty.setGoBackFunc(func)` // func	String	触发函数，要求可以全局执行
+4. 移除返回函数
+    - `cmApi.thirdParty.removeGoBackFunc()`
+
+### 成为手持机
+
 成为手持机专用发放，其他手机不支持。
-2.21.1.身份证识别
-方法：
-`cmApi.handset.readIdCard(callback)` 
-参数列表：
-参数名	类型	描述
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-data	JsonObject	
-data格式
-参数名	类型	描述
-name	String	姓名
-sex	String	性别
-ethnicity	String	民族
-birth	String	出生日期
-address	String	住址
-cardNo	String	身份证号
-authority	String	签发机关
-period	String	有效期
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.handset.readIdCard('module.callback')` 
-2.21.2.身份证识别关闭
-方法：
-`cmApi.handset.closeIdCard()` 
-参数列表：
-无
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.handset.closeIdCard()` 
-2.21.3.打印
-打印当前截屏。
-方法：
-`cmApi.handset.print()` 
-参数列表：
-无
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.handset.print()` 
-2.21.4.二维码扫描
-方法：
-`cmApi.handset.scanBarCode(callback)` 
-参数列表：
-参数名	类型	描述
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-data	String	识别内容
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.handset.scanBarCode('module.callback')` 
-2.21.5.开启二维码扫描按键
-方法：
-`cmApi.handset.scanBarCodeBindKey(keycode，callback)`
-参数列表：
-参数名	类型	描述
-keycode	String	按键
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-data	String	识别内容
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.handset.scanBarCodeBindKey(''，'module.callback')` 
-2.21.6.关闭二维码扫描按键
-方法：
-`cmApi.handset.scanBarCodeUnBindKey()` 
-参数列表：
-无
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.handset.scanBarCodeUnBindKey()` 
+
+1. 身份证识别
+    - `cmApi.handset.readIdCard(callback)` 
+
+返回值 returnVal.data （JsonObject） 格式：
+
+| 参数名    | 类型   | 描述     |
+|-----------|--------|----------|
+| name      | String | 姓名     |
+| sex       | String | 性别     |
+| ethnicity | String | 民族     |
+| birth     | String | 出生日期 |
+| address   | String | 住址     |
+| cardNo    | String | 身份证号 |
+| authority | String | 签发机关 |
+| period    | String | 有效期   |
+
+2. 身份证识别关闭
+    - `cmApi.handset.closeIdCard()` 
+3. 打印：打印当前截屏。
+    - `cmApi.handset.print()` 
+4. 二维码扫描
+    - `cmApi.handset.scanBarCode(callback)` 
+5. 开启二维码扫描按键
+    - `cmApi.handset.scanBarCodeBindKey(keycode，callback)`
+6. 关闭二维码扫描按键
+    - `cmApi.handset.scanBarCodeUnBindKey()` 
