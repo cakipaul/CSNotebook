@@ -212,13 +212,13 @@ function imagePickerSuccess(filePaths) {
 
     参数列表：
 
-| 参数名         | 类型 | 描述                                                          |
-|----------------|------|---------------------------------------------------------------|
-| flag           | Int  | 0：进入app时进行检查更新；1：我的关于页面，手动点击检查更新； |
-| zznm           |      | 组织内码                                                      |
-| systemType     |      | 系统类型（只针对android）                                     |
-| appName        |      | App名称                                                       |
-| appVersionCode |      | App版本号                                                     |
+    | 参数名         | 类型 | 描述                                                          |
+    |----------------|------|---------------------------------------------------------------|
+    | flag           | Int  | 0：进入app时进行检查更新；1：我的关于页面，手动点击检查更新； |
+    | zznm           |      | 组织内码                                                      |
+    | systemType     |      | 系统类型（只针对android）                                     |
+    | appName        |      | App名称                                                       |
+    | appVersionCode |      | App版本号                                                     |
 
     示例：
 
@@ -431,36 +431,36 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 1. 用户定位
     - `cmApi.map.locate(callback)` 
 
-返回值：
+    返回值：
 
-| 参数名    | 类型   | 描述 |
-|-----------|--------|------|
-| latitude  | double | 纬度 |
-| longitude | double | 经度 |
+    | 参数名    | 类型   | 描述 |
+    |-----------|--------|------|
+    | latitude  | double | 纬度 |
+    | longitude | double | 经度 |
 
-### 百度导航
+2. 百度导航
 
-实现起始位置的在线导航功能。依赖百度导航扩展插件。
+    实现起始位置的在线导航功能。依赖百度导航扩展插件。
 
-方法：`cmApi.map.navigate(opts)` 
+    方法：`cmApi.map.navigate(opts)` 
 
-参数列表：
+    参数列表：
 
-| 参数名 | 类型   | 描述     |
-|--------|--------|----------|
-| slng   | String | 起点经度 |
-| slat   | String | 起点纬度 |
-| sloc   | String | 起点地址 |
-| elng   | String | 终点经度 |
-| eloc   | String | 终点纬度 |
-| eloc   | String | 终点地址 |
+    | 参数名 | 类型   | 描述     |
+    |--------|--------|----------|
+    | slng   | String | 起点经度 |
+    | slat   | String | 起点纬度 |
+    | sloc   | String | 起点地址 |
+    | elng   | String | 终点经度 |
+    | eloc   | String | 终点纬度 |
+    | eloc   | String | 终点地址 |
 
-示例：
+    示例：
 
-```js
-var opts = {slng: '',slat: '',elng: '',elat: '',eloc: ''};
-cmApi.map.navigate(opts);
-```
+    ```js
+    var opts = {slng: '',slat: '',elng: '',elat: '',eloc: ''};
+    cmApi.map.navigate(opts);
+    ```
 
 ### 二维码
 
@@ -469,12 +469,12 @@ cmApi.map.navigate(opts);
 
     参数列表：
 
-| 参数名  | 类型   | 描述                  |
-|---------|--------|-----------------------|
-| w       | String | 二维码图片宽度        |
-| h       | String | 二维码图片高度        |
-| divId   | String | 显示二维码图片div的Id |
-| content | String | 二维码内容            |
+    | 参数名  | 类型   | 描述                  |
+    |---------|--------|-----------------------|
+    | w       | String | 二维码图片宽度        |
+    | h       | String | 二维码图片高度        |
+    | divId   | String | 显示二维码图片div的Id |
+    | content | String | 二维码内容            |
 2. 二维码扫描
     - `cmApi.qrCode.scan(callback)` 
 
@@ -498,12 +498,12 @@ cmApi.map.navigate(opts);
 5. 静默模式
     - `cmApi.push.setNoDisturbMode()` 
 
-| 参数名      | 类型 | 描述         |
-|-------------|------|--------------|
-| startHour   | int  | 静默开始小时 |
-| startMinute | int  | 静默开始分钟 |
-| endHour     | int  | 静默结束小时 |
-| endMinute   | int  | 静默结束分钟 |
+    | 参数名      | 类型 | 描述         |
+    |-------------|------|--------------|
+    | startHour   | int  | 静默开始小时 |
+    | startMinute | int  | 静默开始分钟 |
+    | endHour     | int  | 静默结束小时 |
+    | endMinute   | int  | 静默结束分钟 |
 
     示例：`cmApi.push.setNoDisturbMode({param:param,success:success,error:error})` 
 
@@ -531,306 +531,73 @@ cmApi.map.navigate(opts);
     | video      | String | 视频地址     |
     | screenshot | String | 视频缩略图   |
 3. 录音
+    - `cmApi.audioRecord(callback)` //V4.0已废弃，但可继续使用。请使用audio.record。
     - `cmApi.audio.record(filename,callback)` 
-参数列表：
-参数名	类型	描述
-filename	String	照片名称
-callback		String	回调函数
-返回值：
-参数名	类型	描述
-path	String	录音路径
-返回方式：
-异步-字符串回调
-增加版本：
-   V4.0
-示例：
-`cmApi.audioRecord('demoModule.audioRecordCallback')` 
-2.10.3.2.录音（已废弃）
-V4.0已废弃，但可继续使用。请使用audio.record。
-方法：
-`cmApi.audioRecord(callback)` 
-参数列表：
-参数名	类型	描述
-callback		String	回调函数
-返回值：
-参数名	类型	描述
-path	String	录音路径
-返回方式：
-异步-字符串回调
-增加版本：
-   V3.0
-示例：
-`cmApi.audioRecord('demoModule.audioRecordCallback')` 
-2.10.4.图片处理
+
+#### 图片处理
+
 图片压缩可有效减小照片大小，实现照片快速上传。使用后可体积可压缩10倍左右。
-2.10.4.1.照片压缩
-方法：
-`cmApi.image.compress(image,callback)` 
-参数列表：
-参数名	类型	描述
-image	String	照片路径
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-imgUrl	String	照片路径
-返回方式：
-异步-字符串回调
-增加版本：
-   V4.0
-示例：
-`cmApi.image.compress('../time.png','module.callback')` 
-2.10.4.2.添加文字水印
-方法：
-`cmApi.image.watermarkText(image,text,position,size,color)` 
-参数列表：
-参数名	类型	描述
-image	String	照片路径
-text	String	水印内容
-position	String	水印位置：
-C：中
-T：上
-B：下
-L：左
-R：右
-LT：左上
-LB：左下
-RT：右上
-RB：右下
-size	String	文字大小
-color	String	16进制文字颜色（例：#000000）
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.image.watermarkText('../time.png','inspur','C','1.0','#000000')` 
-2.10.4.3.添加照片水印
-方法：
-`cmApi.image.watermaskImage(image,maskImage,position,scale)` 
-参数列表：
-参数名	类型	描述
-image	String	照片路径
-maskImage	String	水印照片路径
-position	String	水印位置：
-C：中
-T：上
-B：下
-L：左
-R：右
-LT：左上
-LB：左下
-RT：右上
-RB：右下
-scale	String	照片比例
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.image.watermaskImage('../time.png','../time1.png', 'C',1.0)` 
-2.10.4.4.照片等比例压缩（已废弃）
-V4.1已废弃，但可继续使用。请使用image.compress。
-方法：
-`cmApi.image.compressByScale(image, scale)` 
-参数列表：
-参数名	类型	描述
-image	String	照片路径
-scale	String	压缩比例
-返回值：
-无
-增加版本：
-   V4.0
-示例：
-`cmApi.image.compressByScale('../time.png',1.0)` 
-2.10.4.5.照片按大小压缩（已废弃）
-V4.1已废弃，但可继续使用。请使用image.compress。
-方法：
-`cmApi.image.compressBySize(image,size)` 
-参数列表：
-参数名	类型	描述
-image	String	照片路径
-size	String	图片大小（KB）
-返回值：
-无
-增加版本：
-   V4.0
-示例：
-`cmApi.image.compressBySize('../time.png' ,'100.0')` 
-2.10.4.6.头像裁剪
-方法：
-`cmApi.image.headclip(opts)` 
-参数列表：
-参数名	类型	描述
-path	String	图片路径
-返回值：
-参数名	类型	描述
-path	String	图片路径
-返回方式：
-异步-方法回调
-增加版本：
-   V4.1.5
-示例：
-`cmApi.image.headclip('../time.png' ,'100.0')` 
-2.10.5.语音播报
+
+1. 照片压缩
+    - `cmApi.image.compressByScale(imagePath, scale)` //scale	String	压缩比例 V4.1已废弃，但可继续使用。请使用image.compress。
+    - `cmApi.image.compressBySize(image,size)` //size	String	图片大小（KB） V4.1已废弃，但可继续使用。请使用image.compress。
+    - `cmApi.image.compress(imagePath,callback)` 
+2. 添加文字水印
+    - `cmApi.image.watermarkText(imagePath,text,position,size,color)` //position	String	水印位置：C：中 T：上 B：下 L：左 R：右 LT：左上 LB：左下 RT：右上 RB：右下 color	String	16进制文字颜色（例：#000000）
+3. 添加照片水印
+    - `cmApi.image.watermaskImage(imagePath,maskImagePath,position,scale)` //position	String	水印位置：C：中 T：上 B：下 L：左 R：右 LT：左上 LB：左下 RT：右上 RB：右下 scale	String	照片比例
+4. 头像裁剪
+    - `cmApi.image.headclip(opts)` 
+
+#### 语音播报
+
 依赖音频处理扩展插件。
-2.10.5.1.播放
-方法：
-`cmApi.speech.startSpeak(text,speaker)` 
-参数列表：
-参数名	类型	描述
-text		String	语音播报内容
-speaker	String	声音类型：0.男声 1.女声）
-返回值：
-无
-增加版本：
-   V4.0
-示例：
-`cmApi.speech.startSpeak("语音播报","0")` 
-2.10.5.2.停止播放
-方法：
-`cmApi.speech.stopSpeak()` 
-参数列表：
-无
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.speech.stopSpeak()` 
-2.10.6.语音识别
+
+1. 播放
+    - `cmApi.speech.startSpeak(text,speaker)` //speaker	String	声音类型：0.男声 1.女声）
+2. 停止播放
+    - `cmApi.speech.stopSpeak()` 
+
+#### 语音识别
+
 依赖音频处理扩展插件。
-2.10.6.1.语音识别
-方法：
-`cmApi.speech.recognize(callback)` 
-参数列表：
-参数名	类型	描述
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-text	String	识别文字
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.speech.recognize("module.callback")` 
-2.11.文件操作
-2.11.1.文档预览
-文件预览是集成腾讯TBS服务，支持主流数十种文件格式直接预览。
-方法：
-`cmApi.document.preview(filepath)` 
-参数列表：
-参数名	类型	描述
-filepath	String	文件路径
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.document.preview(filepath)`
-2.11.2.文件上传
-方法：
-`cmApi.file.uploadFile(opts)` 
-参数列表：
-参数名	类型	描述
-url	String	上传路径
-path	String	文件路径
-showProgress	Boolean	是否展示进度条，默认展示
-showToast	Boolean	上传完成是否提醒，默认提醒
-params	JsonObject	请求参数
-返回值：
-参数名	类型	描述
-data	JsonObject或String	返回值如果是JSON格式，则返回JsonObject，否则直接返回String
-返回方式：
-异步-方法回调
-增加版本：
-V4.0
-示例：
-var businessParams = {djnm: "xxxx"};
-var params = {url:url,path:path,params:businessParams};
-`cmApi.file.uploadFile({params:params,success:success,error:error})`
-2.11.3.文件上传（已废弃）
-V4.1已废弃，但可继续使用。请使用file.uploadFile。
-方法：
-`cmApi.file.upload(url,path,params,callback)` 
-参数列表：
-参数名	类型	描述
-url	String	上传路径
-path	String	文件路径
-params	JsonObject	请求参数
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-data	JsonObject或String	返回值如果是JSON格式，则返回JsonObject，否则直接返回String
-返回方式：
-异步-字符串回调
-版本说明：
-V3.0
-示例：
-`cmApi.file.upload(url,path,params,'demoModule.uploadImgCallback')`
-2.11.4.文件下载
-方法：
-`cmApi.file.downloadFile(opts)` 
-参数列表：
-参数名	类型	描述
-url	String	下载路径
-path	String	文件路径
-showProgress	Boolean	是否展示进度条，默认展示
-showToast	Boolean	完成是否提醒，默认提醒
-返回值：
-参数名	类型	描述
-data	JsonObject或String	返回值如果是JSON格式，则返回JsonObject，否则直接返回String
-返回方式：
-异步-方法回调
-增加版本：
-   V4.0
-示例：
-var params = {url:url,path:path };
-cmApi.file.downloadFile({params:params,success:success,error:error}
-2.11.5.文件下载（已废弃）
-V4.1已废弃，但可继续使用。请使用file.downloadFile。
-方法：
-`cmApi.file.download(url,path,callback)` 
-参数列表：
-参数名	类型	描述
-url	String	下载路径
-path	String	文件路径
-callback	String	回调函数
-返回值：
-参数名	类型	描述
-data	JsonObject或String	返回值如果是JSON格式，则返回JsonObject，否则直接返回String
-返回方式：
-异步-字符串回调
-增加版本：
-V4.0
-示例：
-`cmApi.file.download(url,path,'demoModule.downloadImgCallback')`
-2.11.6.文件删除
-方法：
-`cmApi.file.delete(path)`
-参数列表：
-参数名	类型	描述
-path	String	文件路径
-返回值：
-无
-增加版本：
-V4.0
-示例：
-`cmApi.file.delete(path)` 
-2.11.7.文件删除
-V4.0已废弃，但可继续使用。请使用file.delete。
-方法：
-`cmApi.deleteLocalImg(path)`
-参数列表：
-参数名	类型	描述
-path	String	文件路径
-返回值：
-无
-增加版本：
-V3.0
-示例：
-`cmApi.deleteLocalImg(path)` 
-2.11.8.文件重命名
+
+1. 语音识别
+    - `cmApi.speech.recognize(callback)` 
+
+### 文件操作
+
+1. 文档预览：文件预览是集成腾讯TBS服务，支持主流数十种文件格式直接预览。
+    - `cmApi.document.preview(filepath)` 
+2. 文件上传
+    - `cmApi.file.upload(url,path,params,callback)` //V4.1已废弃，但可继续使用。请使用file.uploadFile。
+    - `cmApi.file.uploadFile(opts)`
+
+    参数列表：
+
+    参数名|	类型|	描述
+    ---|---|---
+    url	|String	|上传路径
+    path|	String	|文件路径
+    showProgress|	Boolean	|是否展示进度条，默认展示
+    showToast|	Boolean	上传完成是否提醒，默认提醒
+    params|	JsonObject|	请求参数
+3. 文件下载
+- `cmApi.file.download(url,path,callback)` //V4.1已废弃，但可继续使用。请使用file.downloadFile。
+- `cmApi.file.downloadFile(opts)` 
+
+    参数列表：
+    
+    参数名|	类型|	描述
+    ---|---|---
+    url	|String	|下载路径
+    path|	String	|文件路径
+    showProgress|	Boolean|	是否展示进度条，默认展示
+    showToast|	Boolean	|完成是否提醒，默认提醒
+4. 文件删除
+    - `cmApi.deleteLocalImg(path)` //V4.0已废弃，但可继续使用。请使用file.delete。
+    - `cmApi.file.delete(path)`
+5. 文件重命名
 方法：
 `cmApi.file.rename(opts)` 
 参数列表：
