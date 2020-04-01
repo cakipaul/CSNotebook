@@ -117,7 +117,9 @@
         </div>
 
     </div>
-    <div id="toastDiv" class="tooltip-inner" style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px"></div>
+    <div id="toastDiv" class="tooltip-inner"
+        style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
+    </div>
 
 
 
@@ -162,8 +164,6 @@
         });
 
         $(function () {
-            //设置popover属性
-            $().popover({});
 
             // Getting URL var by its nam
             var path = $.getUrlVar('path');
@@ -193,46 +193,49 @@
                     flowChart: true,         // 默认不解析
                     sequenceDiagram: true,  // 默认不解析
                 });
+                //初始化代码copy方法
+                initCopyMethod();
+                //绑定数据源
+                initVueApp();
+            }
+        });
 
-                codeId = 0;
-                $("#md-to-html code").each(function () {
-                    var $codeBlock = $(this);
-                    var codeBlockHtml = $codeBlock.html();
-                    var popoverMsg = "";
-                    //若在代码块中則返回
-                    if ($codeBlock.parent().prop("tagName") == "LI" && $codeBlock.parent().parent().prop("tagName") == "OL") {
-                        var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function (str) { return str != "linenums" });
-                        //判断是否有 linenums 样式，包含則返回
-                        if (hasLinenumsClass) {
-                            popoverMsg = "点击复制本行";//在代碼塊中
-                        } else {
-                            popoverMsg = "点击复制";//不在代碼塊中
-                        }
+        function initCopyMethod() {
+            codeId = 0;
+            $("#md-to-html code").each(function () {
+                var $codeBlock = $(this);
+                var codeBlockHtml = $codeBlock.html();
+                var popoverMsg = "";
+                //若在代码块中則返回
+                if ($codeBlock.parent().prop("tagName") == "LI" && $codeBlock.parent().parent().prop("tagName") == "OL") {
+                    var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function (str) { return str != "linenums" });
+                    //判断是否有 linenums 样式，包含則返回
+                    if (hasLinenumsClass) {
+                        popoverMsg = "点击复制本行";//在代碼塊中
                     } else {
                         popoverMsg = "点击复制";//不在代碼塊中
                     }
-                    // @click:getOneLineCode(event)
+                } else {
+                    popoverMsg = "点击复制";//不在代碼塊中
+                }
+                // @click:getOneLineCode(event)
 
-                    codeHtml = '<span id="codeNum' + codeId + '" v-clipboard:copy="getOneLineCode(' + codeId + ')" v-clipboard:success="onCopy" v-clipboard:error="onError" title="' + popoverMsg + '" data-toggle="popover" data-content="' + popoverMsg + '">' + codeBlockHtml + '<span></code>';
-                    $codeBlock.html(codeHtml)
-                    codeId++;
-                })
+                codeHtml = '<span id="codeNum' + codeId + '" v-clipboard:copy="getOneLineCode(' + codeId + ')" v-clipboard:success="onCopy" v-clipboard:error="onError" title="' + popoverMsg + '" data-toggle="popover" data-content="' + popoverMsg + '">' + codeBlockHtml + '<span></code>';
+                $codeBlock.html(codeHtml)
+                codeId++;
+            })
 
-                $("#md-to-html pre>ol ").each(function () {
-                    var $linedCodeBlock = $(this);
-                    var hasLinenumsClass = !$(this).attr("class").split(" ").every(function (str) { return str != "linenums" });
-                    //判断是否有 linenums 样式，不包含則返回
-                    if (!hasLinenumsClass) { return; }
-                    linedCodeHtml = $linedCodeBlock.html();
-                    linedCodeHtml = '<button id="codeNum' + codeId + '" style="width:60px;padding:1px;margin:5px;color:grey;" v-clipboard:copy=getLinedCode(' + codeId + ') v-clipboard:success="onCopy" v-clipboard:error="onError" >copy</button>' + linedCodeHtml;
-                    $linedCodeBlock.html(linedCodeHtml)
-                    codeId++;
-                })
-
-                initVueApp();
-
-            }
-        });
+            $("#md-to-html pre>ol ").each(function () {
+                var $linedCodeBlock = $(this);
+                var hasLinenumsClass = !$(this).attr("class").split(" ").every(function (str) { return str != "linenums" });
+                //判断是否有 linenums 样式，不包含則返回
+                if (!hasLinenumsClass) { return; }
+                linedCodeHtml = $linedCodeBlock.html();
+                linedCodeHtml = '<button id="codeNum' + codeId + '" style="width:60px;padding:1px;margin:5px;color:grey;" v-clipboard:copy=getLinedCode(' + codeId + ') v-clipboard:success="onCopy" v-clipboard:error="onError" >copy</button>' + linedCodeHtml;
+                $linedCodeBlock.html(linedCodeHtml)
+                codeId++;
+            })
+        }
 
         Vue.component('tool-item', {
             props: ['tool'],

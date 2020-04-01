@@ -5,7 +5,7 @@
     <title>Logs</title>
 
     <link rel="stylesheet" href="editor.md/css/editormd.min.css" />
-    <link rel="stylesheet" href="editormd/css/editormd.preview.css" />
+    <!-- <link rel="stylesheet" href="editormd/css/editormd.preview.css" /> -->
 
     <!--引入js文件-->
     <!-- 开发环境版本，包含了有帮助的命令行警告 -->
@@ -22,7 +22,19 @@
     <script src="editor.md/lib/sequence-diagram.min.js"></script>
     <script src="editor.md/lib/flowchart.min.js"></script>
     <script src="editor.md/lib/jquery.flowchart.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
     <style>
+        * {
+            box-sizing: content-box;
+            width: 100%;
+        }
+
         .mdWindow {
             /* width: 900px;
             height: 900px; */
@@ -104,6 +116,9 @@
         </div>
 
     </div>
+    <div id="toastDiv" class="tooltip-inner"
+        style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
+    </div>
 
 
 
@@ -130,9 +145,7 @@
                 path: "editor.md/lib/"
             });
         }
-        function backToReader() {
 
-        }
 
         $.extend({
             getUrlVars: function () {
@@ -163,7 +176,7 @@
             xhr.onload = function () {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
-                if(mdContent.indexOf(".md")!=-1)mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/logs.html?path=$2)");//链接格式修正
+                if (mdContent.indexOf(".md") != -1) mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes/html/logs.html?path=$2)");//链接格式修正
                 else mdContent = mdContent.replace(/\[(.*)\]\((\/.*)\)/g, "[$1](/csnotes$2)");//链接格式修正
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
@@ -179,70 +192,151 @@
                     flowChart: true,         // 默认不解析
                     sequenceDiagram: true,  // 默认不解析
                 });
-
+                //初始化代码copy方法
+                initCopyMethod();
+                //绑定数据源
+                initVueApp();
             }
         });
+        function initCopyMethod() {
+            codeId = 0;
+            $("#md-to-html code").each(function () {
+                var $codeBlock = $(this);
+                var codeBlockHtml = $codeBlock.html();
+                var popoverMsg = "";
+                //若在代码块中則返回
+                if ($codeBlock.parent().prop("tagName") == "LI" && $codeBlock.parent().parent().prop("tagName") == "OL") {
+                    var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function (str) { return str != "linenums" });
+                    //判断是否有 linenums 样式，包含則返回
+                    if (hasLinenumsClass) {
+                        popoverMsg = "点击复制本行";//在代碼塊中
+                    } else {
+                        popoverMsg = "点击复制";//不在代碼塊中
+                    }
+                } else {
+                    popoverMsg = "点击复制";//不在代碼塊中
+                }
+                // @click:getOneLineCode(event)
+
+                codeHtml = '<span id="codeNum' + codeId + '" v-clipboard:copy="getOneLineCode(' + codeId + ')" v-clipboard:success="onCopy" v-clipboard:error="onError" title="' + popoverMsg + '" data-toggle="popover" data-content="' + popoverMsg + '">' + codeBlockHtml + '<span></code>';
+                $codeBlock.html(codeHtml)
+                codeId++;
+            })
+
+            $("#md-to-html pre>ol ").each(function () {
+                var $linedCodeBlock = $(this);
+                var hasLinenumsClass = !$(this).attr("class").split(" ").every(function (str) { return str != "linenums" });
+                //判断是否有 linenums 样式，不包含則返回
+                if (!hasLinenumsClass) { return; }
+                linedCodeHtml = $linedCodeBlock.html();
+                linedCodeHtml = '<button id="codeNum' + codeId + '" style="width:60px;padding:1px;margin:5px;color:grey;" v-clipboard:copy=getLinedCode(' + codeId + ') v-clipboard:success="onCopy" v-clipboard:error="onError" >copy</button>' + linedCodeHtml;
+                $linedCodeBlock.html(linedCodeHtml)
+                codeId++;
+            })
+        }
 
         Vue.component('tool-item', {
             props: ['tool'],
             template: '<li @click="tool.method">{{ tool.content }}</li>'
         })
-        var toolsApp = new Vue({
-            el: '#tools-div',
-            data() {
-                return {
-                    toolUrl: '',
-                    toolWindowWidth: window.innerWidth - 400 + 'px',
-                    toolWindowHeight: window.innerHeight - 130 + 'px',
-                    toolCatWidth: '260px',
-                    toolCatHeight: window.innerHeight - 100 + 'px',
-                    logs: [{
-                        id: 0,
-                        content: '2020-Spring',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    },{
-                        id: 1,
-                        content: '历史日志',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    }],
-                    others: [{
-                        id: 0,
-                        content: 'xj语录',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
-                            // window.open("http://www.bejson.com/ui/compress_img/");
-                        }
-                    }, {
-                        id: 1,
-                        content: '租房物品清单',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
-                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                        }
-                    }]
-                }
-            },
+        function initVueApp() {
+            var toolsApp = new Vue({
+                el: '#tools-div',
+                data() {
+                    return {
+                        toolUrl: '',
+                        toolWindowWidth: window.innerWidth - 400 + 'px',
+                        toolWindowHeight: window.innerHeight - 130 + 'px',
+                        toolCatWidth: '260px',
+                        toolCatHeight: window.innerHeight - 100 + 'px',
+                        logs: [{
+                            id: 0,
+                            content: '2020-Spring',
+                            method: function () {
+                                window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
+                                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                            }
+                        }, {
+                            id: 1,
+                            content: '历史日志',
+                            method: function () {
+                                window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
+                                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                            }
+                        }],
+                        others: [{
+                            id: 0,
+                            content: 'xj语录',
+                            method: function () {
+                                window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
+                                // window.open("http://www.bejson.com/ui/compress_img/");
+                            }
+                        }, {
+                            id: 1,
+                            content: '租房物品清单',
+                            method: function () {
+                                window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
+                                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                            }
+                        }]
+                    }
+                },
+                methods: {
+                    onCopy: function () {
+                        this.toast("", "copy success")
+                    },
+                    onError: function () {
+                        this.toast("", "copy error")
+                    },
+                    getOneLineCode: function (codeId) {
+                        var selector = "#codeNum" + codeId;
+                        var originHtml = $(selector).html();
+                        // console.log($(selector));
+                        var convertedText = originHtml.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, ' ').replace(/ /g, ' ').replace(/>/g, ' ');
+                        // console.log("copy:", convertedText);
+                        return convertedText;
+                    },
+                    getLinedCode: function (codeId) {
+                        var selector = "#codeNum" + codeId;
+                        var originHtml = $(selector).parent().html();
+                        //去除开始的 copy button
+                        originHtml = originHtml.replace(/.*\<\/button\>/g, '');
+                        //按 li 添加换行，放在数组中
+                        var codeLinedList = originHtml.split(/\<\/li\>/g);
+                        //去除其他标签
+                        var convertedText = ""
+                        var firstLine = true;
+                        codeLinedList.forEach(function (codeLine) {
+                            if (!firstLine) {
+                                convertedText += "\n";
+                            }
+                            convertedText += codeLine.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, '').replace(/>/g, '');//.replace(/ /g, ' ')
+                            firstLine = false;
+                        })
+                        // console.log("copy:", convertedText);
+                        return convertedText;
+                    },
+                    toast: function (title, content) {
+                        $("#toastDiv").html(content);
+                        $("#toastDiv").fadeIn(400);
+                        setTimeout(function () { $("#toastDiv").fadeToggle(400); }, 1200);
+                    }
+                },
+                mounted() {
+                    const _this = this;
+                    window.onresize = () => {
+                        return (() => {
+                            _this.toolWindowHeight = window.innerHeight - 130 + 'px';
+                            _this.toolWindowWidth = window.innerWidth - 400 + 'px';
+                            console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
+                            _this.toolCatHeight = window.innerHeight - 100 + 'px';
+                            _this.toolCatWidth = '260px';
+                        })()
+                    }
+                },
 
-            mounted() {
-                const _this = this;
-                window.onresize = () => {
-                    return (() => {
-                        _this.toolWindowHeight = window.innerHeight - 130 + 'px';
-                        _this.toolWindowWidth = window.innerWidth - 400 + 'px';
-                        console.log(_this.toolWindowHeight + '*' + _this.toolWindowWidth);
-                        _this.toolCatHeight = window.innerHeight - 100 + 'px';
-                        _this.toolCatWidth = '260px';
-                    })()
-                }
-            },
-
-        })
+            })
+        }
 
     </script>
 </body>

@@ -212,13 +212,13 @@ function imagePickerSuccess(filePaths) {
 
     参数列表：
 
-    | 参数名         | 类型 | 描述                                                          |
-    |----------------|------|---------------------------------------------------------------|
-    | flag           | Int  | 0：进入app时进行检查更新；1：我的关于页面，手动点击检查更新； |
-    | zznm           |      | 组织内码                                                      |
-    | systemType     |      | 系统类型（只针对android）                                     |
-    | appName        |      | App名称                                                       |
-    | appVersionCode |      | App版本号                                                     |
+| 参数名         | 类型 | 描述                                                          |
+|----------------|------|---------------------------------------------------------------|
+| flag           | Int  | 0：进入app时进行检查更新；1：我的关于页面，手动点击检查更新； |
+| zznm           |      | 组织内码                                                      |
+| systemType     |      | 系统类型（只针对android）                                     |
+| appName        |      | App名称                                                       |
+| appVersionCode |      | App版本号                                                     |
 
     示例：
 
@@ -433,10 +433,10 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 
     返回值：
 
-    | 参数名    | 类型   | 描述 |
-    |-----------|--------|------|
-    | latitude  | double | 纬度 |
-    | longitude | double | 经度 |
+| 参数名    | 类型   | 描述 |
+|-----------|--------|------|
+| latitude  | double | 纬度 |
+| longitude | double | 经度 |
 
 2. 百度导航
 
@@ -446,14 +446,14 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 
     参数列表：
 
-    | 参数名 | 类型   | 描述     |
-    |--------|--------|----------|
-    | slng   | String | 起点经度 |
-    | slat   | String | 起点纬度 |
-    | sloc   | String | 起点地址 |
-    | elng   | String | 终点经度 |
-    | eloc   | String | 终点纬度 |
-    | eloc   | String | 终点地址 |
+| 参数名 | 类型   | 描述     |
+|--------|--------|----------|
+| slng   | String | 起点经度 |
+| slat   | String | 起点纬度 |
+| sloc   | String | 起点地址 |
+| elng   | String | 终点经度 |
+| eloc   | String | 终点纬度 |
+| eloc   | String | 终点地址 |
 
     示例：
 
@@ -469,12 +469,12 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 
     参数列表：
 
-    | 参数名  | 类型   | 描述                  |
-    |---------|--------|-----------------------|
-    | w       | String | 二维码图片宽度        |
-    | h       | String | 二维码图片高度        |
-    | divId   | String | 显示二维码图片div的Id |
-    | content | String | 二维码内容            |
+| 参数名  | 类型   | 描述                  |
+|---------|--------|-----------------------|
+| w       | String | 二维码图片宽度        |
+| h       | String | 二维码图片高度        |
+| divId   | String | 显示二维码图片div的Id |
+| content | String | 二维码内容            |
 2. 二维码扫描
     - `cmApi.qrCode.scan(callback)` 
 
@@ -498,12 +498,12 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 5. 静默模式
     - `cmApi.push.setNoDisturbMode()` 
 
-    | 参数名      | 类型 | 描述         |
-    |-------------|------|--------------|
-    | startHour   | int  | 静默开始小时 |
-    | startMinute | int  | 静默开始分钟 |
-    | endHour     | int  | 静默结束小时 |
-    | endMinute   | int  | 静默结束分钟 |
+| 参数名      | 类型 | 描述         |
+|-------------|------|--------------|
+| startHour   | int  | 静默开始小时 |
+| startMinute | int  | 静默开始分钟 |
+| endHour     | int  | 静默结束小时 |
+| endMinute   | int  | 静默结束分钟 |
 
     示例：`cmApi.push.setNoDisturbMode({param:param,success:success,error:error})` 
 
@@ -525,11 +525,11 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 
     返回值：
 
-    | 参数名     | 类型   | 描述         |
-    |------------|--------|--------------|
-    | directory  | String | 视频存放路径 |
-    | video      | String | 视频地址     |
-    | screenshot | String | 视频缩略图   |
+| 参数名     | 类型   | 描述         |
+|------------|--------|--------------|
+| directory  | String | 视频存放路径 |
+| video      | String | 视频地址     |
+| screenshot | String | 视频缩略图   |
 3. 录音
     - `cmApi.audioRecord(callback)` //V4.0已废弃，但可继续使用。请使用audio.record。
     - `cmApi.audio.record(filename,callback)` 
@@ -575,25 +575,25 @@ V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 
     参数列表：
 
-    参数名|	类型|	描述
-    ---|---|---
-    url	|String	|上传路径
-    path|	String	|文件路径
-    showProgress|	Boolean	|是否展示进度条，默认展示
-    showToast|	Boolean	上传完成是否提醒，默认提醒
-    params|	JsonObject|	请求参数
+| 参数名       | 类型                              | 描述     |
+|--------------|-----------------------------------|----------|
+| url          | String                            | 上传路径 |
+| path         | String                            | 文件路径 |
+| showProgress | Boolean                           | 是否展示进度条，默认展示 |
+| showToast    | Boolean	上传完成是否提醒，默认提醒 |
+| params       | JsonObject                        | 请求参数 |
 3. 文件下载
 - `cmApi.file.download(url,path,callback)` //V4.1已废弃，但可继续使用。请使用file.downloadFile。
 - `cmApi.file.downloadFile(opts)` 
 
     参数列表：
     
-    参数名|	类型|	描述
-    ---|---|---
-    url	|String	|下载路径
-    path|	String	|文件路径
-    showProgress|	Boolean|	是否展示进度条，默认展示
-    showToast|	Boolean	|完成是否提醒，默认提醒
+| 参数名       | 类型    | 描述                     |
+|--------------|---------|--------------------------|
+| url          | String  | 下载路径                 |
+| path         | String  | 文件路径                 |
+| showProgress | Boolean | 是否展示进度条，默认展示 |
+| showToast    | Boolean | 完成是否提醒，默认提醒   |
 4. 文件删除
     - `cmApi.deleteLocalImg(path)` //V4.0已废弃，但可继续使用。请使用file.delete。
     - `cmApi.file.delete(path)`
