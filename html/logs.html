@@ -12,12 +12,10 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <!-- 生产环境版本，优化了尺寸和速度 -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+    <!-- <link rel="stylesheet" href="css/themename/jquery-ui.custom.css" /> -->
     <script src="js/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+    <!-- <script src="js/jquery-ui.custom.min.js"></script> -->
 
     <script src="editor.md/editormd.js"></script>
     <script src="editor.md/editormd.min.js"></script>
@@ -29,8 +27,16 @@
     <script src="editor.md/lib/flowchart.min.js"></script>
     <script src="editor.md/lib/jquery.flowchart.min.js"></script>
     <script src="js/vue-clipboard.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <script src="js/cloudjs.js"></script>
 
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <!--font-awesome-->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/fontawesome.min.js"></script>
 
     <style>
         * {
@@ -87,6 +93,14 @@
             font-weight: 400;
             padding: 0010px;
             margin-top: 5px; */
+        }
+
+        .tocActive {
+            height: 80%;
+        }
+
+        .tocInactive {
+            height: 5%;
         }
     </style>
 </head>
@@ -168,7 +182,7 @@
             // Getting URL var by its nam
             var path = $.getUrlVar('path');
             // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
-            var mdContent = "";
+            var mdContent = "[TOC]\n\n";//头部添加 TOCs
             reqPath = '/csnotes' + path;
             console.log('reqPath:' + reqPath);
             var xhr = new XMLHttpRequest();
@@ -193,12 +207,55 @@
                     flowChart: true,         // 默认不解析
                     sequenceDiagram: true,  // 默认不解析
                 });
+                //TOC 设置为独立窗口
+                initTocFloatWindow();
                 //初始化代码copy方法
                 initCopyMethod();
                 //绑定数据源
                 initVueApp();
             }
         });
+        //TOC 设置为独立窗口
+        function initTocFloatWindow() {
+            $('.markdown-toc').css({
+                "background-color": "whitesmoke",
+                "position": "fixed",
+                "overflow-y": "auto",
+                "float": "right",
+                "color": "grey",
+                "border": "1px solid gray",
+                "top": "5%",
+                "left": "70%",
+                "display": "inline-block"
+            })
+
+            $('.markdown-toc').bind("onmousedown", function (that, event) {
+                // "MoveDiv(KeFuDiv,event);"
+                console.log(that, event);
+            })
+
+            $('.markdown-toc>ul').css({
+                "padding-top": "8%"
+            })
+            $('.markdown-toc').addClass("tocActive");
+            $('.markdown-toc').removeClass("tocInactive");
+            toggleButtonHtml = "<div style='position:fixed;padding:2px;margin:2px;'>" +
+                "<span  id='moveTocBtn' onmouseover='javascript:bindDragToc()'><span class='fa fa-arrows'></span></span>" +
+                "<span  onclick='toggleToc($(this).parent().parent())'>&nbsp;&nbsp;tap2toggle</span>"
+                + "</div>";
+            $('.markdown-toc').html(toggleButtonHtml + $('.markdown-toc').html());
+        }
+        function bindDragToc() {
+            cloudjs('.markdown-toc').draggable({
+                containment: 'parent'
+            });
+        }
+        function toggleToc($toc) {
+            $toc.toggleClass("tocActive");
+            $toc.toggleClass("tocInactive");
+        }
+
+
         function initCopyMethod() {
             codeId = 0;
             $("#md-to-html code").each(function () {
@@ -240,47 +297,46 @@
             props: ['tool'],
             template: '<li @click="tool.method">{{ tool.content }}</li>'
         })
+
         function initVueApp() {
             var toolsApp = new Vue({
                 el: '#tools-div',
-                data() {
-                    return {
-                        toolUrl: '',
-                        toolWindowWidth: window.innerWidth - 400 + 'px',
-                        toolWindowHeight: window.innerHeight - 130 + 'px',
-                        toolCatWidth: '260px',
-                        toolCatHeight: window.innerHeight - 100 + 'px',
-                        logs: [{
-                            id: 0,
-                            content: '2020-Spring',
-                            method: function () {
-                                window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
-                                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                            }
-                        }, {
-                            id: 1,
-                            content: '历史日志',
-                            method: function () {
-                                window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
-                                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                            }
-                        }],
-                        others: [{
-                            id: 0,
-                            content: 'xj语录',
-                            method: function () {
-                                window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
-                                // window.open("http://www.bejson.com/ui/compress_img/");
-                            }
-                        }, {
-                            id: 1,
-                            content: '租房物品清单',
-                            method: function () {
-                                window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
-                                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                            }
-                        }]
-                    }
+                data: {
+                    toolUrl: '',
+                    toolWindowWidth: window.innerWidth - 400 + 'px',
+                    toolWindowHeight: window.innerHeight - 130 + 'px',
+                    toolCatWidth: '260px',
+                    toolCatHeight: window.innerHeight - 100 + 'px',
+                    logs: [{
+                        id: 0,
+                        content: '2020-Spring',
+                        method: function () {
+                            window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
+                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                        }
+                    }, {
+                        id: 1,
+                        content: '历史日志',
+                        method: function () {
+                            window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
+                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+                        }
+                    }],
+                    others: [{
+                        id: 0,
+                        content: 'xj语录',
+                        method: function () {
+                            window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
+                            // window.open("http://www.bejson.com/ui/compress_img/");
+                        }
+                    }, {
+                        id: 1,
+                        content: '租房物品清单',
+                        method: function () {
+                            window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
+                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+                        }
+                    }]
                 },
                 methods: {
                     onCopy: function () {
@@ -323,7 +379,7 @@
                         setTimeout(function () { $("#toastDiv").fadeToggle(400); }, 1200);
                     }
                 },
-                mounted() {
+                mounted: function(){
                     const _this = this;
                     window.onresize = () => {
                         return (() => {
