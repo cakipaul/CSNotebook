@@ -12,7 +12,7 @@
 * [JS 入门教程1](/csnotes/fe/JavaScipt/js1.md)
 * [JS 入门教程2](/csnotes/fe/JavaScipt/js2.md)
 * [前端JavaScript规范](/csnotes/fe/JavaScipt/js-guide.md)
-
+* [requirejs 模块化工具](/csnotes/fe/JavaScipt/js-require.md)
 
 ## JS 库
 

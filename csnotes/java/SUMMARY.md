@@ -5,7 +5,8 @@
 
 ## 工具
 
-* [MAVEN介绍](/csnotes/java/tools/MAVEN1.md)
+* [MAVEN 介绍](/csnotes/java/tools/MAVEN1.md)
+* [Gradle 教程](/csnotes/java/tools/gradle-intro.md)
 
 ## Java语法
 

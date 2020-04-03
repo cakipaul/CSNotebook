@@ -224,6 +224,7 @@
         //TOC 设置为独立窗口
         function initTocFloatWindow() {
             $('.markdown-toc').css({
+                "width": "max-content",
                 "background-color": "whitesmoke",
                 "position": "fixed",
                 "overflow-y": "auto",
@@ -241,7 +242,8 @@
             })
 
             $('.markdown-toc>ul').css({
-                "padding-top": "8%"
+                "padding-top": "20px",
+                "margin": "10px"
             })
             $('.markdown-toc').addClass("tocActive");
             $('.markdown-toc').removeClass("tocInactive");
