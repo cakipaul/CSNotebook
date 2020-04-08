@@ -7,7 +7,7 @@
 
 ## 分布式世界
 
-### 1. 版本控制之道
+### 版本控制之道
 
 - 版本库
   - 集中式（CVS、SVN）
@@ -24,7 +24,7 @@
 - 合并
 - 锁机制
 
-### 2. 安装与设置
+### 安装与设置
 
 - 安装
     - Linux
@@ -42,10 +42,10 @@
     - gitk --all(备注：工作目录树)
     - GitX (Mac)
 - 内置帮助
-    - git help \<command\>
+    - `git help <command>`
     - git-doc
 
-### 3. Hello Git
+### Hello Git
 
 - 创建版本库：git int
 - 修改代码
@@ -81,7 +81,7 @@
 ## Git用法
 
 
-### 1. 添加与提交
+### 添加与提交
 
 - 添加文件到暂存区
     - 1、启动交互命令提示符：git add -i
@@ -122,7 +122,7 @@
         - a、版本级：文件加入.gitignore文件中，支持通配符*
         - b、本地级：.git/info/exclude
 
-### 2. 分支
+### 分支
 
 - 什么叫分支
     - 分支重命名：git branch -m   分支原名称   新名称  
@@ -193,7 +193,7 @@
     - git branch -M 原分支名称  新分支名称 （强制覆盖）  
         git branch -m master contact
 
-### 3. 查询历史记录
+### 查询历史记录
 
 - 查看日志
     - git log
@@ -211,13 +211,13 @@
         - 注：日志结果不包括最老，包括最新
         - git log 18f822e..HEAD  /  git log 18f822e..
     - git log 标签名称
-        - git log --pretty=format:"%h %s" 1.0..HEAD
-        - git log --pretty=oneline 1.0..HEAD
-    - \^：回溯一个版本
+        - `git log --pretty=format:"%h %s" 1.0..HEAD`
+        - `git log --pretty=oneline 1.0..HEAD`
+    - `^`：回溯一个版本
         - git log 18f822e^^
         - 注：1、windows系统下，^需要添加双引号 git log “18f822e^^”。
         - 注：2、当遇到某个节点（通常是版本合并后的节点）有并列的多个父节点时，“^1”代表第一个父节点，“^2”代表第二个，以此类推。而“^”是“^1”的简写。
-    - *~N：回溯N个版本
+    - `*~N`：回溯N个版本
         - git log -1 HEAD^^^  /  git log -1 HEAD^~2  /  git log -1 HEAD~1^  /  git log -1 HEAD~3
         - git log -1 HEAD~10..HEAD
 - 查看版本间差异
@@ -228,14 +228,14 @@
     - git blame 文件名（特定代码块历史）
         - git blame hello.html
         - 注：1、格式：提交名称  初始文件名（提交人   提交时间  行号）   代码行
-        - 注：2、^脱字号开头表示版本库中第一个递交
+        - 注：2、`^` 脱字号开头表示版本库中第一个递交
     - git blame -L <开始>,<结束> 文件名（特定代码行历史）
         - git blame -L 12,13 hello.html
         - git blame -L 12,+2 hello.html
         - git blame -L 12,-2 hello.html
     - git blame -L 正则表达式 文件名（特定代码行历史）
-        - git blame -L "/<\/body>/",+2 hello.html
-        - >git blame -L "/<\/body>/",-2 "4333289e^" -- index.html
+        - `git blame -L "/<\/body>/",+2 hello.html`
+        - `git blame -L "/<\/body>/",-2 "4333289e^" -- index.html`
 - 跟踪内容
     - 检查在同一个文件内移动或复制的代码行：git blame -M 文件名
     - 查看文件之间的复制：git blame -C -C 文件名
@@ -253,11 +253,11 @@
         - 参数--soft：暂存所有因复位带来的差异，但不提交它
         - 参数--hard：慎用，从版本库和工作目录树中同时删除提交
 - 重新改写历史记录
-    - 重新排序提交：git rebase -i HEAD~3
-    - 将多个提交压合成一个提交：git rebase -i 0bb3dfb^
+    - 重新排序提交：`git rebase -i HEAD~3`
+    - 将多个提交压合成一个提交：`git rebase -i 0bb3dfb^`
     - 将一个提交分解成多个提交：git rebase --continue
 
-### 4. 与远程版本库协作
+### 与远程版本库协作
 
 - 网络协议
     - SSH：用户名@服务器名/版本库路径  
@@ -275,17 +275,17 @@
     - 取来合并：git pull 远程版本库名称 须要拖入的远程分支名
     - 远程分支名前缀origin/表示远程版本库上的分支名称，origin是默认远程版本库别名
 - 推入改动
-    - 推入默认版本库origin：git push
+    - 推入默认版本库 `origin：git push`
     - 查看推入哪些提交：git push --dry-run
-    - 推入指定版本库：git push <repository> <refspec>  
+    - 推入指定版本库：`git push <repository> <refspec> ` 
         git push origin mybranch:master
 - 添加新的远程版本库
     - 一次拖入：git pull git://ourcompany.com/dev-erin.git
     - 使用别名：git remote add 别名 路径
-    - 查看远程版本库详细信息：git remote show <name>
+    - 查看远程版本库详细信息：`git remote show <name>`
     - 删除别名：git remote rm
 
-### 5. 管理本地版本库
+### 管理本地版本库
 
 - 使用标签标记里程碑
     - 标签只读、标签名不能包含空格
@@ -324,20 +324,20 @@
         - 添加新内容到本地自模块版本库，要检出正确分支
         - 修改提交，确保改动被送回远程版本库
 
-### 6. 高级功能
+### 高级功能
 
 - 压缩版本库
-    - git gc  整理版本库、优化Git内部存储历史记录
-    - git gc <--aggressive>  重新计算增量存储单元
+    - `git gc`  整理版本库、优化Git内部存储历史记录
+    - `git gc <--aggressive>`  重新计算增量存储单元
 - 到处版本库
     - 创建版本快照:git archive 格式类型 指定版本
-    - git archive --format=<tar/zip> <--prefix=父目录> 转换格式  
-        git archive --format=zip --prefix=mysite-release/ HEAD > mysite-release.zip     
-        git archive --format=tar --prefix=mysite-release/ HEAD | gzip > mysite-release.tar.gz
+    - `git archive --format=<tar/zip> <--prefix=父目录>` 转换格式  
+        `git archive --format=zip --prefix=mysite-release/ HEAD > mysite-release.zip`
+        `git archive --format=tar --prefix=mysite-release/ HEAD | gzip > mysite-release.tar.gz`
 - 分支变基
-    - git rebase --continue/--skip/--abort
-    - git rebase --onto master contacts search
-- 重现隐藏的历史：git reflog
+    - `git rebase --continue/--skip/--abort`
+    - `git rebase --onto master contacts search`
+- 重现隐藏的历史：`git reflog`
 - 二分查找
     - git bisect start
     - git bisect bad
