@@ -47,7 +47,7 @@
         .mdWindow {
             /* width: 900px;
             height: 900px; */
-            position: relative;
+            position: initial;
             border: 5px solid gray;
             background-color: white;
             padding: 18px;
@@ -110,23 +110,41 @@
     <!-- [if lt IE 9]><div class="notice chromeframe">您的浏览器版本<strong>很旧很旧</strong>，为了正常地访问网站，请升级您的浏览器 <a target="_blank" href="http://browsehappy.com">立即升级</a></div><![endif] -->
     <textarea id="page-content" style="display:none;"> </textarea>
 
+
+
     <div id="test-editormd">
         <textarea id='edit-content' style="display:none;"></textarea>
     </div>
 
 
     <div id="tools-div" style="height: auto;width: auto;">
+        <div id='summary-toc' class='tocActive' style="display:none;">
+            <textarea id='summary-content' style="display:none;"></textarea>
+        </div>
+
+        <div id='category-div' class='tocActive' style="display:none;">
+            <textarea id='category-content' style="display:none;"></textarea>
+        </div>
+
+        <div id='resources-div' class='tocActive' style="display:none;">
+            <textarea id='resources-content' style="display:none;"></textarea>
+        </div>
+
         <div class="doc-sidebar" :style="{'width':toolCatWidth,'height':toolCatHeight }">
-            <ul onclick="editThePage()">Edit the page
-            </ul>
-            <ul>Category
+            <ul onclick="editThePage()">Edit the page</ul>
+            <ul id='summary-popover'>SUMMARY</ul>
+            <ul id='category'>Category
                 <tool-item v-for="item in Category" :tool="item" :key="item.id">
                 </tool-item>
             </ul>
-            <ul>Resource
+
+
+            <ul id='resources'>Resources
                 <tool-item v-for="item in Resource" :tool="item" :key="item.id">
                 </tool-item>
             </ul>
+
+
         </div>
         <div id="md-to-html" class='mdWindow' :style="{'width':toolWindowWidth,'height':toolWindowHeight }">
             <textarea id='md-content' style="display:none;">### Hello world!</textarea>
@@ -142,6 +160,8 @@
 
     <script type="text/javascript">
         var testEditor;
+        var summaryPath = '';
+        var showSummaryToc = true;
 
         function editThePage() {
 
@@ -183,11 +203,17 @@
             $().popover({});
 
             // Getting URL var by its nam
-            var path = $.getUrlVar('path');
+            var path = '' + $.getUrlVar('path');
+            summaryPath = '' + $.getUrlVar('summaryPath');
             // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
             var mdContent = "[TOC]\n\n";//头部添加 TOCs
             reqPath = '/csnotes' + path;
-            console.log('reqPath:' + reqPath);
+            if (reqPath.toLowerCase().endsWith("/summary.md")) {
+                summaryPath = reqPath;
+                showSummaryToc = false;
+            }
+
+            // console.log('reqPath:' + reqPath);
             var xhr = new XMLHttpRequest();
             xhr.open('get', reqPath);
             xhr.send('')
@@ -195,7 +221,11 @@
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
-                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3)");
+                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3&summaryPath=" + summaryPath + ")");
+
+                //取消尖括号前的转义字符 防止vue解析报错
+                mdContent = mdContent.replace(/\\\</g, '\<').replace(/\\\>/g, '\>');
+
                 if (path == undefined || path == null || path == '') {
                     mdContent = '';
                 }
@@ -210,16 +240,155 @@
                     flowChart: true,         // 默认不解析
                     sequenceDiagram: true,  // 默认不解析
                 });
+
                 //TOC 设置为独立窗口
                 initTocFloatWindow();
                 //初始化代码copy方法
                 initCopyMethod();
+
+                //设置SUMMARY popover
+                initSummaryToc();
+
                 //绑定数据源
                 initVueApp();
 
+                //不使用vue实现category
+                // initCategory();
+
             }
         });
+        //设置SUMMARY popover
+        function initSummaryToc() {
+            if (!summaryPath || summaryPath == '' || !showSummaryToc) {
+                $('#summary-toc').hide();
+                return;
+            }
 
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', summaryPath);
+            xhr.send('')
+            var mdContent = '';
+            xhr.onload = function () {
+                mdContent += xhr.responseText;
+                // console.log(mdContent);
+                //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
+                mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3&summaryPath=" + summaryPath + ")");
+                //取消尖括号前的转义字符 防止vue解析报错
+                mdContent = mdContent.replace(/\\\</g, '\<').replace(/\\\>/g, '\>');
+
+                // console.log('initSummaryToc: ', mdContent);
+                $('#summary-content').val(mdContent);
+                // console.log($('#md-content').val());
+                editormd.markdownToHTML("summary-toc", {
+                    htmlDecode: "style,script,iframe", //可以过滤标签解码
+                    emoji: true,
+                    taskList: true,
+                    tex: true,               // 默认不解析
+                    flowChart: true,         // 默认不解析
+                    sequenceDiagram: true,  // 默认不解析
+                });
+                $('#summary-toc').css({
+                    "width": "max-content",
+                    "background-color": "whitesmoke",
+                    "position": "absolute",
+                    "overflow-y": "auto",
+                    "float": "right",
+                    "color": "grey",
+                    "border": "1px solid gray",
+                    "top": "5%",
+                    "left": "20%",
+                    "display": "inline-block"
+                })
+                $('#summary-toc').hide();
+
+                $('#summary-popover').popover({
+                    // title:'summary',
+                    html: true,
+                    placement: 'right',
+                    content: '<div>' + $('#summary-toc').html() + "</div>",
+                    trigger: 'click'
+                });
+            }
+        }
+        //不使用vue实现category
+        function initCategory() {
+            var categoryContent = '### 目录\n';
+            var resourcesContent = '### 资源\n';
+
+            for (i in categoryList) {
+                categoryContent += '\n- [' + categoryList[i].content + '](' + categoryList[i].url + ')'
+            }
+            for (i in resourcesList) {
+                resourcesContent += '\n- [' + resourcesList[i].content + '](' + resourcesList[i].url + ')'
+            }
+
+            $('#category-content').val(categoryContent);
+            $('#resources-content').val(resourcesContent);
+            // console.log($('#md-content').val());
+            editormd.markdownToHTML("category-div", {
+                htmlDecode: "style,script,iframe", //可以过滤标签解码
+                emoji: true,
+                taskList: true,
+                tex: true,               // 默认不解析
+                flowChart: true,         // 默认不解析
+                sequenceDiagram: true,  // 默认不解析
+            });
+            editormd.markdownToHTML("resources-div", {
+                htmlDecode: "style,script,iframe", //可以过滤标签解码
+                emoji: true,
+                taskList: true,
+                tex: true,               // 默认不解析
+                flowChart: true,         // 默认不解析
+                sequenceDiagram: true,  // 默认不解析
+            });
+
+            $('#category-div').css({
+                "width": "max-content",
+                "background-color": "whitesmoke",
+                "position": "absolute",
+                "overflow-y": "auto",
+                "float": "right",
+                "color": "grey",
+                "border": "1px solid gray",
+                "top": "5%",
+                "left": "20%",
+                "display": "inline-block"
+            })
+            $('#resources-div').css({
+                "width": "max-content",
+                "background-color": "whitesmoke",
+                "position": "absolute",
+                "overflow-y": "auto",
+                "float": "right",
+                "color": "grey",
+                "border": "1px solid gray",
+                "top": "5%",
+                "left": "20%",
+                "display": "inline-block"
+            })
+
+            $('#category-div').hide();
+            $('#resources-div').hide();
+
+            $('#category').popover({
+                // title:'summary',
+                html: true,
+                placement: 'right',
+                content: '<div>' + $('#category-div').html() + "</div>",
+                trigger: 'click'
+            });
+
+            $('#resources').popover({
+                // title:'summary',
+                html: true,
+                placement: 'right',
+                content: '<div>' + $('#resources-div').html() + "</div>",
+                trigger: 'click'
+            });
+
+
+
+        }
 
         //TOC 设置为独立窗口
         function initTocFloatWindow() {
@@ -306,6 +475,7 @@
         })
 
         function initVueApp() {
+            // $('#tools-div').html($('#tools-div').html().replace(/v-clipboard:=/g,'data-'));
             var toolsApp = new Vue({
                 el: '#tools-div',
                 data: {
@@ -314,146 +484,8 @@
                     toolWindowHeight: window.innerHeight - 130 + 'px',
                     toolCatWidth: '260px',
                     toolCatHeight: window.innerHeight - 100 + 'px',
-                    Category: [{
-                        id: 0,
-                        content: 'Hardware',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 1,
-                        content: 'OperationSystem',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                        }
-                    }, {
-                        id: 2,
-                        content: 'DataStructure',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 3,
-                        content: 'Tools',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 4,
-                        content: 'DataBase',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 5,
-                        content: 'C',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 6,
-                        content: '.Net',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 7,
-                        content: 'Java',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 8,
-                        content: 'Go',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 9,
-                        content: 'Python',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 10,
-                        content: 'Mobile',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/mobile/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 11,
-                        content: 'Web',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 12,
-                        content: 'FrontEnd',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    },
-                    {
-                        id: 13,
-                        content: 'Dev',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
-                        }
-                    }],
-                    Resource: [{
-                        id: 0,
-                        content: 'Common Res',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/通用资源链接.md', '_self');
-                            // window.open("http://www.bejson.com/ui/compress_img/");
-                        }
-                    }, {
-                        id: 1,
-                        content: 'IT Res',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/IT资源链接.md', '_self');
-                            // window.open("http://tool.oschina.net/");
-                        }
-                    }, {
-                        id: 2,
-                        content: 'IT Skills Tree',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/IT技能树.md', '_self');
-                            // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
-                        }
-                    }, {
-                        id: 3,
-                        content: 'RSS Sites',
-                        method: function () {
-                            window.open('/csnotes/html/docs.html?path=/res/RSS_sites.md', '_self');
-                            // window.open("https://www.materialpalette.com/icons");
-                        }
-                    }]
+                    Category: categoryList,
+                    Resource: resourcesList
 
                 },
                 methods: {
@@ -513,6 +545,166 @@
             })
         }
 
+        var categoryList = [{
+            id: 0,
+            content: 'Hardware',
+            url: '/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md',
+            method: function () {
+                var url = categoryList[0].url; window.open(url, '_self');
+
+                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 1,
+            content: 'OperationSystem',
+            url: '/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md',
+            method: function () {
+                var url = categoryList[1].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+            }
+        }, {
+            id: 2,
+            content: 'DataStructure',
+            url: '/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md',
+            method: function () {
+                var url = categoryList[2].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 3,
+            content: 'Tools',
+            url: '/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md',
+            method: function () {
+                var url = categoryList[3].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 4,
+            content: 'DataBase',
+            url: '/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md',
+            method: function () {
+                var url = categoryList[4].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 5,
+            content: 'C',
+            url: '/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md',
+            method: function () {
+                var url = categoryList[5].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 6,
+            content: '.Net',
+            url: '/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md',
+            method: function () {
+                var url = categoryList[6].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 7,
+            content: 'Java',
+            url: '/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md',
+            method: function () {
+                var url = categoryList[7].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 8,
+            content: 'Go',
+            url: '/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md',
+            method: function () {
+                var url = categoryList[8].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 9,
+            content: 'Python',
+            url: '/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md',
+            method: function () {
+                var url = categoryList[9].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 10,
+            content: 'Mobile',
+            url: '/csnotes/html/docs.html?path=/csnotes/mobile/SUMMARY.md',
+            method: function () {
+                var url = categoryList[10].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 11,
+            content: 'Web',
+            url: '/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md',
+            method: function () {
+                var url = categoryList[11].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 12,
+            content: 'FrontEnd',
+            url: '/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md',
+            method: function () {
+                var url = categoryList[12].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 13,
+            content: 'Dev',
+            url: '/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md',
+            method: function () {
+                var url = categoryList[13].url; window.open(url, '_self');
+                // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
+            }
+        }];
+
+        var resourcesList = [{
+            id: 0,
+            content: 'Common Res',
+            url: '/csnotes/html/docs.html?path=/res/通用资源链接.md',
+            method: function () {
+                var url = resourcesList[0].url; window.open(url, '_self');
+                // window.open("http://www.bejson.com/ui/compress_img/");
+            }
+        }, {
+            id: 1,
+            content: 'IT Res',
+            url: '/csnotes/html/docs.html?path=/res/IT资源链接.md',
+            method: function () {
+                var url = resourcesList[1].url; window.open(url, '_self');
+                // window.open("http://tool.oschina.net/");
+            }
+        }, {
+            id: 2,
+            content: 'IT Skills Tree',
+            url: '/csnotes/html/docs.html?path=/res/IT技能树.md',
+            method: function () {
+                var url = resourcesList[2].url; window.open(url, '_self');
+                // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
+            }
+        }, {
+            id: 3,
+            content: 'RSS Sites',
+            url: '/csnotes/html/docs.html?path=/res/RSS_sites.md',
+            method: function () {
+                var url = resourcesList[3].url; window.open(url, '_self');
+                // window.open("https://www.materialpalette.com/icons");
+            }
+        }]
 
     </script>
 </body>
