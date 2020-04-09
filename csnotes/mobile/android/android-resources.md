@@ -75,23 +75,89 @@ MyProject/
 
 当 Android 应用程序被编译，生成一个 R 类，其中包含了所有 res/ 目录下资源的 ID。你可以使用 R 类，通过子类+资源名或者直接使用资源 ID 来访问资源。
 
-实例
+#### 实例
+
 访问 res/drawable/myimage.png，并将其设置到 ImageView 上，你将使用以下代码：
 
+```java
 ImageView imageView = (ImageView) findViewById(R.id.myimageview);
 imageView.setImageResource(R.drawable.myimage);
+```
+
 这里第一行代码用 R.id.myimageview 来在布局文件中获取定义为 myimageview 的 ImageView。第二行用 R.drawable.myimage 来获取在 res/ 的 drawable 子目录下名为 myimage 的图片。
 
-实例
+#### 实例
+
 考虑下一个例子，其中 res/values/strings.xml 有如下定义：
 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string  name="hello">Hello, World!</string>
 </resources>
+```
+
 现在你可以在 ID 为 msg 的 TextView 对象上使用资源 ID 来设置文本，具体如下：
 
+```java
 TextView msgTextView = (TextView) findViewById(R.id.msg);
 msgTextView.setText(R.string.hello);
+```
 
+#### 实例
 
+考虑如下定义的布局 res/layout/activity_main.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:layout_width="fill_parent" 
+   android:layout_height="fill_parent" 
+   android:orientation="vertical" >
+
+   <TextView android:id="@+id/text"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Hello, I am a TextView" />
+
+   <Button android:id="@+id/button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Hello, I am a Button" />
+
+</LinearLayout>
+```
+
+这个应用程序代码将为活动加载这个布局，onCreate() 方法中如下：
+
+```java
+public void onCreate(Bundle savedInstanceState) {
+   super.onCreate(savedInstanceState);
+   setContentView(R.layout.main_activity);
+}
+```
+
+### 在XML中访问
+
+考虑下面的 XML 资源文件 res/values/strings.xml，其中包含一个颜色资源和一个字符串资源 -
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <color name="opaque_red">#f00</color>
+   <string name="hello">Hello!</string>
+</resources>
+```
+
+现在，你可以在下面的布局文件中使用这些资源来设置文本颜色和文本内容：
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<EditText xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:textColor="@color/opaque_red"
+    android:text="@string/hello" />
+```
+
+现在，你如果再次回到上一章节讲解的" Hello World! "实例，我可以确定，你对这节中所有的概念有了更好的理解。所以，我强烈建议回去看看之前的实例，并查看我使用不同资源的基本用法。
