@@ -1,6 +1,4 @@
-# 移动框架API说明文档
-
-**日期**| **更新人**|**更新内容**|**版本**|**备注**
+日期| 更新人|更新内容|版本|备注
 ---|---|---|---|---
 2018.3.21|张兴康|创建|V1.0|初版
 2018.9.05|张兴康|增加API| V1.1|本次新增内容：18、19、20、21
@@ -8,6 +6,7 @@
 2019.2.19|张兴康|增加、更新API|V1.3|
 2019.9.29|宋伟伟|重新排版，更新API|V1.4|
 2019.12.26|宋伟伟|更新海康安全平台等API|V1.5|
+2020.4.7|孙圣浩|更新至wiki页面|V1.9|
 
 >此文档对应《移动框架开发手册V2.3》
 
@@ -26,25 +25,25 @@ OCR|提供离线车牌号识别|4.0.0-release
 海康安全平台|集成海康威视安全平台，通过此平台间接预览、控制、回放摄像头|4.0.5-release
 社会化分享| 集成友盟社会化分享，暂只支持分享链接到微信|4.0.0-release
 
-# 总体介绍
+# 1.  总体介绍
 
 移动框架使用混合开发模式，使用HTML/JS开发展示页面，使用Native原生实现底层硬件控制、JS无法实现的通用模块。框架提供数十个插件快速实现业务逻辑，研发只需要掌握html、js、css技术即可快速实现功能，一次开发同时支持Android、IOS、微信公众号。
 
 本文档针对每个插件的调用API进行详细说明介绍。
 
-## 返回方式
+## 1.1.  返回方式
 
 插件API调用时，框架提供三种返回方式：同步返回、异步返回-字符串回调、异步返回-方法返回。后续版本异步返回统一使用方法返回，字符串回调逐步废弃。
 
 在插件API使用介绍时，如有返回值，则按照以下用法接收返回值，每个API不再详细。
 
-### 同步返回
+### 1.1.1.  同步返回
 
 同步返回即调用插件API时，直接返回结果，使用方便，但会阻塞主线程。同步返回插件API不要在for循环中高频调用，否则会造成程序卡顿，影响用户体验。
 
 例如： `var value = cmApi.localStorage.getItem("xxx")`;
 
-### 异步返回-字符串回调
+### 1.1.2.  异步返回-字符串回调
 
 异步返回即调用插件API时，直接异步结果，不会阻塞主线程，但使用不便。需要定义回调函数，并将其暴露出去。
 
@@ -71,7 +70,7 @@ return {
 }
 ```
 
-### 异步返回-方法回调
+### 1.1.3.  异步返回-方法回调
 
 异步返回即调用插件API时，直接异步结果，不会阻塞主线程，支持直接传递回调处理逻辑或传递回调方法，使用比字符串回调方式简单。且无需暴露回调函数更安全。
 
@@ -92,7 +91,7 @@ function imagePickerSuccess(filePaths) {
 }
 ```
 
-## 微信公众号插件支持
+## 1.2.  微信公众号插件支持
 
 因微信API限制，移动框架的部分API在微信公众号无法使用，支持情况如下：
 
@@ -174,13 +173,13 @@ function imagePickerSuccess(filePaths) {
 | 监听| `cmApi.eventListener.remove`| 移除监听  | **不支持** |
 | 监听| `cmApi.eventListener.clear` | 清楚监听  | **不支持** |
 
-#  插件API使用说明
+# 2.   插件API使用说明
 
-##  基本操作
+## 2.1.   基本操作
 
-### 功能路由
+### 2.1.1.  功能路由
 
-#### 功能跳转
+#### 2.1.1.1.  功能跳转
 
 实现app中不同功能之间的跳转。
 
@@ -208,7 +207,7 @@ V4.0
 
 `cmApi.router.turnToPage('demo',{'djnm': '1'})`;
 
-#### 加载新页面（html路径）
+#### 2.1.1.2.  加载新页面（html路径）
 
 方法：
 
@@ -234,7 +233,7 @@ V3.0
 
 `cmApi.router.load(htmlpath)`;
 
-#### 加载新页面（html代码）
+#### 2.1.1.3.  加载新页面（html代码）
 
 方法：
 
@@ -260,7 +259,7 @@ V3.0
 
 `cmApi.router.loadContent('<div>deom</div>')`
 
-#### 重新加载页面（html代码）
+#### 2.1.1.4.  重新加载页面（html代码）
 
 方法：
 
@@ -284,7 +283,7 @@ V3.0
 
 `cmApi.router.reloadContent('<div>deom</div>')`
 
-#### 加载新页面（html网络地址）
+#### 2.1.1.5.  加载新页面（html网络地址）
 
 方法：
 
@@ -310,7 +309,7 @@ V3.0
 
 `cmApi.router.loadHtml('www.baidu.com')`;
 
-#### 重新加载页面（html网络地址）
+#### 2.1.1.6.  重新加载页面（html网络地址）
 
 方法：
 
@@ -336,13 +335,13 @@ V3.0
 
 > `cmApi.router.reloadHtml('www.baidu.com')`;
 
-### 服务器地址
+### 2.1.2.  服务器地址
 
 设置后端服务地址以及获取后端服务地址。
 
 >注：通过setServerUrl设置服务地址并不会修改configs.properties中的app.server.url值，故服务地址修改后，getServerUrl会与config.getItem("app.server.url")不一致
 
-#### 设置服务地址
+#### 2.1.2.1.  设置服务地址
 
 方法：
 
@@ -368,7 +367,7 @@ V4.0
 
 `cmApi.setServerUrl("http://10.200.64.78:8080")`;
 
-#### 获取服务地址
+#### 2.1.2.2.  获取服务地址
 
 方法：
 
@@ -396,7 +395,7 @@ V4.0
 
 var serverUrl = `cmApi.getServerUrl()`;
 
-#### 设置服务地址（已废弃）
+#### 2.1.2.3.  设置服务地址（已废弃）
 
 V4.0已废弃，但可继续使用。请使用setServerUrl。
 
@@ -422,7 +421,7 @@ V3.0
 
 `cmApi.setServerUrl("http://10.200.64.78:8080")`;
 
-#### 获取服务地址（已废弃）
+#### 2.1.2.4.  获取服务地址（已废弃）
 
 V4.0已废弃，但可继续使用。请使用getServerUrl。
 
@@ -452,13 +451,13 @@ V3.0
 
 var ip = `cmApi.getIp()`;
 
-### 加载框
+### 2.1.3.  加载框
 
 展示或隐藏加载提示框，在处理较长任务时可使用，效果如下图。
 
 ![LoadingDialog](media/LoadingDialog.jpg)
 
-#### 展示加载框
+#### 2.1.3.1.  展示加载框
 
 方法：
 
@@ -480,7 +479,7 @@ V3.0
 
 `cmApi.showLoadingDialog()`;
 
-#### 取消加载框
+#### 2.1.3.2.  取消加载框
 
 方法：
 
@@ -502,11 +501,11 @@ V3.0
 
 `cmApi.hideLoadingDialog()`;
 
-### 信息提示
+### 2.1.4.  信息提示
 
 给当前视图显示一个浮动的显示块，不会获得焦点，3秒后自动消失。一般用于提示一些不重要但是又希望用户看见的消息，例如单据保存成功后提示"单据保存成功"。
 
-#### 信息提示
+#### 2.1.4.1.  信息提示
 
 方法：
 
@@ -535,11 +534,11 @@ V3.0
 - `cmApi.prompt.toast('单据保存成功')`;
 - `cmApi.prompt.toast('单据保存成功', '提示')`;
 
-### APP信息
+### 2.1.5.  APP信息
 
 用于查询有关app的相关信息。
 
-#### 获取app版本号
+#### 2.1.5.1.  获取app版本号
 
 方法：
 
@@ -567,7 +566,7 @@ V3.0
 
 var appVersionCode = `cmApi.appUtil.getAppVersionCode()`;
 
-#### 获取app名称
+#### 2.1.5.2.  获取app名称
 
 方法：
 
@@ -597,7 +596,7 @@ V3.0
 
 var appName = `cmApi.appUtil.getAppName()`;
 
-#### 获取当前网络类型（已废弃）
+#### 2.1.5.3.  获取当前网络类型（已废弃）
 
 > V4.0已废弃，但可继续使用。请使用network.getNetworkType。
 
@@ -627,7 +626,7 @@ V3.0
 
 var networkType = `cmApi.appUtil.getNetWorkType()`;
 
-#### 检查更新（已废弃）
+#### 2.1.5.4.  检查更新（已废弃）
 
 >检查app更新，用于android版本。V4.0已废弃，不能使用，请业务判断是否需要更新。
 
@@ -658,7 +657,7 @@ V3.0
 - `cmApi.appCheckUpdate(0,cmApi.userInfo.getZznm(),cmApi.device.getType()`,
 - `cmApi.appUtil.getAppName,cmApi.appUtil.getAppName.getAppVersionCode)`;
 
-#### 下载并安装apk 
+#### 2.1.5.5.  下载并安装apk 
 
 > APP完成下载后会自动调用安装程序。
 
@@ -685,11 +684,11 @@ V4.0
 
 `cmApi.appUtil.downloadApk('http://10.24.18.224:8080/igmcloud/downloadAPP)`;
 
-### 设备信息
+### 2.1.6.  设备信息
 
 获取手机设备基础信息。
 
-#### 获取设备唯一标识
+#### 2.1.6.1.  获取设备唯一标识
 
 方法：
 
@@ -717,7 +716,7 @@ V3.0
 
 var deviceId = `cmApi.device.getDeviceId()`;
 
-#### 获取系统版本
+#### 2.1.6.2.  获取系统版本
 
 方法：
 
@@ -746,7 +745,7 @@ V3.0
 
 var version = `cmApi.device.getVersion()`;
 
-#### 获取手机型号
+#### 2.1.6.3.  获取手机型号
 
 方法：
 
@@ -778,7 +777,7 @@ V3.0
 
 var phoneModel = `cmApi.device.getModel()`;
 
-#### 获取手机品牌
+#### 2.1.6.4.  获取手机品牌
 
 方法：
 
@@ -808,7 +807,7 @@ V3.0
 
 var phoneBrand = `cmApi.device.getBrand()`;
 
-#### 获取手机类型
+#### 2.1.6.5.  获取手机类型
 
 方法：
 
@@ -836,7 +835,7 @@ V3.0
 
 var mobileType = `cmApi.device.getType()`;
 
-#### 获取手机屏幕像素高度
+#### 2.1.6.6.  获取手机屏幕像素高度
 
 方法：
 
@@ -864,7 +863,7 @@ V4.0
 
 var height = `cmApi.device.getScreenHeight()`;
 
-#### 获取手机屏幕像素高度
+#### 2.1.6.7.  获取手机屏幕像素高度
 
 方法：
 
@@ -892,7 +891,7 @@ V4.0
 
 var width = `cmApi.device. getScreenWidth ()`;
 
-#### 设置状态栏颜色
+#### 2.1.6.8.  设置状态栏颜色
 
 方法：
 
@@ -918,7 +917,7 @@ V3.0
 
 `cmApi.device.setWindowStatusBarColor("#FFFFFF")`;
 
-#### 是否平板设备
+#### 2.1.6.9.  是否平板设备
 
 方法：
 
@@ -946,13 +945,13 @@ V3.0
 
 var mobileType = `cmApi.device.getType()`;
 
-### 配置文件
+### 2.1.7.  配置文件
 
 获取APP配置信息，读取configs.properties配置文件数据，不支持配置修改。
 
 >注：通过setServerUrl设置服务地址并不会修改configs.properties中的app.server.url值，故服务地址修改后，getServerUrl会与config.getItem（"app.server.url"）不一致
 
-#### 获取配置信息
+#### 2.1.7.1.  获取配置信息
 
 方法：
 
@@ -986,7 +985,7 @@ V4.0
 
 var value = `cmApi.config.getItem(key)`;
 
-#### 调试模式
+#### 2.1.7.2.  调试模式
 
 方法：
 
@@ -1016,7 +1015,7 @@ V4.0
 
 var isDebug = `cmApi.config.isDebug()`;
 
-#### 兼容模式
+#### 2.1.7.3.  兼容模式
 
 方法：
 
@@ -1038,11 +1037,11 @@ V4.0
 
 `cmApi.config.isCompatibility()`;
 
-### 本地存储
+### 2.1.8.  本地存储
 
 将数据存储在手机中，APP卸载时，数据清空。适合用于保存APP配置参数，例如配置开关、用户名等数据。
 
-#### 存储数据
+#### 2.1.8.1.  存储数据
 
 方法：
 
@@ -1067,7 +1066,7 @@ V4.0
 
 `cmApi.localStorage.setItem("username",userJson.loginUserName)`;
 
-#### 获取数据
+#### 2.1.8.2.  获取数据
 
 方法：
 
@@ -1097,7 +1096,7 @@ V4.0
 
 var value = `cmApi.localStorage.getItem("xxx")`;
 
-#### 存储数据（已废弃）
+#### 2.1.8.3.  存储数据（已废弃）
 
 V4.0已废弃，但可继续使用。请使用localStorage.setItem。使用setStringSession保存的数据支持使用新接口getItem获取。
 
@@ -1124,7 +1123,7 @@ V3.0
 
 `cmApi.getStringSession("username",userJson.loginUserName)`;
 
-#### 获取数据（已废弃）
+#### 2.1.8.4.  获取数据（已废弃）
 
 V4.0已废弃，但可继续使用。请使用localStorage.getItem。使用setStringSession保存的数据支持使用新接口getItem获取。
 
@@ -1156,11 +1155,11 @@ V3.0
 
 var value = `cmApi.getStringSession("username")`;
 
-### 退出
+### 2.1.9.  退出
 
 彻底退出app应用程序。
 
-#### APP退出
+#### 2.1.9.1.  APP退出
 
 方法：
 
@@ -1182,9 +1181,9 @@ V3.0
 
 `cmApi.appExit()`;
 
-###  网络状态
+### 2.1.10.   网络状态
 
-#### 是否有网路
+#### 2.1.10.1.  是否有网路
 
 方法：
 
@@ -1212,7 +1211,7 @@ V4.0
 
 var isConnect = `cmApi.network.isConnect()`;
 
-#### 获取当前网络类型
+#### 2.1.10.2.  获取当前网络类型
 
 方法：
 
@@ -1240,7 +1239,7 @@ V4.0
 
 var networkType = `cmApi.network.getNetworkType()`;
 
-#### ping
+#### 2.1.10.3.  ping
 
 方法：
 
@@ -1271,11 +1270,11 @@ V4.0
 
 var isPing = `cmApi.network.ping("192.168.0.1",3)`;
 
-## 用户信息
+## 2.2.  用户信息
 
 用于获取登录用户的一些基本信息。用户登录后可以使用，如果获取为空，请检查登录逻辑中是否保存。
 
-### 获取用户唯一标识
+### 2.2.1.  获取用户唯一标识
 
 方法：
 
@@ -1303,7 +1302,7 @@ V3.0
 
 var userId = `cmApi.userInfo.getUserId()`;
 
-### 获取用户绑定标识
+### 2.2.2.  获取用户绑定标识
 
 方法：
 
@@ -1331,7 +1330,7 @@ V3.0
 
 var userId = `cmApi.userInfo.getBindUserId()`;
 
-### 获取用户内码
+### 2.2.3.  获取用户内码
 
 方法：
 
@@ -1359,7 +1358,7 @@ V3.0
 
 var userNm = `cmApi.userInfo.getUserNm()`;
 
-### 获取用户密码
+### 2.2.4.  获取用户密码
 
 方法：
 
@@ -1387,7 +1386,7 @@ V3.0
 
 var password = `cmApi.userInfo.getUserPwd()`;
 
-### 获取用户身份证号
+### 2.2.5.  获取用户身份证号
 
 方法：
 
@@ -1415,7 +1414,7 @@ V3.0
 
 var userIdCard = `cmApi.userInfo.getUserIDCard()`;
 
-### 获取用户电话
+### 2.2.6.  获取用户电话
 
 方法：
 
@@ -1443,7 +1442,7 @@ V3.0
 
 var phoneNum = `cmApi.userInfo.getPhoneNum()`;
 
-### 获取用户组织内码
+### 2.2.7.  获取用户组织内码
 
 方法：
 
@@ -1471,7 +1470,7 @@ V3.0
 
 var zznm = `cmApi.userInfo.getZZnm()`;
 
-### 获取用户组织名称
+### 2.2.8.  获取用户组织名称
 
 方法：
 
@@ -1501,7 +1500,7 @@ V3.0
 
 var zzmc = `cmApi.userInfo.getZZmc()`;
 
-### 获取用户组织类型
+### 2.2.9.  获取用户组织类型
 
 方法：
 
@@ -1531,7 +1530,7 @@ V3.0
 
 var zzlx = `cmApi.userInfo.getZZlx()`;
 
-### 获取用户分级编码
+### 2.2.10.  获取用户分级编码
 
 方法：
 
@@ -1561,7 +1560,7 @@ V3.0
 
 var fjbm = `cmApi.userInfo.getFjbm()`;
 
-### 获取用户级次
+### 2.2.11.  获取用户级次
 
 方法：
 
@@ -1591,7 +1590,7 @@ V3.0
 
 var jc = `cmApi.userInfo.getJc()`;
 
-### 获取用户角色
+### 2.2.12.  获取用户角色
 
 方法：
 
@@ -1621,7 +1620,7 @@ V3.0
 
 var roles = `cmApi.userInfo.getRoles()`;
 
-### 获取组织树
+### 2.2.13.  获取组织树
 
 方法：
 
@@ -1651,7 +1650,7 @@ V3.0
 
 var ret = `cmApi.userInfo.getAllZzTree()`;
 
-### 获取当前用户组织树
+### 2.2.14.  获取当前用户组织树
 
 方法：
 
@@ -1681,14 +1680,14 @@ V3.0
 
 var ret = `cmApi.userInfo.getCurrentUserZzTree()`;
 
-## Http请求
+## 2.3.  Http请求
 
 
-### 发起http
+### 2.3.1.  发起http
 
 post请求，包含几种不同形式的请求方式。httpPostAsync方法会自动控制加载框，httpPostAsyncNoLoading则没有加载框。
 
-### 异步请求
+### 2.3.2.  异步请求
 
 方法：
 
@@ -1726,7 +1725,7 @@ V4.0
 
 `cmApi.request.httpPostAsync('service/demo/insert',params,'demoModule.insertCallback')`;
 
-### 异步请求(不含提示框) 
+### 2.3.3.  异步请求(不含提示框) 
 
 方法：
 
@@ -1764,7 +1763,7 @@ V4.0
 
 `cmApi.request.httpPostAsyncNoLoading('service/demo/insert',params,'demoModule.insertCallback')`;
 
-### 异步请求（转发服务专用）（已废弃）
+### 2.3.4.  异步请求（转发服务专用）（已废弃）
 
 V4.0已废弃，不能使用。请使用request.commHttpPostAsync。
 
@@ -1802,7 +1801,7 @@ V3.0
 
 `cmApi.request.commHttpPostAsync('demoinsert',params,'demoModule.insertCallback')`;
 
-### 硕正报表请求
+### 2.3.5.  硕正报表请求
 
 方法：
 
@@ -1838,9 +1837,9 @@ V3.0
 
 `cmApi.request.reportFormHttpPostAsync('getRform',params,'ckrjdModule.queryReportFormCallback')`;
 
-##  设备通信
+## 2.4.   设备通信
 
-### 打电话
+### 2.4.1.  打电话
 
 方法：
 
@@ -1866,7 +1865,7 @@ V3.0
 
 `cmApi.contact.phone("18666666666")`
 
-### 发短信
+### 2.4.2.  发短信
 
 方法：
 
@@ -1892,11 +1891,11 @@ V3.0
 
 `cmApi.contact.sms("18666666666")`
 
-## 本地数据库
+## 2.5.  本地数据库
 
 对手机本地数据库中的数据进行增、删、改、查。APP卸载时，数据清空
 
-### 数据库查询
+### 2.5.1.  数据库查询
 
 方法：
 
@@ -1932,7 +1931,7 @@ var sql = "SELECT CF_CFNM FROM CRK_CF WHERE CF_ZZNM = 'zznm'";
 var data = `cmApi.jdbc.execSelectSQL(sql)`;
 ```
 
-### 数据库更新
+### 2.5.2.  数据库更新
 
 方法：
 
@@ -1970,14 +1969,14 @@ var sql = "DELETE FROM CRK_CF WHERE CF_ZZNM = 'zznm'";
 var index = `cmApi.jdbc.execUpdateSQL(sql)`;
 ```
 
-## 地图
+## 2.6.  地图
 
 
 集成百度地图，定位默认使用GCJ02坐标系。百度导航效果类似百度地图。
 
 移动框架支持后端定位用户位置，可以以指定频率反馈位置，便于项目绘制用户轨迹。启动跟踪后会给用户通知提示，关闭跟踪后清除提醒，且提醒无法手动消除，避免用户误解。框架提供"启动跟踪"、"关闭跟踪"、"跟踪状态"3个API接口。
 
-### 用户定位
+### 2.6.1.  用户定位
 
 方法：
 
@@ -2023,7 +2022,7 @@ V4.0
 
 `cmApi.map.locate('demoModule.geolocationCallback')`;
 
-### 用户定位(已废弃)
+### 2.6.2.  用户定位(已废弃)
 
 V4.0已废弃，但可继续使用。请使用push.map.locate。
 
@@ -2061,7 +2060,7 @@ V3.0
 
 `cmApi.map.locate('demoModule.geolocationCallback')`;
 
-### 百度导航
+### 2.6.3.  百度导航
 
 实现起始位置的在线导航功能。依赖百度导航扩展插件。
 
@@ -2097,7 +2096,7 @@ var opts = {slng: '',slat: '',elng: '',elat: '',eloc: ''};
 cmApi.map.navigate(opts);
 ```
 
-### 后台跟踪启动
+### 2.6.4.  后台跟踪启动
 
 移动框架支持后端定位用户位置，可以以指定频率反馈位置，便于项目绘制用户轨迹。启动跟踪后会给用户通知提示，关闭跟踪后清除提醒，且提醒无法手动消除，避免用户误解。
 
@@ -2184,7 +2183,7 @@ function startTrace(){
 }
 ```
 
-### 后台跟踪关闭
+### 2.6.5.  后台跟踪关闭
 
 移动框架支持后端定位用户位置，可以以指定频率反馈位置，便于项目绘制用户轨迹。关闭跟踪后会清除跟踪提醒。
 
@@ -2240,7 +2239,7 @@ function stopTrace(){
 }
 ```
 
-### 后台跟踪状态
+### 2.6.6.  后台跟踪状态
 
 查询后台跟踪的状态情况。
 
@@ -2297,10 +2296,10 @@ function traceStatus(){
 }
 ```
 
-## 二维码
+## 2.7.  二维码
 
 
-### 生成二维码
+### 2.7.1.  生成二维码
 
 创建二维码图片，并将其显示在div中。
 
@@ -2331,7 +2330,7 @@ V3.0
 
 `cmApi.qrCode.createQRCode("250","250","divId",qrCodeContent)`;
 
-### 二维码扫描
+### 2.7.2.  二维码扫描
 
 方法：
 
@@ -2365,13 +2364,13 @@ V3.0
 
 `cmApi.qrCode.scan('mainModule.scanQRcodeCallback')`;
 
-## 消息推送
+## 2.8.  消息推送
 
 消息推送支持百度推送、友盟推送。使用百度推送时依赖百度推送扩展插件，使用友盟推送时依赖友盟推送扩展插件。
 
 百度推送不支持增、删标签，不支持静默模式。
 
-### 推送注册
+### 2.8.1.  推送注册
 
 方法：
 
@@ -2399,7 +2398,7 @@ V4.1.5
 
 `cmApi.push.register()`
 
-### 增加标签
+### 2.8.2.  增加标签
 
 方法：
 
@@ -2431,7 +2430,7 @@ V4.1.5
 
 `cmApi.push.addTag("jinan")`
 
-### 删除标签
+### 2.8.3.  删除标签
 
 方法：
 
@@ -2465,7 +2464,7 @@ V4.1.5
 
 `cmApi.push.delTag("jinan")`
 
-### 标签列表
+### 2.8.4.  标签列表
 
 方法：
 
@@ -2495,7 +2494,7 @@ V4.1.5
 
 var tags = `cmApi.push.listTag()`
 
-### 静默模式
+### 2.8.5.  静默模式
 
 方法：
 
@@ -2532,7 +2531,7 @@ var params = {
 `cmApi.push.setNoDisturbMode({params:params,success:success,error:error})`
 ```
 
-### 推送初始化（已废弃）
+### 2.8.6.  推送初始化（已废弃）
 
 V4.0已废弃，但可继续使用。请使用push.register。
 
@@ -2558,13 +2557,13 @@ V3.0
 
 `cmApi.push.init(url)`;
 
-## 多媒体
+## 2.9.  多媒体
 
-### 拍照
+### 2.9.1.  拍照
 
 拍照完成后，建议调用图片压缩处理，图片压缩可大幅减小照片大小，实现照片快速上传。
 
-#### 拍照
+#### 2.9.1.1.  拍照
 
 方法：
 
@@ -2599,7 +2598,7 @@ V4.0
 
 `cmApi.photo.photograph('myPhoto'，'demoModule.photographCallback')`;
 
-#### 拍照（已废弃）
+#### 2.9.1.2.  拍照（已废弃）
 
 V4.0已废弃，但可继续使用。请使用photo.photograph。
 
@@ -2636,9 +2635,9 @@ V3.0
 
 `cmApi.photograph('myPhoto'，'demoModule.photographCallback')`;
 
-### 录像
+### 2.9.2.  录像
 
-#### 录像
+#### 2.9.2.1.  录像
 
 支持录屏增加水印，支持文本水印、动态时间戳水印。视频录制完成后，会调用视频压缩处理，大幅减小视频大小，实现快速上传。压缩时间视设备CPU处理能力。依赖视频处理扩展插件。
 
@@ -2746,7 +2745,7 @@ function recordCallback(ret) {
 }
 ```
 
-#### 录像（已废弃）
+#### 2.9.2.2.  录像（已废弃）
 
 视频录制完成后，会调用视频压缩处理，大幅减小视频大小，实现快速上传。压缩时间视设备CPU处理能力。依赖视频处理扩展插件。
 
@@ -2787,7 +2786,7 @@ V4.0
 
 `cmApi.video.record(2,60,10,'demoModule.recordCallback')`;
 
-#### 录像（已废弃）
+#### 2.9.2.3.  录像（已废弃）
 
 V4.0已废弃，不能使用。请使用video.record。
 
@@ -2820,9 +2819,9 @@ V3.0
 
 `cmApi.videoRecord('demoModule.recordCallback')`;
 
-### 录音
+### 2.9.3.  录音
 
-#### 录音
+#### 2.9.3.1.  录音
 
 方法：
 
@@ -2857,7 +2856,7 @@ V4.0
 
 `cmApi.audioRecord('demoModule.audioRecordCallback')`;
 
-#### 录音（已废弃）
+#### 2.9.3.2.  录音（已废弃）
 
 V4.0已废弃，但可继续使用。请使用audio.record。
 
@@ -2893,11 +2892,11 @@ V3.0
 
 `cmApi.audioRecord('demoModule.audioRecordCallback')`;
 
-### 图片处理
+### 2.9.4.  图片处理
 
 图片压缩可有效减小照片大小，实现照片快速上传。使用后可体积可压缩10倍左右。
 
-#### 照片压缩
+#### 2.9.4.1.  照片压缩
 
 方法：
 
@@ -2932,7 +2931,7 @@ V4.0
 
 `cmApi.image.compress('../time.png','module.callback')`;
 
-#### 添加文字水印
+#### 2.9.4.2.  添加文字水印
 
 方法：
 
@@ -2973,7 +2972,7 @@ V4.0
 
 `cmApi.image.watermarkText('../time.png','inspur','C','1.0','#000000')`;
 
-#### 添加照片水印
+#### 2.9.4.3.  添加照片水印
 
 方法：
 
@@ -3013,7 +3012,7 @@ V4.0
 
 `cmApi.image.watermaskImage('../time.png','../time1.png', 'C',1.0)`;
 
-#### 照片等比例压缩（已废弃）
+#### 2.9.4.4.  照片等比例压缩（已废弃）
 
 V4.1已废弃，但可继续使用。请使用image.compress。
 
@@ -3042,7 +3041,7 @@ V4.0
 
 `cmApi.image.compressByScale('../time.png',1.0)`;
 
-#### 照片按大小压缩（已废弃）
+#### 2.9.4.5.  照片按大小压缩（已废弃）
 
 V4.1已废弃，但可继续使用。请使用image.compress。
 
@@ -3069,7 +3068,7 @@ V4.0
 
 `cmApi.image.compressBySize('../time.png' ,'100.0')`;
 
-#### 头像裁剪
+#### 2.9.4.6.  头像裁剪
 
 方法：
 
@@ -3103,11 +3102,11 @@ V4.1.5
 
 `cmApi.image.headclip('../time.png' ,'100.0')`;
 
-### 语音播报
+### 2.9.5.  语音播报
 
 依赖音频处理扩展插件。
 
-#### 播放
+#### 2.9.5.1.  播放
 
 方法：
 
@@ -3132,7 +3131,7 @@ V4.0
 
 `cmApi.speech.startSpeak("语音播报","0")`;
 
-#### 停止播放
+#### 2.9.5.2.  停止播放
 
 方法：
 
@@ -3154,11 +3153,11 @@ V4.0
 
 `cmApi.speech.stopSpeak()`;
 
-### 语音识别
+### 2.9.6.  语音识别
 
 依赖音频处理扩展插件。
 
-#### 语音识别
+#### 2.9.6.1.  语音识别
 
 方法：
 
@@ -3192,9 +3191,9 @@ V4.0
 
 `cmApi.speech.recognize("module.callback")`;
 
-## 文件操作
+## 2.10.  文件操作
 
-### 文档预览
+### 2.10.1.  文档预览
 
 文件预览是集成腾讯TBS服务，支持主流数十种文件格式直接预览。
 
@@ -3222,7 +3221,7 @@ V4.0
 
 `cmApi.document.preview(filepath)`
 
-### 文件上传
+### 2.10.2.  文件上传
 
 方法：
 
@@ -3271,7 +3270,7 @@ var params = {url:url,path:path,params:businessParams};
 cmApi.file.uploadFile({params:params,success:success,error:error});
 ```
 
-### 文件上传（已废弃）
+### 2.10.3.  文件上传（已废弃）
 
 V4.1已废弃，但可继续使用。请使用file.uploadFile。
 
@@ -3310,7 +3309,7 @@ V3.0
 
 `cmApi.file.upload(url,path,params,'demoModule.uploadImgCallback')`;
 
-### 文件下载
+### 2.10.4.  文件下载
 
 方法：
 
@@ -3350,7 +3349,7 @@ var params = {url:url,path:path };
 cmApi.file.downloadFile({params:params,success:success,error:error};
 ```
 
-### 文件下载（已废弃）
+### 2.10.5.  文件下载（已废弃）
 
 V4.1已废弃，但可继续使用。请使用file.downloadFile。
 
@@ -3388,7 +3387,7 @@ V4.0
 
 `cmApi.file.download(url,path,'demoModule.downloadImgCallback')`;
 
-### 文件删除
+### 2.10.6.  文件删除
 
 方法：
 
@@ -3414,7 +3413,7 @@ V4.0
 
 `cmApi.file.delete(path)`;
 
-### 文件删除
+### 2.10.7.  文件删除
 
 V4.0已废弃，但可继续使用。请使用file.delete。
 
@@ -3442,7 +3441,7 @@ V3.0
 
 `cmApi.deleteLocalImg(path)`;
 
-### 文件重命名
+### 2.10.8.  文件重命名
 
 方法：
 
@@ -3480,7 +3479,7 @@ var params = {oldPath:oldPath,newName:newName};
 cmApi.file.rename({params:params,success:success,error:error};
 ```
 
-### 文件复制
+### 2.10.9.  文件复制
 
 方法：
 
@@ -3518,7 +3517,7 @@ var params = {oldPath:oldPath,newPath:newPath};
 cmApi.file.copy({params:params,success:success,error:error}
 ```
 
-### 新建文件夹
+### 2.10.10.  新建文件夹
 
 方法：
 
@@ -3551,7 +3550,7 @@ var params = {dirPath:dirPath };
 cmApi.file.mkdirs({params:params,success:success,error:error}
 ```
 
-### 获取文件MD5值
+### 2.10.11.  获取文件MD5值
 
 方法：
 
@@ -3619,7 +3618,7 @@ var params = {maxCount:maxCount};
 cmApi.filePicker.openImagePicker({params:params,success:success,error:error}
 ```
 
-### 视频选择器
+### 2.10.12.  视频选择器
 
 方法：
 
@@ -3654,7 +3653,7 @@ var params = {maxCount:maxCount};
 cmApi.filePicker.openVideoPicker({params:params,success:success,error:error}
 ```
 
-### 音频选择器
+### 2.10.13.  音频选择器
 
 方法：
 
@@ -3689,7 +3688,7 @@ var params = {maxCount:maxCount};
 cmApi.filePicker.openAudioPicker({params:params,success:success,error:error}
 ```
 
-### 文件选择器
+### 2.10.14.  文件选择器
 
 方法：
 
@@ -3724,11 +3723,11 @@ var params = {maxCount:maxCount};
 cmApi.filePicker.openFilePicker({params:params,success:success,error:error}
 ```
 
-## 网络摄像头
+## 2.11.  网络摄像头
 
 即安防摄像头，依赖网络摄像头扩展插件。
 
-### 视频预览
+### 2.11.1.  视频预览
 
 方法：
 
@@ -3777,7 +3776,7 @@ V4.0
 
 `cmApi.webcam.preview([],' ')`
 
-### 视频预览（已废弃）
+### 2.11.2.  视频预览（已废弃）
 
 V4.0已废弃，但可继续使用。请使用video.preview。
 
@@ -3831,7 +3830,7 @@ V3.0
 
 `cmApi.video.show([],' ')`
 
-### 录像回放
+### 2.11.3.  录像回放
 
 回放硬盘录像机上按时间锁定的录像。
 
@@ -3867,11 +3866,11 @@ V4.0
 
 `cmApi.webcam.playback(' ', ' ', ' ', ' '......)`
 
-## 手机认证
+## 2.12.  手机认证
 
 Android手机使用指纹认证，老苹果手机使用指纹认证，新苹果手机使用人脸认证。
 
-### 开始认证
+### 2.12.1.  开始认证
 
 方法：
 
@@ -3903,7 +3902,7 @@ V4.0
 
 `cmApi.fingerprint.startAuthenticate('demoModule.authenticateCallback')`;
 
-### 停止认证
+### 2.12.2.  停止认证
 
 方法：
 
@@ -3925,7 +3924,7 @@ V4.0
 
 `cmApi.fingerprint.cancelAuthenticate()`;
 
-### 是否支持认证
+### 2.12.3.  是否支持认证
 
 方法：
 
@@ -3955,7 +3954,7 @@ V4.0
 
 `cmApi.fingerprint.isSupport()`;
 
-## 事件监听
+## 2.13.  事件监听
 
 移动框架支持多种事件监听，以便业务端灵活使用。支持的事件如下：
   
@@ -3967,7 +3966,7 @@ buttondown:back|返回按钮|返回按钮触发时
 buttondown:home|Home按钮|Home按钮触发时
   
 
-### 增加监听
+### 2.13.1.  增加监听
 
 方法：
 
@@ -3997,7 +3996,7 @@ var opt = {type: "buttondown:back",listen:function};
 cmApi.eventListener.add(opts);
 ```
 
-### 移除监听
+### 2.13.2.  移除监听
 
 方法：
 
@@ -4027,7 +4026,7 @@ var opt = {type: "buttondown:back",listen:function};
 cmApi.eventListener.remove(opts);
 ```
 
-### 清空监听
+### 2.13.3.  清空监听
 
 方法：
 
@@ -4056,11 +4055,11 @@ var opt = {type: "buttondown:back"};
 `cmApi.eventListener.clear(opts)`;
 ```
 
-## 手写签名
+## 2.14.  手写签名
 
 实现手指在手机上进行姓名签写。
 
-### 手写签名
+### 2.14.1.  手写签名
 
 方法：
 
@@ -4108,7 +4107,7 @@ V4.0
 示例：
 `cmApi.handwrite.start("",null,"lqjcModule.handWriteCallBack")`;
 
-### 手写签名（已废弃）
+### 2.14.2.  手写签名（已废弃）
 
 > V4.0已废弃，但可继续使用。请使用handwrite.start。
 
@@ -4152,12 +4151,12 @@ V3.0
 
 `cmApi.startHandWrite("","lqjcModule.handWriteCallBack")`;
 
-## NFC功能
+## 2.15.  NFC功能
 
 
 Android机进行一些有关nfc功能的操作。
 
-### 是否支持nfc
+### 2.15.1.  是否支持nfc
 
 方法：
 
@@ -4187,7 +4186,7 @@ V4.0
 
 var isNfcExists = `cmApi.nfc.isNfcExists()`;
 
-### 是否开启nfc
+### 2.15.2.  是否开启nfc
 
 方法：
 
@@ -4217,7 +4216,7 @@ V3.0
 
 var isNfcEnabled = `cmApi.nfc.isNfcEnabled()`;
 
-### nfc读卡
+### 2.15.3.  nfc读卡
 
 方法：
 
@@ -4249,7 +4248,7 @@ V4.0
 
 `cmApi.nfc.startReadCard('0','ydqyModule.nfcReadCardCallback')`;
 
-### 停止nfc读卡
+### 2.15.4.  停止nfc读卡
 
 方法：
 
@@ -4271,7 +4270,7 @@ V4.0
 
 `cmApi.nfc.stopReadCard()` `;
 
-### nfc写卡
+### 2.15.5.  nfc写卡
 
 方法：
 
@@ -4298,7 +4297,7 @@ V4.0
 
 `cmApi.nfc.writeCard(writeData,"crkbkModule.writeCardCallback")`;
 
-### 重置nfc卡
+### 2.15.6.  重置nfc卡
 
 方法：
 
@@ -4320,11 +4319,11 @@ V4.0
 
 `cmApi.nfc.resetCardInfo()`;
 
-## 蓝牙打印
+## 2.16.  蓝牙打印
 
 使用基于ESC/POS协议，打印当前截屏。
 
-### 开始打印
+### 2.16.1.  开始打印
 
 方法：
 
@@ -4358,7 +4357,7 @@ V4.0
 
 `cmApi.bluetoothPrinter.print(opts)`;
 
-### 设置打印标题、内容、类型（已废弃）
+### 2.16.2.  设置打印标题、内容、类型（已废弃）
 
 方法：
 
@@ -4388,7 +4387,7 @@ V3.0
 - `cmApi.bluetoothPrinter.setInfo('小麦 ')`
 - `cmApi.bluetoothPrinter.setType('0')`
 
-### 开始打印（已废弃）
+### 2.16.3.  开始打印（已废弃）
 
 方法：
 
@@ -4410,7 +4409,7 @@ V3.0
 
 `cmApi.bluetoothPrinter.printer()` `;
 
-### 停止打印（已废弃）
+### 2.16.4.  停止打印（已废弃）
 
 方法：
 
@@ -4432,9 +4431,9 @@ V3.0
 
 `cmApi.bluetoothPrinter.destroyBluetooth()`;
 
-## OCR识别
+## 2.17.  OCR识别
  
-### 离线车牌号识别
+### 2.17.1.  离线车牌号识别
 
 方法：
 
@@ -4468,7 +4467,7 @@ V4.0
 
 `cmApi.handset.carNumberRecognize('module.callback')`;
 
-### 在线车牌号识别
+### 2.17.2.  在线车牌号识别
 
 调用face++第三方识别API，要求必须可以连通互联网。
 
@@ -4505,7 +4504,7 @@ V4.0
 
 `cmApi.handset.licenseRecognize('module.callback')`;
 
-### 在线身份证识别
+### 2.17.3.  在线身份证识别
 
 调用face++第三方识别API，要求必须可以连通互联网。
 
@@ -4540,9 +4539,9 @@ V4.0
 
 `cmApi.handset.idCardRecognize('module.callback')`;
 
-## 第三方功能集成
+## 2.18.  第三方功能集成
 
-### 浏览器返回
+### 2.18.1.  浏览器返回
 
 提供给第三方使用，使用时不依赖前端环境，可全局调用。
 
@@ -4568,7 +4567,7 @@ V4.1.2
 
 window.MobileAPI.goBack();
 
-### 浏览器返回首页
+### 2.18.2.  浏览器返回首页
 
 提供给第三方使用，使用时不依赖前端环境，可全局调用。
 
@@ -4592,7 +4591,7 @@ V4.1.2
 
 window.MobileAPI.goHome();
 
-### 注册返回函数
+### 2.18.3.  注册返回函数
 
 方法：
 
@@ -4616,7 +4615,7 @@ V4.1.2
 
 `cmApi.thirdParty.setGoBackFunc(func)`;
 
-### 移除返回函数
+### 2.18.4.  移除返回函数
 
 方法：
 
@@ -4638,11 +4637,11 @@ V4.1.2
 
 `cmApi.thirdParty.removeGoBackFunc()`;
 
-## 成为手持机
+## 2.19.  成为手持机
 
 成为手持机专用发放，其他手机不支持。
 
-### 身份证识别
+### 2.19.1.  身份证识别
 
 方法：
 
@@ -4688,7 +4687,7 @@ V4.0
 
 `cmApi.handset.readIdCard('module.callback')`;
 
-### 身份证识别关闭
+### 2.19.2.  身份证识别关闭
 
 方法：
 
@@ -4710,7 +4709,7 @@ V4.0
 
 `cmApi.handset.closeIdCard()`;
 
-### 打印
+### 2.19.3.  打印
 
 打印当前截屏。
 
@@ -4734,7 +4733,7 @@ V4.0
 
 `cmApi.handset.print()`;
 
-### 二维码扫描
+### 2.19.4.  二维码扫描
 
 方法：
 
@@ -4768,7 +4767,7 @@ V4.0
 
 `cmApi.handset.scanBarCode('module.callback')`;
 
-### 开启二维码扫描按键
+### 2.19.5.  开启二维码扫描按键
 
 方法：
 
@@ -4803,7 +4802,7 @@ V4.0
 
 `cmApi.handset.scanBarCodeBindKey(''，'module.callback')`;
 
-### 关闭二维码扫描按键
+### 2.19.6.  关闭二维码扫描按键
 
 方法：
 
@@ -4825,11 +4824,11 @@ V4.0
 
 `cmApi.handset.scanBarCodeUnBindKey()`;
 
-## 海康安防平台
+## 2.20.  海康安防平台
 
 综合安防管理平台 iSecure Center集成，依赖海康平台扩展插件，视频预览、视频回放接口调用前都必须先调用视频初始化接口。
 
-### 视频初始化
+### 2.20.1.  视频初始化
 
 方法：
 
@@ -4878,7 +4877,7 @@ var opts = {
 cmApi.hikplatform.init(opts);
 ```
 
-### 视频预览
+### 2.20.2.  视频预览
 
 通过以下方法传递待预览的摄像头树形结构，移动端在界面右侧以侧滑栏的形式进行展现。当点击侧滑栏中的摄像头时，框架根据cameraIndexCode、【视频初始化】接口中传递的认证信息、请求路径向海康威视综合安防管理平台的/artemis/api/video/v1/cameras/previewURLs请求RTSP视频流url，随后对此视频流进行播放。
 
@@ -4974,7 +4973,7 @@ var opts = {
 cmApi.hikplatform.realplay(opts);
 ```
 
-### 回放列表查询
+### 2.20.3.  回放列表查询
 
 查询指定摄像头在时间区间内的录像片段。当调用框架此API时，框架根据cameraIndexCode、录像查询起止期间、【视频初始化】接口中传递的认证信息、请求路径向海康威视综合安防管理平台的/artemis/api/video/v1/cameras/playbackURLs查询录像列表，进行处理后返回。
 
@@ -5025,7 +5024,7 @@ var opts = {
 cmApi.hikplatform.backplayList(opts);
 ```
 
-### 录像回放
+### 2.20.4.  录像回放
 
 通过以下方法传递待预览的摄像头树形结构，移动端在界面右侧以侧滑栏的形式进行展现。当点击侧滑栏中的摄像头时，框架根据cameraIndexCode、录像回放起止期间、【视频初始化】接口中传递的认证信息、请求路径向海康威视综合安防管理平台的/artemis/api/video/v1/cameras/playbackURLs请求RTSP视频流url，随后对此视频流进行播放。注意这里的回放起止期间必须包含在2.22.3回放查询列表中查询结果中。
 
@@ -5077,11 +5076,11 @@ var opts = {
 `cmApi.hikplatform.backplay(opts)`;
 ```
 
-## 权限菜单跳转
+## 2.21.  权限菜单跳转
 
 跳转到手机系统的指定配置页面，注意不通品牌、型号手机的配置页面各不相同，且跳转逻辑差别很大，框架只对主流手机进行了适配，如无法跳转及时沟通。
 
-### 跳转后台运行配置
+### 2.21.1.  跳转后台运行配置
 
 跳转到手机系统的后台运行配置页。配置后允许APP在后台运行，不会因锁屏被杀死，但无法100%保证不被杀。
 
@@ -5112,11 +5111,11 @@ V4.3.0
 `cmApi.permission.turnToBackgroundRun()`;
 ```
 
-## 社会化分享
+## 2.22.  社会化分享
 
 移动框架支持社会化分享，帮助APP快速具备国内外多社交平台分享，便于APP进行用户裂变推广。**注意使用此API之前，请详细阅读《移动框架开发手册》的5.7社会化分享章节。**
 
-### 分享链接
+### 2.22.1.  分享链接
 
 将链接分享到三方平台中。
 
