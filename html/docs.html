@@ -222,6 +222,8 @@
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
                 mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/docs.html?path=$2$3&summaryPath=" + summaryPath + ")");
+                //图片资源格式修正
+                mdContent = mdContent.replace(/!\[([^\]]*)\]\(([^\)]*)+([^/]*\.[jpg|png|jpeg|gif|webp]*)\)/g, "![$1](" + reqPath.replace(/[^/]*.md/g, '') + "$2$3)");
 
                 //取消尖括号前的转义字符 防止vue解析报错
                 mdContent = mdContent.replace(/\\\</g, '\<').replace(/\\\>/g, '\>');

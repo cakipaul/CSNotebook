@@ -202,7 +202,7 @@
                 showSummaryToc = false;
             }
 
-           // console.log('reqPath:' + reqPath);
+            // console.log('reqPath:' + reqPath);
             var xhr = new XMLHttpRequest();
             xhr.open('get', reqPath);
             xhr.send('')
@@ -211,6 +211,9 @@
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
                 mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/logs.html?path=$2$3&summaryPath=" + summaryPath + ")");
+                //图片资源格式修正
+                mdContent = mdContent.replace(/!\[([^\]]*)\]\(([^\)]*)+([^/]*\.[jpg|png|jpeg|gif|webp]*)\)/g, "![$1](" + reqPath.replace(/[^/]*.md/g, '') + "$2$3)");
+                
                 //取消尖括号前的转义字符 防止vue解析报错
                 mdContent = mdContent.replace(/\\\</g, '\<').replace(/\\\>/g, '\>');
 
@@ -241,7 +244,7 @@
             }
         });
 
-       //设置SUMMARY popover
+        //设置SUMMARY popover
         function initSummaryToc() {
             if (!summaryPath || summaryPath == '' || !showSummaryToc) {
                 $('#summary-toc').hide();
@@ -288,9 +291,9 @@
 
                 $('#summary-popover').popover({
                     // title:'summary',
-                    html:true,
-                    placement:'right',
-                    content:'<div>'+ $('#summary-toc').html()+"</div>",
+                    html: true,
+                    placement: 'right',
+                    content: '<div>' + $('#summary-toc').html() + "</div>",
                     trigger: 'click'
                 });
             }
@@ -390,7 +393,7 @@
                     toolCatWidth: '260px',
                     toolCatHeight: window.innerHeight - 100 + 'px',
                     logs: logsList,
-	    others: othersList 
+                    others: othersList
                 },
                 methods: {
                     onCopy: function () {
@@ -433,7 +436,7 @@
                         setTimeout(function () { $("#toastDiv").fadeToggle(400); }, 1200);
                     }
                 },
-                mounted: function(){
+                mounted: function () {
                     const _this = this;
                     window.onresize = () => {
                         return (() => {
@@ -449,44 +452,44 @@
             })
         }
 
-      var logsList = [{
-                        id: 0,
-                        content: '2020-Summer',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/log/2020_04-06.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    },
-{
-                        id: 1,
-                        content: '2020-Spring',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    }, {
-                        id: 2,
-                        content: '历史日志',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
-                            // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
-                        }
-                    }];
-            var othersList = [{
-                        id: 0,
-                        content: 'xj语录',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
-                            // window.open("http://www.bejson.com/ui/compress_img/");
-                        }
-                    }, {
-                        id: 1,
-                        content: '租房物品清单',
-                        method: function () {
-                            window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
-                            // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
-                        }
-                    }];
+        var logsList = [{
+            id: 0,
+            content: '2020-Summer',
+            method: function () {
+                window.open('/csnotes/html/logs.html?path=/log/2020_04-06.md', '_self');
+                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+            }
+        },
+        {
+            id: 1,
+            content: '2020-Spring',
+            method: function () {
+                window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
+                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+            }
+        }, {
+            id: 2,
+            content: '历史日志',
+            method: function () {
+                window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
+                // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
+            }
+        }];
+        var othersList = [{
+            id: 0,
+            content: 'xj语录',
+            method: function () {
+                window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
+                // window.open("http://www.bejson.com/ui/compress_img/");
+            }
+        }, {
+            id: 1,
+            content: '租房物品清单',
+            method: function () {
+                window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
+                // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
+            }
+        }];
     </script>
 </body>
 
