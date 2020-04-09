@@ -2,7 +2,6 @@
 
 * [本书首页](/csnotes/mobile/README.md)
 
-
 ## Android
 
 * [Android 开发与结构简介](/csnotes/mobile/android/android-intro.md)
