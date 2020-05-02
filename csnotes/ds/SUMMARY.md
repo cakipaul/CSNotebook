@@ -2,6 +2,10 @@
 
 * [简介](/csnotes/ds/README.md)
 
+## 推荐阅读
+
+[fucking-algorithm](https://labuladong.gitbook.io/algo/)
+
 ## 数据结构
 * [数据结构基础](/csnotes/ds/数据结构/ds1.md)
 * [查找与排序](/csnotes/ds/数据结构/ds2.md)

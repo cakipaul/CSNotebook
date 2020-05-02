@@ -5,17 +5,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
+// import java.io.OutputStream;
+// import java.util.ArrayList;
 import java.util.ArrayList;
 
 public class test {
     public static void main(final String[] args) {
         // System.out.println(max(borderOrNot(new int[] { 1, 2, 3, 4, 5, 6, 7 })));
 
-        // String inputFilePath = "G:\\android\\android-dev\\doc-html\\docs\\移动框架\\api.md";
-        // String outputFilePath = "G:\\android\\android-dev\\doc-html\\docs\\移动框架\\api-new.md";
-        // System.out.println(mdAutoChapterSerialNumerBuilder(inputFilePath, outputFilePath).toString());
+        // String inputFilePath = "G:\\inspur\\dev\\handbook.md";
+        // String outputFilePath = "G:\\inspur\\dev\\handbook-new.md";
+        // System.out.println(mdAutoChapterSerialNumerBuilder(inputFilePath,
+        // outputFilePath).toString());
 
+        ArrayList<String> aList = new ArrayList<String>();
+        System.out.println(aList.isEmpty());
+        aList.add("num");
+        System.out.println(aList.isEmpty());
     }
 
     public static Integer max(int[] array) {
@@ -88,7 +94,7 @@ public class test {
 
             File outputFile = new File(outputFilePath);
             fos = new FileOutputStream(outputFile);
-            byte[] output=sb.toString().getBytes();
+            byte[] output = sb.toString().getBytes();
             fos.write(output);
 
             br.close();
