@@ -14,12 +14,12 @@
 * [前端JavaScript规范](/csnotes/fe/JavaScipt/js-guide.md)
 * [requirejs 模块化工具](/csnotes/fe/JavaScipt/js-require.md)
 
-## JS 库
+## JS
 
 * [Node.js](/csnotes/fe/Node/node1.md)
 * [Angular](/csnotes/fe/Angular/angular1.md)
 * [React](/csnotes/fe/React/react1.md)
-* [Vue](/csnotes/fe/Vue/vue1.md)
+* [Vue 入门指南](/csnotes/fe/Vue/vue1.md)
 
 ## 快速建站
 

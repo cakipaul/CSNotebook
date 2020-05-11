@@ -40,6 +40,11 @@
 
 * [Spring Web MVC框架简介](/csnotes/java/Spring/springmvc1.md)
 
+### Spring Cloud
+
+* [SpringCloud 快速入门](/csnotes/java/Spring/springcloud-intro.md)
+* [SpringCloud 教程(外链)](https://www.fangzhipeng.com/springcloud)
+
 ## Loushang
 
 * [楼7框架功能研发规范](/csnotes/java/loushang/loushang1.md)
