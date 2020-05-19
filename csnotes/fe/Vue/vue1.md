@@ -2,6 +2,10 @@
 
 ## 资源
 
+- [vue 中文文档](https://cn.vuejs.org/v2/guide/)
+- [vue-cli 中文文档](https://cli.vuejs.org/zh/guide)
+- [element vue 中文文档](https://element.eleme.io/#/zh-CN)
+- [el-icon](https://element.eleme.io/#/zh-CN/component/icon)
 - [MUI](https://dev.dcloud.net.cn/mui/)
 - [VANT](https://youzan.github.io/vant/#/zh-CN/intro)
 
