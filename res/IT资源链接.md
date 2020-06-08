@@ -21,8 +21,9 @@
 - [Staticfile CDN](https://www.staticfile.org/)
 - [BootstrapCDN](https://www.bootstrapcdn.com/)
 
-### 站长工具
+### 工具
 
+- [DISM++ 工具箱](https://www.chuyu.me/zh-Hans/index.html)
 - [站长之家工具](http://tool.chinaz.com/)
 - [免费申请SSL证书](https://freessl.cn/)
 - [SSL工具](https://ee.myssl.com/dashboard)
@@ -99,6 +100,7 @@
 - [i春秋](http://www.ichunqiu.com/)
 - [鱼C工作室](http://www.fishc.com/)
 - [清华大学计算机系课程攻略](https://github.com/PKUanonym/REKCARC-TSC-UHT?utm_source=qq)
+- [易百教程](htps://www.yiibai.com)
 
 ## 嵌入式
 
@@ -178,6 +180,9 @@
 
 ### 素材资源
 
+- [生成 banner 艺术字](http://www.network-science.de/ascii/)
+- [拟态按钮](https://neumorphism.io/)
+- [精美的在线模板](http://www.jq22.com/daima2)
 - [H5UP html5 模板](https://html5up.net/)
 - [SDC设计师网址导航](http://hao.uisdc.com/)
 - [在线制作logo](https://www.graphicsprings.com)
@@ -230,12 +235,9 @@
 - [SublimeText](http://www.sublimetext.com/)
 - [NotePad++](https://notepad-plus-plus.org)
 
-### 库
-
-- [dom4j-Flexible XML](https://dom4j.github.io/)
-
 ### 其他
 
+- [ffmpeg 跨平台流媒体组件](http://ffmpeg.org/)
 - [Git4Windows下载代理](https://github.com/waylau/git-for-win)
 
 ## 常用API与数据服务

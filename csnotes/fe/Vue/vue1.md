@@ -4,7 +4,9 @@
 
 - [vue 中文文档](https://cn.vuejs.org/v2/guide/)
 - [vue-cli 中文文档](https://cli.vuejs.org/zh/guide)
-- [element vue 中文文档](https://element.eleme.io/#/zh-CN)
+- [vuex](https://vuex.vuejs.org/zh/)
+- [element vue 文档](https://element.eleme.io/#/zh-CN)
+- [iview 文档](https://www.iviewui.com/docs/introduce)
 - [el-icon](https://element.eleme.io/#/zh-CN/component/icon)
 - [MUI](https://dev.dcloud.net.cn/mui/)
 - [VANT](https://youzan.github.io/vant/#/zh-CN/intro)
@@ -58,9 +60,18 @@ Vue 是一个前端框架，特点是:
 # 安装依赖，建议使用管理员权限的 powershell，否则可能出现各种权限问题导致的奇怪错误
 npm install
 
-
+# 启动项目
+npm run dev
 ```
 
+## 说明
 
-启动项目
-npm run dev
+### 兼容性
+
+Vue 不支持 IE8 及以下版本，因为 Vue 使用了 IE8 无法模拟的 ECMAScript 5 特性。但它支持所有兼容 ECMAScript 5 的浏览器。
+
+### 语义化版本控制
+
+Vue 在其所有项目中公布的功能和行为都遵循[语义化版本控制](https://semver.org/lang/zh-CN/)。对于未公布的或内部暴露的行为，其变更会描述在发布说明中。
+
+### 
