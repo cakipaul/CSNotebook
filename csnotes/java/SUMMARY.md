@@ -10,25 +10,25 @@
 
 ## Java语法
 
-* [Java 入门](/csnotes/java/grammar/java1.md)
-* [面向对象编程](/csnotes/java/grammar/java2.md)
-* [Java核心类](/csnotes/java/grammar/java19.md)
-* [异常处理](/csnotes/java/grammar/java3.md)
-* [反射](/csnotes/java/grammar/java4.md)
-* [注解](/csnotes/java/grammar/java5.md)
-* [泛型](/csnotes/java/grammar/java6.md)
-* [集合](/csnotes/java/grammar/java7.md)
-* [IO](/csnotes/java/grammar/java8.md)
-* [日期与时间](/csnotes/java/grammar/java9.md)
-* [单元测试](/csnotes/java/grammar/java10.md)
-* [正则表达式](/csnotes/java/grammar/java11.md)
-* [加密与安全](/csnotes/java/grammar/java12.md)
-* [多线程](/csnotes/java/grammar/java13.md)
-* [网络编程](/csnotes/java/grammar/java14.md)
-* [JDBC编程](/csnotes/java/grammar/java15.md)
-* [函数式编程](/csnotes/java/grammar/java16.md)
-* [设计模式](/csnotes/java/grammar/java17.md)
-* [Web 开发](/csnotes/java/grammar/java18.md)
+* [Java 入门](/csnotes/java/grammar/java-intro.md)
+* [面向对象编程](/csnotes/java/grammar/java-oop.md)
+* [Java核心类](/csnotes/java/grammar/java-core.md)
+* [异常处理](/csnotes/java/grammar/java-exp.md)
+* [反射](/csnotes/java/grammar/java-invoke.md)
+* [注解](/csnotes/java/grammar/java-anno.md)
+* [泛型](/csnotes/java/grammar/java-T.md)
+* [集合](/csnotes/java/grammar/java-collection.md)
+* [IO](/csnotes/java/grammar/java-io.md)
+* [日期与时间](/csnotes/java/grammar/java-datetime.md)
+* [单元测试](/csnotes/java/grammar/java-test.md)
+* [正则表达式](/csnotes/java/grammar/java-reg.md)
+* [加密与安全](/csnotes/java/grammar/java-security.md)
+* [多线程](/csnotes/java/grammar/java-multithreading.md)
+* [网络编程](/csnotes/java/grammar/java-net.md)
+* [JDBC编程](/csnotes/java/grammar/java-jdbc.md)
+* [函数式编程](/csnotes/java/grammar/java-lambada.md)
+* [设计模式](/csnotes/java/grammar/java-design.md)
+* [Web 开发](/csnotes/java/grammar/java-web.md)
 
 ## Java Web
 
@@ -54,6 +54,8 @@
 * [VSCode](/csnotes/java/编译环境/vscode-java.md)
 * [IntelliJ IDEA](/csnotes/java/编译环境/idea.md)
 
-## 参考资源
+## 参考资料
 
 * [分类链接](/csnotes/java/参考资源/分类链接.md)
+* [JDK的选择](/csnotes/java/参考资源/JDK的选择.md)
+* [RestAPI](/csnotes/java/参考资源/RestAPI.md)
