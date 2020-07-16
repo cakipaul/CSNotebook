@@ -30,11 +30,8 @@
     <script src="js/cloudjs.js"></script>
 
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--font-awesome-->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/fontawesome.min.js"></script>
 
@@ -42,7 +39,7 @@
         * {
             box-sizing: content-box;
         }
-
+        
         .mdWindow {
             /* width: 900px;
             height: 900px; */
@@ -52,7 +49,7 @@
             padding: 18px;
             margin: 18px;
         }
-
+        
         .sidebar {
             text-align: center;
             overflow-y: auto;
@@ -60,7 +57,7 @@
             border-right: 1px solid #f0f2f1;
             padding-left: 25px;
         }
-
+        
         .sidebar>ul {
             text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -76,7 +73,7 @@
             padding: 0;
             margin: 0; */
         }
-
+        
         .sidebar>ul>li {
             text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -94,11 +91,11 @@
             padding: 0010px;
             margin-top: 5px; */
         }
-
+        
         .tocActive {
             height: 80%;
         }
-
+        
         .tocInactive {
             height: 5%;
         }
@@ -138,8 +135,7 @@
         </div>
 
     </div>
-    <div id="toastDiv" class="tooltip-inner"
-        style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
+    <div id="toastDiv" class="tooltip-inner" style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
     </div>
 
 
@@ -171,8 +167,9 @@
 
 
         $.extend({
-            getUrlVars: function () {
-                var vars = [], hash;
+            getUrlVars: function() {
+                var vars = [],
+                    hash;
                 var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
                 for (var i = 0; i < hashes.length; i++) {
                     hash = hashes[i].split('=');
@@ -181,12 +178,12 @@
                 }
                 return vars;
             },
-            getUrlVar: function (name) {
+            getUrlVar: function(name) {
                 return $.getUrlVars()[name];
             }
         });
 
-        $(function () {
+        $(function() {
             //设置popover属性
             $().popover({});
 
@@ -195,7 +192,7 @@
             summaryPath = '' + $.getUrlVar('summaryPath');
 
             // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
-            var mdContent = "[TOC]\n\n";//头部添加 TOCs
+            var mdContent = "[TOC]\n\n"; //头部添加 TOCs
             reqPath = '/csnotes' + path;
             if (reqPath.toLowerCase().endsWith("/summary.md")) {
                 summaryPath = reqPath;
@@ -206,14 +203,14 @@
             var xhr = new XMLHttpRequest();
             xhr.open('get', reqPath);
             xhr.send('')
-            xhr.onload = function () {
+            xhr.onload = function() {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
                 mdContent = mdContent.replace(/\[([^\]]*)\]\((\/[^\)]*)+(.md)\)/g, "[$1](/csnotes/html/logs.html?path=$2$3&summaryPath=" + summaryPath + ")");
                 //图片资源格式修正
                 mdContent = mdContent.replace(/!\[([^\]]*)\]\(([^\)]*)+([^/]*\.[jpg|png|jpeg|gif|webp]*)\)/g, "![$1](" + reqPath.replace(/[^/]*.md/g, '') + "$2$3)");
-                
+
                 //取消尖括号前的转义字符 防止vue解析报错
                 mdContent = mdContent.replace(/\\\</g, '\<').replace(/\\\>/g, '\>');
 
@@ -227,9 +224,9 @@
                     htmlDecode: "style,script,iframe", //可以过滤标签解码
                     emoji: true,
                     taskList: true,
-                    tex: true,               // 默认不解析
-                    flowChart: true,         // 默认不解析
-                    sequenceDiagram: true,  // 默认不解析
+                    tex: true, // 默认不解析
+                    flowChart: true, // 默认不解析
+                    sequenceDiagram: true, // 默认不解析
                 });
                 //TOC 设置为独立窗口
                 initTocFloatWindow();
@@ -255,7 +252,7 @@
             xhr.open('get', summaryPath);
             xhr.send('')
             var mdContent = '';
-            xhr.onload = function () {
+            xhr.onload = function() {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
@@ -271,9 +268,9 @@
                     htmlDecode: "style,script,iframe", //可以过滤标签解码
                     emoji: true,
                     taskList: true,
-                    tex: true,               // 默认不解析
-                    flowChart: true,         // 默认不解析
-                    sequenceDiagram: true,  // 默认不解析
+                    tex: true, // 默认不解析
+                    flowChart: true, // 默认不解析
+                    sequenceDiagram: true, // 默认不解析
                 });
                 $('#summary-toc').css({
                     "width": "max-content",
@@ -314,7 +311,7 @@
                 "display": "inline-block"
             })
 
-            $('.markdown-toc').bind("onmousedown", function (that, event) {
+            $('.markdown-toc').bind("onmousedown", function(that, event) {
                 // "MoveDiv(KeFuDiv,event);"
                 console.log(that, event);
             })
@@ -326,15 +323,17 @@
             $('.markdown-toc').removeClass("tocInactive");
             toggleButtonHtml = "<div style='position:fixed;padding:2px;margin:2px;'>" +
                 "<span  id='moveTocBtn' onmouseover='javascript:bindDragToc()'><span class='fa fa-arrows'></span></span>" +
-                "<span  onclick='toggleToc($(this).parent().parent())'>&nbsp;&nbsp;tap2toggle</span>"
-                + "</div>";
+                "<span  onclick='toggleToc($(this).parent().parent())'>&nbsp;&nbsp;tap2toggle</span>" +
+                "</div>";
             $('.markdown-toc').html(toggleButtonHtml + $('.markdown-toc').html());
         }
+
         function bindDragToc() {
             cloudjs('.markdown-toc').draggable({
                 containment: 'parent'
             });
         }
+
         function toggleToc($toc) {
             $toc.toggleClass("tocActive");
             $toc.toggleClass("tocInactive");
@@ -343,21 +342,23 @@
 
         function initCopyMethod() {
             codeId = 0;
-            $("#md-to-html code").each(function () {
+            $("#md-to-html code").each(function() {
                 var $codeBlock = $(this);
                 var codeBlockHtml = $codeBlock.html();
                 var popoverMsg = "";
                 //若在代码块中則返回
                 if ($codeBlock.parent().prop("tagName") == "LI" && $codeBlock.parent().parent().prop("tagName") == "OL") {
-                    var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function (str) { return str != "linenums" });
+                    var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function(str) {
+                        return str != "linenums"
+                    });
                     //判断是否有 linenums 样式，包含則返回
                     if (hasLinenumsClass) {
-                        popoverMsg = "点击复制本行";//在代碼塊中
+                        popoverMsg = "点击复制本行"; //在代碼塊中
                     } else {
-                        popoverMsg = "点击复制";//不在代碼塊中
+                        popoverMsg = "点击复制"; //不在代碼塊中
                     }
                 } else {
-                    popoverMsg = "点击复制";//不在代碼塊中
+                    popoverMsg = "点击复制"; //不在代碼塊中
                 }
                 // @click:getOneLineCode(event)
 
@@ -366,11 +367,15 @@
                 codeId++;
             })
 
-            $("#md-to-html pre>ol ").each(function () {
+            $("#md-to-html pre>ol ").each(function() {
                 var $linedCodeBlock = $(this);
-                var hasLinenumsClass = !$(this).attr("class").split(" ").every(function (str) { return str != "linenums" });
+                var hasLinenumsClass = !$(this).attr("class").split(" ").every(function(str) {
+                    return str != "linenums"
+                });
                 //判断是否有 linenums 样式，不包含則返回
-                if (!hasLinenumsClass) { return; }
+                if (!hasLinenumsClass) {
+                    return;
+                }
                 linedCodeHtml = $linedCodeBlock.html();
                 linedCodeHtml = '<button id="codeNum' + codeId + '" style="width:60px;padding:1px;margin:5px;color:grey;" v-clipboard:copy=getLinedCode(' + codeId + ') v-clipboard:success="onCopy" v-clipboard:error="onError" >copy</button>' + linedCodeHtml;
                 $linedCodeBlock.html(linedCodeHtml)
@@ -396,13 +401,13 @@
                     others: othersList
                 },
                 methods: {
-                    onCopy: function () {
+                    onCopy: function() {
                         this.toast("", "copy success")
                     },
-                    onError: function () {
+                    onError: function() {
                         this.toast("", "copy error")
                     },
-                    getOneLineCode: function (codeId) {
+                    getOneLineCode: function(codeId) {
                         var selector = "#codeNum" + codeId;
                         var originHtml = $(selector).html();
                         // console.log($(selector));
@@ -410,7 +415,7 @@
                         // console.log("copy:", convertedText);
                         return convertedText;
                     },
-                    getLinedCode: function (codeId) {
+                    getLinedCode: function(codeId) {
                         var selector = "#codeNum" + codeId;
                         var originHtml = $(selector).parent().html();
                         //去除开始的 copy button
@@ -420,23 +425,25 @@
                         //去除其他标签
                         var convertedText = ""
                         var firstLine = true;
-                        codeLinedList.forEach(function (codeLine) {
-                            if (!firstLine) {
-                                convertedText += "\n";
-                            }
-                            convertedText += codeLine.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, '').replace(/>/g, '');//.replace(/ /g, ' ')
-                            firstLine = false;
-                        })
-                        // console.log("copy:", convertedText);
+                        codeLinedList.forEach(function(codeLine) {
+                                if (!firstLine) {
+                                    convertedText += "\n";
+                                }
+                                convertedText += codeLine.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, '').replace(/>/g, ''); //.replace(/ /g, ' ')
+                                firstLine = false;
+                            })
+                            // console.log("copy:", convertedText);
                         return convertedText;
                     },
-                    toast: function (title, content) {
+                    toast: function(title, content) {
                         $("#toastDiv").html(content);
                         $("#toastDiv").fadeIn(400);
-                        setTimeout(function () { $("#toastDiv").fadeToggle(400); }, 1200);
+                        setTimeout(function() {
+                            $("#toastDiv").fadeToggle(400);
+                        }, 1200);
                     }
                 },
-                mounted: function () {
+                mounted: function() {
                     const _this = this;
                     window.onresize = () => {
                         return (() => {
@@ -455,22 +462,21 @@
         var logsList = [{
             id: 0,
             content: '2020-Summer',
-            method: function () {
+            method: function() {
                 window.open('/csnotes/html/logs.html?path=/log/2020_04-06.md', '_self');
                 // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 1,
             content: '2020-Spring',
-            method: function () {
+            method: function() {
                 window.open('/csnotes/html/logs.html?path=/log/2020_01-03.md', '_self');
                 // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
             }
         }, {
             id: 2,
             content: '历史日志',
-            method: function () {
+            method: function() {
                 window.open('/csnotes/html/logs.html?path=/log/SUMMARY.md', '_self');
                 // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
             }
@@ -478,14 +484,14 @@
         var othersList = [{
             id: 0,
             content: 'xj语录',
-            method: function () {
+            method: function() {
                 window.open('/csnotes/html/logs.html?path=/others/jokes/quotes_chengjie.md', '_self');
                 // window.open("http://www.bejson.com/ui/compress_img/");
             }
         }, {
             id: 1,
             content: '租房物品清单',
-            method: function () {
+            method: function() {
                 window.open('/csnotes/html/logs.html?path=/others/events/2019_6_租房/租房附录_物品清单.md', '_self');
                 // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
             }

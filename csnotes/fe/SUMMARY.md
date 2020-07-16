@@ -26,6 +26,10 @@
 * [WordPress](/csnotes/fe/快速建站/wordpress1.md)
 * [Hexo-GitBook](/csnotes/fe/快速建站/hexo-gitbook.md)
 
+## electron
+
+* [electron-vue](/csnotes/electron/electron-vue.md)
+
 ## 参考资源
 
 * [分类链接](/csnotes/fe/参考资源/分类链接.md)

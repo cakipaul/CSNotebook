@@ -1,6 +1,46 @@
 {
-  "dependencies": {
-    "commander": "^2.20.0",
-    "marked": "^0.7.0"
-  }
+    "name": "csnotes",
+    "productName": "csnotes",
+    "author": "cakipaul",
+    "version": "0.1.0",
+    "main": "main.js",
+    "description": "csnotes",
+    "scripts": {
+        "start": "electron .",
+        "pack": "electron-packager . csnotes --out build --arch=x64 --overwrite --ignore=node_modules"
+    },
+    "build": {
+        "electronVersion": "1.8.4",
+        "win": {
+            "requestedExecutionLevel": "highestAvailable",
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ]
+        },
+        "appId": "csnotes",
+        "artifactName": "demo-${version}-${arch}.${ext}",
+        "nsis": {
+            "artifactName": "demo-${version}-${arch}.${ext}"
+        },
+        "extraResources": [
+            {
+                "from": "./static/",
+                "to": "app-server",
+                "filter": [
+                    "**/*"
+                ]
+            }
+        ],
+        "publish": []
+    },
+    "dependencies": {
+        "core-js": "^2.4.1",
+        "electron-packager": "^12.1.0",
+        "electron-updater": "^2.22.1"
+    }
 }

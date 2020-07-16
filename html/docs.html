@@ -30,11 +30,8 @@
     <script src="js/cloudjs.js"></script>
 
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <!--font-awesome-->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/fontawesome.min.js"></script>
 
@@ -43,7 +40,7 @@
         * {
             box-sizing: content-box;
         }
-
+        
         .mdWindow {
             /* width: 900px;
             height: 900px; */
@@ -53,7 +50,7 @@
             padding: 18px;
             margin: 18px;
         }
-
+        
         .doc-sidebar {
             text-align: center;
             overflow-y: auto;
@@ -61,7 +58,7 @@
             border-right: 1px solid #f0f2f1;
             padding-left: 25px;
         }
-
+        
         .doc-sidebar>ul {
             text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -77,7 +74,7 @@
             padding: 0;
             margin: 0; */
         }
-
+        
         .doc-sidebar>ul>li {
             text-align: center;
             font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
@@ -95,11 +92,11 @@
             padding: 0010px;
             margin-top: 5px; */
         }
-
+        
         .tocActive {
             height: 80%;
         }
-
+        
         .tocInactive {
             height: 5%;
         }
@@ -151,8 +148,7 @@
         </div>
 
     </div>
-    <div id="toastDiv" class="tooltip-inner"
-        style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
+    <div id="toastDiv" class="tooltip-inner" style="text-align:center;width:100px;top:80%; left:50%;position:absolute; margin-top:0px;margin-left:-50px;display:none;font-size:14px">
     </div>
 
 
@@ -183,8 +179,9 @@
         }
 
         $.extend({
-            getUrlVars: function () {
-                var vars = [], hash;
+            getUrlVars: function() {
+                var vars = [],
+                    hash;
                 var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
                 for (var i = 0; i < hashes.length; i++) {
                     hash = hashes[i].split('=');
@@ -193,12 +190,12 @@
                 }
                 return vars;
             },
-            getUrlVar: function (name) {
+            getUrlVar: function(name) {
                 return $.getUrlVars()[name];
             }
         });
 
-        $(function () {
+        $(function() {
             //设置popover属性
             $().popover({});
 
@@ -206,7 +203,7 @@
             var path = '' + $.getUrlVar('path');
             summaryPath = '' + $.getUrlVar('summaryPath');
             // var path=escape(path).replace(/\+/g, '%2B').replace(/\"/g,'%22').replace(/\'/g, '%27').replace(/\//g,'%2F');
-            var mdContent = "[TOC]\n\n";//头部添加 TOCs
+            var mdContent = "[TOC]\n\n"; //头部添加 TOCs
             reqPath = '/csnotes' + path;
             if (reqPath.toLowerCase().endsWith("/summary.md")) {
                 summaryPath = reqPath;
@@ -217,7 +214,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open('get', reqPath);
             xhr.send('')
-            xhr.onload = function () {
+            xhr.onload = function() {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
@@ -238,9 +235,9 @@
                     htmlDecode: "style,script,iframe", //可以过滤标签解码
                     emoji: true,
                     taskList: true,
-                    tex: true,               // 默认不解析
-                    flowChart: true,         // 默认不解析
-                    sequenceDiagram: true,  // 默认不解析
+                    tex: true, // 默认不解析
+                    flowChart: true, // 默认不解析
+                    sequenceDiagram: true, // 默认不解析
                 });
 
                 //TOC 设置为独立窗口
@@ -270,7 +267,7 @@
             xhr.open('get', summaryPath);
             xhr.send('')
             var mdContent = '';
-            xhr.onload = function () {
+            xhr.onload = function() {
                 mdContent += xhr.responseText;
                 // console.log(mdContent);
                 //链接格式修正，将以 / 开头 .md 结尾的链接进行转换
@@ -285,9 +282,9 @@
                     htmlDecode: "style,script,iframe", //可以过滤标签解码
                     emoji: true,
                     taskList: true,
-                    tex: true,               // 默认不解析
-                    flowChart: true,         // 默认不解析
-                    sequenceDiagram: true,  // 默认不解析
+                    tex: true, // 默认不解析
+                    flowChart: true, // 默认不解析
+                    sequenceDiagram: true, // 默认不解析
                 });
                 $('#summary-toc').css({
                     "width": "max-content",
@@ -331,17 +328,17 @@
                 htmlDecode: "style,script,iframe", //可以过滤标签解码
                 emoji: true,
                 taskList: true,
-                tex: true,               // 默认不解析
-                flowChart: true,         // 默认不解析
-                sequenceDiagram: true,  // 默认不解析
+                tex: true, // 默认不解析
+                flowChart: true, // 默认不解析
+                sequenceDiagram: true, // 默认不解析
             });
             editormd.markdownToHTML("resources-div", {
                 htmlDecode: "style,script,iframe", //可以过滤标签解码
                 emoji: true,
                 taskList: true,
-                tex: true,               // 默认不解析
-                flowChart: true,         // 默认不解析
-                sequenceDiagram: true,  // 默认不解析
+                tex: true, // 默认不解析
+                flowChart: true, // 默认不解析
+                sequenceDiagram: true, // 默认不解析
             });
 
             $('#category-div').css({
@@ -407,7 +404,7 @@
                 "display": "inline-block"
             })
 
-            $('.markdown-toc').bind("onmousedown", function (that, event) {
+            $('.markdown-toc').bind("onmousedown", function(that, event) {
                 // "MoveDiv(KeFuDiv,event);"
                 console.log(that, event);
             })
@@ -420,15 +417,17 @@
             $('.markdown-toc').removeClass("tocInactive");
             toggleButtonHtml = "<div style='position:fixed;padding:2px;margin:2px;'>" +
                 "<span  id='moveTocBtn' onmouseover='javascript:bindDragToc()'><span class='fa fa-arrows'></span></span>" +
-                "<span  onclick='toggleToc($(this).parent().parent())'>&nbsp;&nbsp;tap2toggle</span>"
-                + "</div>";
+                "<span  onclick='toggleToc($(this).parent().parent())'>&nbsp;&nbsp;tap2toggle</span>" +
+                "</div>";
             $('.markdown-toc').html(toggleButtonHtml + $('.markdown-toc').html());
         }
+
         function bindDragToc() {
             cloudjs('.markdown-toc').draggable({
                 containment: 'parent'
             });
         }
+
         function toggleToc($toc) {
             $toc.toggleClass("tocActive");
             $toc.toggleClass("tocInactive");
@@ -436,21 +435,23 @@
 
         function initCopyMethod() {
             codeId = 0;
-            $("#md-to-html code").each(function () {
+            $("#md-to-html code").each(function() {
                 var $codeBlock = $(this);
                 var codeBlockHtml = $codeBlock.html();
                 var popoverMsg = "";
                 //若在代码块中則返回
                 if ($codeBlock.parent().prop("tagName") == "LI" && $codeBlock.parent().parent().prop("tagName") == "OL") {
-                    var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function (str) { return str != "linenums" });
+                    var hasLinenumsClass = $codeBlock.parent().parent().attr("class") && !$codeBlock.parent().parent().attr("class").split(" ").every(function(str) {
+                        return str != "linenums"
+                    });
                     //判断是否有 linenums 样式，包含則返回
                     if (hasLinenumsClass) {
-                        popoverMsg = "点击复制本行";//在代碼塊中
+                        popoverMsg = "点击复制本行"; //在代碼塊中
                     } else {
-                        popoverMsg = "点击复制";//不在代碼塊中
+                        popoverMsg = "点击复制"; //不在代碼塊中
                     }
                 } else {
-                    popoverMsg = "点击复制";//不在代碼塊中
+                    popoverMsg = "点击复制"; //不在代碼塊中
                 }
                 // @click:getOneLineCode(event)
 
@@ -459,11 +460,15 @@
                 codeId++;
             })
 
-            $("#md-to-html pre>ol ").each(function () {
+            $("#md-to-html pre>ol ").each(function() {
                 var $linedCodeBlock = $(this);
-                var hasLinenumsClass = !$(this).attr("class").split(" ").every(function (str) { return str != "linenums" });
+                var hasLinenumsClass = !$(this).attr("class").split(" ").every(function(str) {
+                    return str != "linenums"
+                });
                 //判断是否有 linenums 样式，不包含則返回
-                if (!hasLinenumsClass) { return; }
+                if (!hasLinenumsClass) {
+                    return;
+                }
                 linedCodeHtml = $linedCodeBlock.html();
                 linedCodeHtml = '<button id="codeNum' + codeId + '" style="width:60px;padding:1px;margin:5px;color:grey;" v-clipboard:copy=getLinedCode(' + codeId + ') v-clipboard:success="onCopy" v-clipboard:error="onError" >copy</button>' + linedCodeHtml;
                 $linedCodeBlock.html(linedCodeHtml)
@@ -491,13 +496,13 @@
 
                 },
                 methods: {
-                    onCopy: function () {
+                    onCopy: function() {
                         this.toast("", "copy success")
                     },
-                    onError: function () {
+                    onError: function() {
                         this.toast("", "copy error")
                     },
-                    getOneLineCode: function (codeId) {
+                    getOneLineCode: function(codeId) {
                         var selector = "#codeNum" + codeId;
                         var originHtml = $(selector).html();
                         // console.log($(selector));
@@ -505,7 +510,7 @@
                         // console.log("copy:", convertedText);
                         return convertedText;
                     },
-                    getLinedCode: function (codeId) {
+                    getLinedCode: function(codeId) {
                         var selector = "#codeNum" + codeId;
                         var originHtml = $(selector).parent().html();
                         //去除开始的 copy button
@@ -515,23 +520,25 @@
                         //去除其他标签
                         var convertedText = ""
                         var firstLine = true;
-                        codeLinedList.forEach(function (codeLine) {
-                            if (!firstLine) {
-                                convertedText += "\n";
-                            }
-                            convertedText += codeLine.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, '').replace(/>/g, '');//.replace(/ /g, ' ')
-                            firstLine = false;
-                        })
-                        // console.log("copy:", convertedText);
+                        codeLinedList.forEach(function(codeLine) {
+                                if (!firstLine) {
+                                    convertedText += "\n";
+                                }
+                                convertedText += codeLine.replace(/<(style|script|iframe)[^>]*?>[\s\S]+?<\/\1\s*>/gi, '').replace(/<[^>]+?>/g, '').replace(/\s+/g, '').replace(/>/g, ''); //.replace(/ /g, ' ')
+                                firstLine = false;
+                            })
+                            // console.log("copy:", convertedText);
                         return convertedText;
                     },
-                    toast: function (title, content) {
+                    toast: function(title, content) {
                         $("#toastDiv").html(content);
                         $("#toastDiv").fadeIn(400);
-                        setTimeout(function () { $("#toastDiv").fadeToggle(400); }, 1200);
+                        setTimeout(function() {
+                            $("#toastDiv").fadeToggle(400);
+                        }, 1200);
                     }
                 },
-                mounted: function () {
+                mounted: function() {
                     const _this = this;
                     window.onresize = () => {
                         return (() => {
@@ -551,125 +558,127 @@
             id: 0,
             content: 'Hardware',
             url: '/csnotes/html/docs.html?path=/csnotes/hw/SUMMARY.md',
-            method: function () {
-                var url = categoryList[0].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[0].url;
+                window.open(url, '_self');
 
                 // window.open("FormatterTools/SQLFormatter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 1,
             content: 'OperationSystem',
             url: '/csnotes/html/docs.html?path=/csnotes/os/SUMMARY.md',
-            method: function () {
-                var url = categoryList[1].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[1].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
             }
         }, {
             id: 2,
             content: 'DataStructure',
             url: '/csnotes/html/docs.html?path=/csnotes/ds/SUMMARY.md',
-            method: function () {
-                var url = categoryList[2].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[2].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonFormatter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 3,
             content: 'Tools',
             url: '/csnotes/html/docs.html?path=/csnotes/tools/SUMMARY.md',
-            method: function () {
-                var url = categoryList[3].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[3].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 4,
             content: 'DataBase',
             url: '/csnotes/html/docs.html?path=/csnotes/db/SUMMARY.md',
-            method: function () {
-                var url = categoryList[4].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[4].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 5,
             content: 'C',
             url: '/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md',
-            method: function () {
-                var url = categoryList[5].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[5].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 6,
             content: '.Net',
             url: '/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md',
-            method: function () {
-                var url = categoryList[6].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[6].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 7,
             content: 'Java',
             url: '/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md',
-            method: function () {
-                var url = categoryList[7].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[7].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 8,
             content: 'Go',
             url: '/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md',
-            method: function () {
-                var url = categoryList[8].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[8].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 9,
             content: 'Python',
             url: '/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md',
-            method: function () {
-                var url = categoryList[9].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[9].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 10,
             content: 'Mobile',
             url: '/csnotes/html/docs.html?path=/csnotes/mobile/SUMMARY.md',
-            method: function () {
-                var url = categoryList[10].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[10].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 11,
             content: 'Web',
             url: '/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md',
-            method: function () {
-                var url = categoryList[11].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[11].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 12,
             content: 'FrontEnd',
             url: '/csnotes/html/docs.html?path=/csnotes/fe/SUMMARY.md',
-            method: function () {
-                var url = categoryList[12].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[12].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
-        },
-        {
+        }, {
             id: 13,
             content: 'Dev',
             url: '/csnotes/html/docs.html?path=/csnotes/dev/SUMMARY.md',
-            method: function () {
-                var url = categoryList[13].url; window.open(url, '_self');
+            method: function() {
+                var url = categoryList[13].url;
+                window.open(url, '_self');
                 // window.open("FormatterTools/JsonYamlConverter.html"); //,'_self'                      
             }
         }];
@@ -678,36 +687,39 @@
             id: 0,
             content: 'Common Res',
             url: '/csnotes/html/docs.html?path=/res/通用资源链接.md',
-            method: function () {
-                var url = resourcesList[0].url; window.open(url, '_self');
+            method: function() {
+                var url = resourcesList[0].url;
+                window.open(url, '_self');
                 // window.open("http://www.bejson.com/ui/compress_img/");
             }
         }, {
             id: 1,
             content: 'IT Res',
             url: '/csnotes/html/docs.html?path=/res/IT资源链接.md',
-            method: function () {
-                var url = resourcesList[1].url; window.open(url, '_self');
+            method: function() {
+                var url = resourcesList[1].url;
+                window.open(url, '_self');
                 // window.open("http://tool.oschina.net/");
             }
         }, {
             id: 2,
             content: 'IT Skills Tree',
             url: '/csnotes/html/docs.html?path=/res/IT技能树.md',
-            method: function () {
-                var url = resourcesList[2].url; window.open(url, '_self');
+            method: function() {
+                var url = resourcesList[2].url;
+                window.open(url, '_self');
                 // window.open("http://www.wapadd.cn/icons/awesome/index.htm");
             }
         }, {
             id: 3,
             content: 'RSS Sites',
             url: '/csnotes/html/docs.html?path=/res/RSS_sites.md',
-            method: function () {
-                var url = resourcesList[3].url; window.open(url, '_self');
+            method: function() {
+                var url = resourcesList[3].url;
+                window.open(url, '_self');
                 // window.open("https://www.materialpalette.com/icons");
             }
         }]
-
     </script>
 </body>
 
