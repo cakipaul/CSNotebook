@@ -63,6 +63,7 @@
 
 ## Mirrors
 
+- [腾讯云镜像](http://mirrors.cloud.tencent.com/)
 - [清华大学mirrors](https://mirrors.tuna.tsinghua.edu.cn/)
 
 ## 通用资源

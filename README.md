@@ -15,8 +15,6 @@ CSNotebook.git
 |  |- hw/...
 |  |- os/...
 |  |- ...
-|- inspur/
-|  |- ...
 |- log/
 |  |- 2019_7.md
 |  |- 2019_8.md
@@ -63,7 +61,7 @@ CSNotebook.git
 [c](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/c/SUMMARY.md)|C/C++，Unity
 [dotnet](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/dotnet/SUMMARY.md)|C#，.NET
 [java](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/java/SUMMARY.md)|Java，Spring MVC，Spring Boot
-[java](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md)|Go
+[go](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/go/SUMMARY.md)|Go
 [dart](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/dart/SUMMARY.md)|Dart，Flutter
 [py](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/py/SUMMARY.md)|Python
 [web](https://cakipaul.com/csnotes/html/docs.html?path=/csnotes/web/SUMMARY.md)|Network（OSI，TCP-IP，HTTP，SSL，SSH，Mail，FTP），Server（Apache，Nginx，IIS），H-Network(Bluetooth,WiFi,4G,ZigBee,NB-IoT)，通信原理
